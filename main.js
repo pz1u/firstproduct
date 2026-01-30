@@ -131,6 +131,11 @@ const translations = {
 
 const soundGrid = document.getElementById('sound-grid');
 const langSelect = document.getElementById('lang-select');
+
+// Web Audio API 설정 (모바일 볼륨 제어 문제 해결)
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+
 const audioPlayers = {};
 let currentLang = 'ko';
 
@@ -154,15 +159,25 @@ soundsData.forEach(sound => {
     soundGrid.appendChild(card);
 
     const audio = new Audio(sound.file);
+    audio.crossOrigin = "anonymous"; // CORS 허용
     audio.loop = true;
-    audio.volume = 0.5;
-    audioPlayers[sound.id] = { audio, isPlaying: false };
+    
+    // Web Audio API 연결 (GainNode를 통해 볼륨 제어)
+    const track = audioCtx.createMediaElementSource(audio);
+    const gainNode = audioCtx.createGain();
+    gainNode.gain.value = 0.5; // 초기 볼륨 50%
+    track.connect(gainNode).connect(audioCtx.destination);
+
+    audioPlayers[sound.id] = { audio, gainNode, isPlaying: false };
 
     const playBtn = card.querySelector(`#btn-${sound.id}`);
     const volSlider = card.querySelector(`#vol-${sound.id}`);
 
-    playBtn.addEventListener('click', () => toggleSound(sound.id));
-    volSlider.addEventListener('input', (e) => audio.volume = e.target.value);
+    playBtn.addEventListener('click', () => {
+        if (audioCtx.state === 'suspended') audioCtx.resume(); // 브라우저 자동재생 정책 대응
+        toggleSound(sound.id);
+    });
+    volSlider.addEventListener('input', (e) => gainNode.gain.value = e.target.value);
 });
 
 function toggleSound(id) {
