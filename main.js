@@ -149,7 +149,17 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
 
 const audioPlayers = {};
-let currentLang = 'ko';
+
+// 브라우저 언어 감지 및 설정
+const userLang = navigator.language || navigator.userLanguage;
+let currentLang = 'en'; // 기본값은 영어(글로벌)
+
+if (userLang.includes('ko')) currentLang = 'ko';
+else if (userLang.includes('ja')) currentLang = 'ja';
+else if (userLang.includes('zh')) currentLang = 'zh';
+else if (userLang.includes('es')) currentLang = 'es';
+
+langSelect.value = currentLang;
 
 // Initialize Sound Cards
 // 카드 생성 및 오디오 초기화
