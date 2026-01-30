@@ -139,6 +139,7 @@ const audioCtx = new AudioContext();
 const audioPlayers = {};
 let currentLang = 'ko';
 
+// Initialize Sound Cards
 // 카드 생성 및 오디오 초기화
 soundsData.forEach(sound => {
     const card = document.createElement('div');
