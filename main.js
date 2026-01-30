@@ -11,7 +11,7 @@ const audioPlayers = {};
 // 카드 생성 및 오디오 초기화
 soundsData.forEach(sound => {
     const card = document.createElement('div');
-    card.className = 'bg-slate-800 border-2 border-transparent rounded-xl p-6 flex flex-col items-center gap-4 transition-all duration-300 hover:bg-slate-700';
+    card.className = 'w-full sm:w-72 bg-slate-800 border-2 border-transparent rounded-xl p-6 flex flex-col items-center gap-4 transition-all duration-300 hover:bg-slate-700';
     card.id = `card-${sound.id}`;
     card.innerHTML = `
         <div class="text-blue-400 mb-2"><i data-lucide="${sound.icon}" width="48" height="48"></i></div>
