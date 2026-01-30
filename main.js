@@ -281,6 +281,19 @@ function updateLanguage() {
             el.placeholder = translations[currentLang][key];
         }
     });
+
+    // 언어 버튼 텍스트 업데이트
+    const langNames = {
+        ko: '한국어',
+        en: 'English',
+        ja: '日本語',
+        zh: '中文',
+        es: 'Español'
+    };
+    const langSpan = langBtn.querySelector('span');
+    if (langSpan) {
+        langSpan.textContent = langNames[currentLang];
+    }
 }
 
 lucide.createIcons();
