@@ -18,11 +18,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex flex-col">
-    <header class="p-6 text-center">
-        <h1 class="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+    <header class="p-6 text-center relative">
+        <div class="absolute top-4 right-4">
+            <select id="lang-select" class="bg-slate-800 text-white border border-slate-600 rounded-lg p-2 text-sm focus:outline-none focus:border-blue-400">
+                <option value="ko">한국어</option>
+                <option value="en">English</option>
+                <option value="ja">日本語</option>
+                <option value="zh">中文</option>
+                <option value="es">Español</option>
+            </select>
+        </div>
+        <h1 class="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text" data-i18n="title">
             My ASMR Space
         </h1>
-        <p class="text-slate-400">나만의 소리를 믹스하여 휴식하세요.</p>
+        <p class="text-slate-400" data-i18n="subtitle">나만의 소리를 믹스하여 휴식하세요.</p>
     </header>
 
     <main class="flex-grow container mx-auto px-4 py-8">
@@ -33,21 +42,21 @@
         <!-- AdSense 승인을 위한 콘텐츠 보강 (텍스트 추가) -->
         <section class="mt-16 max-w-4xl mx-auto">
             <article class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
-                <h2 class="text-2xl font-bold mb-4 text-blue-400">ASMR과 백색소음이란?</h2>
-                <p class="text-slate-300 mb-6 leading-relaxed">
+                <h2 class="text-2xl font-bold mb-4 text-blue-400" data-i18n="asmr_title">ASMR과 백색소음이란?</h2>
+                <p class="text-slate-300 mb-6 leading-relaxed" data-i18n="asmr_desc">
                     ASMR(Autonomous Sensory Meridian Response)은 뇌를 자극해 심리적인 안정을 유도하는 소리입니다. 
                     빗소리, 장작 타는 소리, 타자 소리와 같은 백색소음(White Noise)은 주변의 거슬리는 소음을 덮어주고 
                     집중력을 향상시키거나 수면을 돕는 데 효과적입니다.
                 </p>
                 
-                <h2 class="text-2xl font-bold mb-4 text-blue-400">My ASMR Space 활용 팁</h2>
+                <h2 class="text-2xl font-bold mb-4 text-blue-400" data-i18n="tips_title">My ASMR Space 활용 팁</h2>
                 <ul class="list-disc list-inside text-slate-300 space-y-2 mb-6">
-                    <li><strong>집중이 필요할 때:</strong> 타자 소리와 같은 규칙적인 소음을 활용해보세요.</li>
-                    <li><strong>휴식이 필요할 때:</strong> 빗소리와 장작불 소리로 아늑한 분위기를 만들어보세요.</li>
-                    <li><strong>수면 유도:</strong> 볼륨을 낮추고 자연의 소리에 귀를 기울여보세요.</li>
+                    <li data-i18n="tip_focus"><strong>집중이 필요할 때:</strong> 타자 소리와 같은 규칙적인 소음을 활용해보세요.</li>
+                    <li data-i18n="tip_relax"><strong>휴식이 필요할 때:</strong> 빗소리와 장작불 소리로 아늑한 분위기를 만들어보세요.</li>
+                    <li data-i18n="tip_sleep"><strong>수면 유도:</strong> 볼륨을 낮추고 자연의 소리에 귀를 기울여보세요.</li>
                 </ul>
                 
-                <p class="text-slate-400 text-sm">
+                <p class="text-slate-400 text-sm" data-i18n="site_desc">
                     이 사이트는 사용자에게 무료로 휴식과 집중을 위한 소리를 제공합니다. 
                     별도의 설치 없이 웹 브라우저에서 바로 이용할 수 있습니다.
                 </p>
@@ -57,19 +66,19 @@
         <!-- Contact Form (Formspree) -->
         <section class="mt-16 max-w-4xl mx-auto mb-8">
             <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
-                <h2 class="text-2xl font-bold mb-6 text-blue-400">문의하기</h2>
+                <h2 class="text-2xl font-bold mb-6 text-blue-400" data-i18n="contact_title">문의하기</h2>
                 <form action="https://formspree.io/f/xreqwqpe" method="POST" class="space-y-4">
                     <div>
-                        <label for="email" class="block text-slate-300 mb-2">이메일</label>
-                        <input type="email" name="email" id="email" required 
+                        <label for="email" class="block text-slate-300 mb-2" data-i18n="email_label">이메일</label>
+                        <input type="email" name="email" id="email" required data-i18n-placeholder="email_placeholder"
                             class="w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white focus:outline-none focus:border-blue-400 transition-colors" placeholder="답변 받으실 이메일 주소">
                     </div>
                     <div>
-                        <label for="message" class="block text-slate-300 mb-2">메시지</label>
-                        <textarea name="message" id="message" rows="4" required
+                        <label for="message" class="block text-slate-300 mb-2" data-i18n="msg_label">메시지</label>
+                        <textarea name="message" id="message" rows="4" required data-i18n-placeholder="msg_placeholder"
                             class="w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white focus:outline-none focus:border-blue-400 transition-colors" placeholder="문의하실 내용을 적어주세요."></textarea>
                     </div>
-                    <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition-colors">
+                    <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition-colors" data-i18n="send_btn">
                         보내기
                     </button>
                 </form>
@@ -79,9 +88,9 @@
 
     <footer class="bg-slate-800 border-t border-slate-700 py-8 mt-auto">
         <div class="container mx-auto px-4 text-center text-slate-400">
-            <p class="mb-2">&copy; 2026 My ASMR Space. All rights reserved.</p>
+            <p class="mb-2" data-i18n="copyright">&copy; 2026 My ASMR Space. All rights reserved.</p>
             <div class="flex justify-center gap-4 text-sm">
-                <a href="privacy.html" class="hover:text-blue-400 transition-colors">개인정보처리방침</a>
+                <a href="privacy.html" class="hover:text-blue-400 transition-colors" data-i18n="privacy">개인정보처리방침</a>
             </div>
         </div>
     </footer>
