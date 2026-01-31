@@ -9,6 +9,13 @@ const soundsData = [
     { id: 'bug', icon: 'bug', file: 'bug.mp3', tags: ['nature', 'night', 'sleep'] }
 ];
 
+// 추천 믹스 데이터
+const soundMixes = [
+    { id: 'rainy_cabin', icon: 'home', sounds: { rain: 0.7, fire: 0.4 } },
+    { id: 'beach_reading', icon: 'book-open', sounds: { wave: 0.6, book: 0.3, bird: 0.2 } },
+    { id: 'night_studio', icon: 'moon', sounds: { rain: 0.5, keyboard: 0.8 } }
+];
+
 // 다국어 데이터 (모든 페이지 키 복구 완료)
 const translations = {
     ko: {
@@ -21,6 +28,7 @@ const translations = {
         // 버튼 & 레이블 (Buttons & Labels)
         play: "재생",
         stop: "정지",
+        stop_all: "일괄 정지",
         theme_dark: "다크 모드",
         theme_light: "라이트 모드",
         btn_home: "홈으로 가기",
@@ -31,6 +39,10 @@ const translations = {
         msg_label: "메시지",
         msg_placeholder: "문의하실 내용을 적어주세요.",
         my_saved: "내가 저장한 소리",
+        mix_title: "추천 사운드 믹스",
+        mix_rainy_cabin: "비 오는 오두막",
+        mix_beach_reading: "해변의 독서",
+        mix_night_studio: "심야의 작업실",
         
         // 메뉴 & 링크 (Menu & Links)
         sitemap: "사이트맵",
@@ -123,7 +135,11 @@ const translations = {
         guide_mix_list2: "<strong>해변의 독서:</strong> 파도 소리(60%) + 책 넘기는 소리(30%) + 새소리(20%)",
         guide_mix_list3: "<strong>심야의 작업실:</strong> 빗소리(50%) + 타자 소리(80%)",
         guide_pomo_title: "2. 뽀모도로 기법",
-        guide_pomo_desc: "타이머를 활용해 집중과 휴식을 반복하세요.",
+        guide_pomo_desc: "공부나 업무를 할 때 타이머 기능을 활용해보세요. 25분 또는 30분 타이머를 설정하고 타자 소리나 빗소리를 배경음으로 켜두세요. 소리가 멈추면 5분간 휴식을 취합니다. 백색소음은 주변 소음을 차단하고 몰입도를 높여줍니다.",
+        guide_meditation_title: "3. 명상과 호흡",
+        guide_meditation_desc: "파도 소리나 빗소리는 명상 호흡의 훌륭한 가이드가 됩니다. 파도가 밀려올 때 숨을 들이마시고, 나갈 때 내뱉어보세요. 자연의 리듬에 맞춰 호흡하면 심박수가 안정되고 스트레스가 감소합니다.",
+        guide_mobile_title: "📱 모바일 및 오프라인 사용",
+        guide_mobile_desc: "별도의 앱 설치 없이 모바일 웹 브라우저(Chrome, Safari 등)에서 완벽하게 작동합니다. 오디오 파일은 데이터 절약을 위해 최적화되어 있으며, 한 번 로드되면 브라우저 캐시에 저장되어 데이터 소모를 최소화합니다.<br><br><strong>Tip:</strong> 아이폰(iOS) 사용자는 제어 센터에서 백그라운드 재생을 지원합니다. 화면을 끄고 소리만 들으며 배터리를 절약하세요.",
         btn_guide_listen: "나만의 소리 들으러 가기",
 
         // 용어 사전 (Glossary) - 상세 복구됨
@@ -208,6 +224,7 @@ const translations = {
         copyright: "&copy; 2026 My ASMR Space. All rights reserved.",
         play: "Play",
         stop: "Stop",
+        stop_all: "Stop All",
         theme_dark: "Dark Mode",
         theme_light: "Light Mode",
         btn_home: "Go Home",
@@ -218,6 +235,10 @@ const translations = {
         msg_label: "Message",
         msg_placeholder: "Your message here",
         my_saved: "My Saved Sounds",
+        mix_title: "Recommended Mixes",
+        mix_rainy_cabin: "Rainy Cabin",
+        mix_beach_reading: "Beach Reading",
+        mix_night_studio: "Late Night Studio",
         sitemap: "Sitemap",
         contact_link: "Contact Us",
         privacy: "Privacy Policy",
@@ -304,13 +325,10 @@ const translations = {
         guide_mix_list2: "<strong>Beach Reading:</strong> Waves(60%) + Page Turning(30%) + Birds(20%)",
         guide_mix_list3: "<strong>Late Night Studio:</strong> Rain(50%) + Typing(80%)",
         guide_pomo_title: "2. Pomodoro Technique",
-        guide_pomo_desc: "Use the timer to alternate between focus and rest.",
-        btn_guide_listen: "Go listen to my sounds",
         guide_pomo_desc: "Try using the timer function when studying or working. Set a timer for 25 or 30 minutes and turn on typing or rain sounds as background noise. When the sound stops, take a 5-minute break. White noise blocks ambient noise and improves immersion.",
         guide_meditation_title: "3. Meditation and Breathing",
         guide_meditation_desc: "Wave or rain sounds are great guides for meditation breathing. Inhale when the wave comes in, exhale when it goes out. Breathing to the rhythm of nature stabilizes heart rate and reduces stress.",
         guide_mobile_title: "📱 Mobile & Offline Use",
-        guide_mobile_desc: "Works perfectly on mobile browsers without app installation. Audio is optimized and cached to save data.<br><br><strong>Tip:</strong> iOS users can use background playback in Control Center.",
         guide_mobile_desc: "This site works perfectly on mobile web browsers (Chrome, Safari, etc.) without installing a separate app. Audio files are optimized to save data, and once loaded, sounds are stored in the browser cache to minimize data consumption.<br><br><strong>Tip:</strong> For iPhone (iOS) users, background playback is supported in the Control Center. Turn off the screen and listen to the sound to save battery.",
         btn_guide_listen: "Go listen to my sounds",
 
@@ -393,6 +411,7 @@ const translations = {
         copyright: "&copy; 2026 My ASMR Space. All rights reserved.",
         play: "再生",
         stop: "停止",
+        stop_all: "全停止",
         theme_dark: "ダークモード",
         theme_light: "ライトモード",
         btn_home: "ホームへ",
@@ -403,6 +422,10 @@ const translations = {
         msg_label: "メッセージ",
         msg_placeholder: "お問い合わせ内容",
         my_saved: "保存したサウンド",
+        mix_title: "おすすめミックス",
+        mix_rainy_cabin: "雨の小屋",
+        mix_beach_reading: "海辺の読書",
+        mix_night_studio: "深夜の作業室",
         sitemap: "サイトマップ",
         contact_link: "お問い合わせ",
         privacy: "プライバシーポリシー",
@@ -483,11 +506,11 @@ const translations = {
         guide_mix_list2: "<strong>海辺の読書：</strong> 波の音(60%) + 本をめくる音(30%) + 鳥のさえずり(20%)",
         guide_mix_list3: "<strong>深夜の作業室：</strong> 雨音(50%) + タイピング(80%)",
         guide_pomo_title: "2. ポモドーロ・テクニック",
-        guide_pomo_desc: "タイマーを活用して集中と休憩を繰り返しましょう。",
+        guide_pomo_desc: "勉強や仕事の際にタイマー機能を活用してみてください。25分または30分のタイマーを設定し、タイピング音や雨音をBGMとして流します。音が止まったら5分間休憩します。ホワイトノイズは周囲の騒音を遮断し、没入感を高めます。",
         guide_meditation_title: "3. 瞑想と呼吸",
         guide_meditation_desc: "波の音や雨音は瞑想呼吸の良いガイドになります。波が押し寄せるときに息を吸い、引くときに吐いてみてください。自然の音に合わせて呼吸すると、心拍数が安定しストレスが減少します。",
         guide_mobile_title: "📱 モバイルおよびオフライン使用",
-        guide_mobile_desc: "アプリなしでモバイルブラウザで動作します。データ節約のために最適化され、キャッシュされます。<br><br><strong>ヒント：</strong> iOSユーザーはコントロールセンターでバックグラウンド再生が可能です。",
+        guide_mobile_desc: "別途アプリをインストールすることなく、モバイルウェブブラウザ（Chrome、Safariなど）で完璧に動作します。オーディオファイルはデータ節約のために最適化されており、一度読み込まれるとブラウザのキャッシュに保存され、データ消費を最小限に抑えます。<br><br><strong>ヒント：</strong> iPhone（iOS）ユーザーは、コントロールセンターでバックグラウンド再生が可能です。画面をオフにして音だけを聞き、バッテリーを節約してください。",
         btn_guide_listen: "自分だけの音を聴きに行く",
 
         glossary_asmr_title: "ASMR (Autonomous Sensory Meridian Response)",
@@ -566,6 +589,7 @@ const translations = {
         copyright: "&copy; 2026 My ASMR Space. All rights reserved.",
         play: "播放",
         stop: "停止",
+        stop_all: "全部停止",
         theme_dark: "深色模式",
         theme_light: "浅色模式",
         btn_home: "返回首页",
@@ -576,6 +600,10 @@ const translations = {
         msg_label: "留言",
         msg_placeholder: "请输入内容",
         my_saved: "我保存的声音",
+        mix_title: "推荐混合音效",
+        mix_rainy_cabin: "雨中小屋",
+        mix_beach_reading: "海边读书",
+        mix_night_studio: "深夜工作室",
         sitemap: "网站地图",
         contact_link: "联系我们",
         privacy: "隐私政策",
@@ -656,11 +684,11 @@ const translations = {
         guide_mix_list2: "<strong>海边读书：</strong> 海浪声(60%) + 翻书声(30%) + 鸟鸣声(20%)",
         guide_mix_list3: "<strong>深夜工作室：</strong> 雨声(50%) + 打字声(80%)",
         guide_pomo_title: "2. 番茄工作法",
-        guide_pomo_desc: "利用定时器重复集中和休息。",
+        guide_pomo_desc: "尝试在学习或工作时使用定时器功能。设置25或30分钟的定时器，并播放打字声或雨声作为背景音。当声音停止时，休息5分钟。白噪音可以阻隔环境噪音并提高沉浸感。",
         guide_meditation_title: "3. 冥想与呼吸",
         guide_meditation_desc: "海浪声或雨声是冥想呼吸的好向导。海浪涌来时吸气，退去时呼气。跟随自然的声音呼吸可以稳定心率并减轻压力。",
         guide_mobile_title: "📱 移动和离线使用",
-        guide_mobile_desc: "无需安装应用程序即可在移动浏览器上完美运行。音频经过优化和缓存以节省数据。<br><br><strong>提示：</strong> iOS 用户可以在控制中心使用后台播放。",
+        guide_mobile_desc: "无需安装单独的应用程序，在移动网络浏览器（Chrome、Safari等）上即可完美运行。音频文件经过优化以节省数据，加载一次后，声音将存储在浏览器缓存中，以最大限度地减少数据消耗。<br><br><strong>提示：</strong> iPhone (iOS) 用户可以在控制中心使用后台播放。关闭屏幕只听声音以节省电池。",
         btn_guide_listen: "去听属于我的声音",
 
         glossary_asmr_title: "ASMR (自发性知觉经络反应)",
@@ -739,6 +767,7 @@ const translations = {
         copyright: "&copy; 2026 My ASMR Space. All rights reserved.",
         play: "Reprod.",
         stop: "Parar",
+        stop_all: "Detener todo",
         theme_dark: "Modo Oscuro",
         theme_light: "Modo Claro",
         btn_home: "Ir a Inicio",
@@ -749,6 +778,10 @@ const translations = {
         msg_label: "Mensaje",
         msg_placeholder: "Escribe tu mensaje",
         my_saved: "Mis sonidos guardados",
+        mix_title: "Mezclas Recomendadas",
+        mix_rainy_cabin: "Cabaña Lluviosa",
+        mix_beach_reading: "Lectura en la Playa",
+        mix_night_studio: "Estudio Nocturno",
         sitemap: "Mapa del sitio",
         contact_link: "Contáctenos",
         privacy: "Política de Privacidad",
@@ -829,11 +862,11 @@ const translations = {
         guide_mix_list2: "<strong>Lectura en la Playa:</strong> Olas(60%) + Pasar páginas(30%) + Pájaros(20%)",
         guide_mix_list3: "<strong>Estudio Nocturno:</strong> Lluvia(50%) + Teclado(80%)",
         guide_pomo_title: "2. Técnica Pomodoro",
-        guide_pomo_desc: "Usa el temporizador para alternar entre concentración y descanso.",
+        guide_pomo_desc: "Intenta usar la función de temporizador cuando estudies o trabajes. Configura un temporizador de 25 o 30 minutos y pon sonidos de escritura o lluvia como ruido de fondo. Cuando el sonido se detenga, tómate un descanso de 5 minutos. El ruido blanco bloquea el ruido ambiental y mejora la inmersión.",
         guide_meditation_title: "3. Meditación y Respiración",
         guide_meditation_desc: "Los sonidos de olas o lluvia son excelentes guías para la respiración en meditación. Inhala cuando viene la ola, exhala cuando se va. Respirar al ritmo de la naturaleza estabiliza el ritmo cardíaco y reduce el estrés.",
         guide_mobile_title: "📱 Uso móvil y sin conexión",
-        guide_mobile_desc: "Funciona perfectamente en navegadores móviles sin instalar app. El audio está optimizado y en caché para ahorrar datos.<br><br><strong>Consejo:</strong> Los usuarios de iOS pueden usar la reproducción en segundo plano en el Centro de control.",
+        guide_mobile_desc: "Este sitio funciona perfectamente en navegadores web móviles (Chrome, Safari, etc.) sin instalar una aplicación separada. Los archivos de audio están optimizados para ahorrar datos y, una vez cargados, los sonidos se almacenan en la caché del navegador para minimizar el consumo de datos.<br><br><strong>Consejo:</strong> Para los usuarios de iPhone (iOS), la reproducción en segundo plano es compatible en el Centro de control. Apaga la pantalla y escucha el sonido para ahorrar batería.",
         btn_guide_listen: "Ir a escuchar mis sonidos",
 
         glossary_asmr_title: "ASMR (Respuesta Sensorial Meridiana Autónoma)",
@@ -912,6 +945,8 @@ const langBtn = document.getElementById('lang-btn');
 const langMenu = document.getElementById('lang-menu');
 const themeBtn = document.getElementById('theme-btn');
 const favFilterBtn = document.getElementById('fav-filter-btn');
+const stopAllBtn = document.getElementById('stop-all-btn');
+const mixGrid = document.getElementById('mix-grid');
 
 // Web Audio API 설정
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -975,7 +1010,8 @@ if (soundGrid) {
                 </button>
                 <div class="flex items-center gap-2">
                     <i data-lucide="volume-2" width="16" class="text-slate-400"></i>
-                    <input type="range" id="vol-${sound.id}" min="0" max="1" step="0.01" value="0.5">
+                    <input type="range" id="vol-${sound.id}" min="0" max="1" step="0.01" value="0.5" class="flex-1">
+                    <span id="vol-display-${sound.id}" class="text-xs text-slate-500 w-9 text-right font-mono">50%</span>
                 </div>
             </div>`;
         soundGrid.appendChild(card);
@@ -1002,7 +1038,10 @@ if (soundGrid) {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             toggleSound(sound.id);
         });
-        volSlider.addEventListener('input', (e) => gainNode.gain.value = e.target.value);
+        volSlider.addEventListener('input', (e) => {
+            gainNode.gain.value = e.target.value;
+            document.getElementById(`vol-display-${sound.id}`).textContent = Math.round(e.target.value * 100) + '%';
+        });
         favBtn.addEventListener('click', () => toggleFavorite(sound.id, favBtn));
     });
 
@@ -1010,6 +1049,56 @@ if (soundGrid) {
         if (e.target.classList.contains('tag-btn')) {
             const tag = e.target.dataset.tag;
             filterByTag(tag);
+        }
+    });
+}
+
+// 믹스 버튼 렌더링
+function renderMixes() {
+    if (!mixGrid) return;
+    mixGrid.innerHTML = '';
+    soundMixes.forEach(mix => {
+        const btn = document.createElement('button');
+        btn.className = 'flex items-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-700 hover:border-blue-300 dark:hover:border-blue-500 transition-all shadow-sm group';
+        btn.innerHTML = `
+            <i data-lucide="${mix.icon}" class="w-5 h-5 text-blue-400 group-hover:text-blue-500 transition-colors"></i>
+            <span class="font-medium" data-i18n="mix_${mix.id}">${translations[currentLang]['mix_' + mix.id]}</span>
+        `;
+        btn.onclick = () => playMix(mix);
+        mixGrid.appendChild(btn);
+    });
+    lucide.createIcons();
+}
+
+function stopAllSounds() {
+    Object.keys(audioPlayers).forEach(id => {
+        const player = audioPlayers[id];
+        if (player.isPlaying) {
+            player.audio.pause();
+            player.isPlaying = false;
+            updateUI(id, false);
+        }
+    });
+}
+
+function playMix(mix) {
+    stopAllSounds();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    Object.entries(mix.sounds).forEach(([soundId, volume]) => {
+        const player = audioPlayers[soundId];
+        if (player) {
+            player.gainNode.gain.value = volume;
+            const volSlider = document.getElementById(`vol-${soundId}`);
+            if (volSlider) {
+                volSlider.value = volume;
+                const volDisplay = document.getElementById(`vol-display-${soundId}`);
+                if (volDisplay) volDisplay.textContent = Math.round(volume * 100) + '%';
+            }
+            
+            player.audio.play();
+            player.isPlaying = true;
+            updateUI(soundId, true);
         }
     });
 }
@@ -1022,13 +1111,6 @@ function toggleSound(id) {
         player.isPlaying = false;
         updateUI(id, false);
     } else {
-        Object.keys(audioPlayers).forEach(key => {
-            if (audioPlayers[key].isPlaying) {
-                audioPlayers[key].audio.pause();
-                audioPlayers[key].isPlaying = false;
-                updateUI(key, false);
-            }
-        });
         player.audio.play();
         player.isPlaying = true;
         updateUI(id, true);
@@ -1044,7 +1126,7 @@ function updateUI(id, isPlaying) {
     const sound = soundsData.find(s => s.id === id);
     
     if (isPlaying) {
-        btn.className = 'w-full py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-medium transition-colors flex justify-center items-center gap-2';
+        btn.className = 'w-full py-2 rounded-lg bg-sky-400 hover:bg-sky-500 text-white font-medium transition-colors flex justify-center items-center gap-2';
         btn.innerHTML = `<i data-lucide="${icon}" width="16"></i> <span data-i18n="${textKey}">${translations[currentLang][textKey]}</span>`;
         btn.setAttribute('onclick', "if(typeof Android !== 'undefined') Android.pauseAudio()");
         card.classList.add('card-active');
@@ -1129,6 +1211,10 @@ if (favFilterBtn) {
         favFilterBtn.classList.toggle('text-red-500', showFavoritesOnly);
         applyFilters();
     });
+}
+
+if (stopAllBtn) {
+    stopAllBtn.addEventListener('click', stopAllSounds);
 }
 
 function initTheme() {
@@ -1253,6 +1339,7 @@ function updateLanguage() {
     
     // 언어 변경 시 명언도 새로고침
     updateQuote();
+    renderMixes();
 }
 
 // 초기화 순서
@@ -1262,4 +1349,5 @@ initTheme();
 updateLanguage();
 // 그 후 명언 업데이트
 updateQuote();
+renderMixes();
 initVisualizer();
