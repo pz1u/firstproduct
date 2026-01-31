@@ -45,8 +45,8 @@
     <header class="p-6 text-center relative">
         <div class="flex justify-end mb-4 sm:absolute sm:top-4 sm:right-4 sm:mb-0 gap-2">
             <div class="relative inline-block text-left">
+                <i data-lucide="globe" class="w-4 h-4"></i>
                 <button id="lang-btn" class="flex items-center gap-2 bg-slate-800 text-white border border-slate-600 rounded-lg px-3 py-2 text-sm hover:bg-slate-700 transition-colors focus:outline-none focus:border-blue-400">
-                    <i data-lucide="globe" class="w-4 h-4"></i>
                     <span>Language</span>
                 </button>
                 <div id="lang-menu" class="hidden absolute right-0 mt-2 w-32 bg-slate-800 border border-slate-600 rounded-lg shadow-xl z-50">
@@ -85,10 +85,8 @@
                     <button class="timer-opt px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg font-medium transition-colors" data-min="15">15m</button>
                     <button class="timer-opt px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg font-medium transition-colors" data-min="30">30m</button>
                     <button class="timer-opt px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg font-medium transition-colors" data-min="60">60m</button>
-                    <div class="flex items-center bg-slate-700 rounded-lg p-1 border border-slate-600">
-                        <input type="number" id="custom-timer-input" placeholder="Min" min="1" class="w-16 bg-transparent text-white text-center text-sm focus:outline-none px-1">
-                        <button id="custom-timer-btn" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-1.5 rounded-md font-bold">Go</button>
-                    </div>
+                    <input type="number" id="custom-timer-input" placeholder="Min" min="1" class="w-20 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg font-medium transition-colors text-center focus:outline-none placeholder-slate-400">
+                    <button id="timer-start" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg font-medium transition-colors">Go</button>
                     <button id="timer-cancel" class="hidden px-4 py-2 bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 rounded-lg font-medium transition-colors flex items-center gap-2">
                         <i data-lucide="square" class="w-4 h-4 fill-current"></i> Stop
                     </button>
@@ -158,41 +156,59 @@
         document.addEventListener('DOMContentLoaded', () => {
             const timerDisplay = document.getElementById('timer-display');
             const timerCancel = document.getElementById('timer-cancel');
-            const customTimerBtn = document.getElementById('custom-timer-btn');
+            const timerStart = document.getElementById('timer-start');
             const customTimerInput = document.getElementById('custom-timer-input');
-            const langBtn = document.getElementById('lang-btn');
             let timerInterval;
+            let selectedMinutes = 0;
 
             document.querySelectorAll('.timer-opt').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    const min = parseInt(btn.dataset.min);
-                    startTimer(min);
+                    selectedMinutes = parseInt(btn.dataset.min);
+                    timerDisplay.textContent = `${selectedMinutes}:00`;
+                    customTimerInput.value = '';
+                    resetTimerState();
                 });
             });
 
-            customTimerBtn.addEventListener('click', () => {
-                const min = parseInt(customTimerInput.value);
-                if (min > 0) {
-                    startTimer(min);
-                    customTimerInput.value = '';
+            customTimerInput.addEventListener('input', () => {
+                const val = parseInt(customTimerInput.value);
+                if (val > 0) {
+                    selectedMinutes = val;
+                    timerDisplay.textContent = `${selectedMinutes}:00`;
+                    resetTimerState();
                 }
             });
 
             customTimerInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
-                    customTimerBtn.click();
+                    timerStart.click();
+                }
+            });
+
+            timerStart.addEventListener('click', () => {
+                if (selectedMinutes > 0) {
+                    startTimer(selectedMinutes);
                 }
             });
 
             timerCancel.addEventListener('click', () => {
                 clearInterval(timerInterval);
                 timerDisplay.textContent = '00:00';
-                timerCancel.classList.add('hidden');
+                selectedMinutes = 0;
+                customTimerInput.value = '';
+                resetTimerState();
             });
+
+            function resetTimerState() {
+                clearInterval(timerInterval);
+                timerStart.classList.remove('hidden');
+                timerCancel.classList.add('hidden');
+            }
 
             function startTimer(minutes) {
                 clearInterval(timerInterval);
                 const endTime = Date.now() + minutes * 60 * 1000;
+                timerStart.classList.add('hidden');
                 timerCancel.classList.remove('hidden');
                 
                 function update() {
@@ -200,7 +216,7 @@
                     if (diff <= 0) {
                         clearInterval(timerInterval);
                         timerDisplay.textContent = '00:00';
-                        timerCancel.classList.add('hidden');
+                        resetTimerState();
                         
                         if (typeof audioPlayers !== 'undefined') {
                             Object.keys(audioPlayers).forEach(id => {
