@@ -246,14 +246,19 @@ function updateUI(id, isPlaying) {
     const card = document.getElementById(`card-${id}`);
     const textKey = isPlaying ? 'stop' : 'play';
     const icon = isPlaying ? 'pause' : 'play';
+    const sound = soundsData.find(s => s.id === id);
     
     if (isPlaying) {
         btn.className = 'w-full py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-medium transition-colors flex justify-center items-center gap-2';
         btn.innerHTML = `<i data-lucide="${icon}" width="16"></i> <span data-i18n="${textKey}">${translations[currentLang][textKey]}</span>`;
+        btn.setAttribute('onclick', "if(typeof Android !== 'undefined') Android.pauseAudio()");
         card.classList.add('card-active');
     } else {
         btn.className = 'w-full py-2 rounded-lg bg-slate-600 hover:bg-blue-500 text-white font-medium transition-colors flex justify-center items-center gap-2';
         btn.innerHTML = `<i data-lucide="${icon}" width="16"></i> <span data-i18n="${textKey}">${translations[currentLang][textKey]}</span>`;
+        if (sound) {
+            btn.setAttribute('onclick', `if(typeof Android !== 'undefined') Android.playAudio('https://asmrspace.shop/sounds/${sound.file}')`);
+        }
         card.classList.remove('card-active');
     }
     lucide.createIcons();
