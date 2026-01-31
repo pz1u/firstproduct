@@ -33,6 +33,7 @@
     <meta name="google-adsense-account" content="ca-pub-5194430757582201">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5194430757582201"
      crossorigin="anonymous"></script>
+    <meta name="naver-site-verification" content="a225d2d5c78d018b2a2026c233d89322d3181253" />
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
@@ -42,7 +43,24 @@
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex flex-col">
     <header class="p-6 text-center relative">
-        <div class="flex justify-end mb-4 sm:absolute sm:top-4 sm:right-4 sm:mb-0">
+        <div class="flex justify-end mb-4 sm:absolute sm:top-4 sm:right-4 sm:mb-0 gap-2">
+            <div class="relative inline-block text-left">
+                <button id="timer-btn" class="flex items-center gap-2 bg-slate-800 text-white border border-slate-600 rounded-lg px-3 py-2 text-sm hover:bg-slate-700 transition-colors focus:outline-none focus:border-blue-400">
+                    <i data-lucide="timer" class="w-4 h-4"></i>
+                    <span id="timer-display">Timer</span>
+                </button>
+                <div id="timer-menu" class="hidden absolute right-0 mt-2 w-40 bg-slate-800 border border-slate-600 rounded-lg shadow-xl z-50 overflow-hidden">
+                    <button class="timer-opt block w-full text-left px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white first:rounded-t-lg" data-min="15">15 min</button>
+                    <button class="timer-opt block w-full text-left px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white" data-min="30">30 min</button>
+                    <button class="timer-opt block w-full text-left px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white" data-min="60">60 min</button>
+                    <div class="px-3 py-2 border-t border-slate-700 flex gap-1 bg-slate-800">
+                        <input type="number" id="custom-timer-input" placeholder="Min" min="1" class="w-full bg-slate-700 text-white text-sm rounded px-2 py-1 focus:outline-none focus:border-blue-400 border border-slate-600">
+                        <button id="custom-timer-btn" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2 py-1 rounded">Go</button>
+                    </div>
+                    <button id="timer-cancel" class="hidden block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-slate-700 hover:text-red-300 border-t border-slate-700">Stop</button>
+                </div>
+            </div>
+
             <div class="relative inline-block text-left">
                 <button id="lang-btn" class="flex items-center gap-2 bg-slate-800 text-white border border-slate-600 rounded-lg px-3 py-2 text-sm hover:bg-slate-700 transition-colors focus:outline-none focus:border-blue-400">
                     <i data-lucide="globe" class="w-4 h-4"></i>
@@ -126,6 +144,96 @@
 
     <!-- Main JS -->
     <script src="main.js?v=1.1"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const timerBtn = document.getElementById('timer-btn');
+            const timerMenu = document.getElementById('timer-menu');
+            const timerDisplay = document.getElementById('timer-display');
+            const timerCancel = document.getElementById('timer-cancel');
+            const customTimerBtn = document.getElementById('custom-timer-btn');
+            const customTimerInput = document.getElementById('custom-timer-input');
+            const langBtn = document.getElementById('lang-btn');
+            let timerInterval;
+
+            timerBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                timerMenu.classList.toggle('hidden');
+                document.getElementById('lang-menu').classList.add('hidden');
+            });
+
+            if (langBtn) {
+                langBtn.addEventListener('click', () => {
+                    timerMenu.classList.add('hidden');
+                });
+            }
+
+            document.querySelectorAll('.timer-opt').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const min = parseInt(btn.dataset.min);
+                    startTimer(min);
+                    timerMenu.classList.add('hidden');
+                });
+            });
+
+            customTimerBtn.addEventListener('click', () => {
+                const min = parseInt(customTimerInput.value);
+                if (min > 0) {
+                    startTimer(min);
+                    timerMenu.classList.add('hidden');
+                    customTimerInput.value = '';
+                }
+            });
+
+            customTimerInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    customTimerBtn.click();
+                }
+            });
+
+            timerCancel.addEventListener('click', () => {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = 'Timer';
+                timerCancel.classList.add('hidden');
+                timerMenu.classList.add('hidden');
+            });
+
+            function startTimer(minutes) {
+                clearInterval(timerInterval);
+                const endTime = Date.now() + minutes * 60 * 1000;
+                timerCancel.classList.remove('hidden');
+                
+                function update() {
+                    const diff = Math.ceil((endTime - Date.now()) / 1000);
+                    if (diff <= 0) {
+                        clearInterval(timerInterval);
+                        timerDisplay.textContent = 'Timer';
+                        timerCancel.classList.add('hidden');
+                        
+                        if (typeof audioPlayers !== 'undefined') {
+                            Object.keys(audioPlayers).forEach(id => {
+                                audioPlayers[id].audio.pause();
+                                audioPlayers[id].isPlaying = false;
+                                if (typeof updateUI === 'function') updateUI(id, false);
+                            });
+                        }
+                        return;
+                    }
+                    const m = Math.floor(diff / 60);
+                    const s = diff % 60;
+                    timerDisplay.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+                }
+                
+                update();
+                timerInterval = setInterval(update, 1000);
+            }
+
+            document.addEventListener('click', (e) => {
+                if (!timerBtn.contains(e.target) && !timerMenu.contains(e.target)) {
+                    timerMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
     <script>
         // 아이콘 초기화 및 렌더링 보장
         window.addEventListener('load', function() {

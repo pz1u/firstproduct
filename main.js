@@ -5,7 +5,8 @@ const soundsData = [
     { id: 'bird', icon: 'bird', file: 'bird.mp3' },
     { id: 'book', icon: 'book', file: 'book.mp3' },
     { id: 'wave', icon: 'waves', file: 'wave.mp3' },
-    { id: 'keyboard', icon: 'keyboard', file: 'keyboard.mp3' }
+    { id: 'keyboard', icon: 'keyboard', file: 'keyboard.mp3' },
+    { id: 'bug', icon: 'bug', file: 'bug.mp3' }
 ];
 
 // 다국어 데이터
@@ -34,6 +35,7 @@ const translations = {
         sound_book: "책 넘기는 소리",
         sound_wave: "파도 소리",
         sound_keyboard: "타자 소리",
+        sound_bug: "풀벌레 소리",
         play: "재생",
         stop: "정지"
     },
@@ -61,6 +63,7 @@ const translations = {
         sound_book: "Page Turning",
         sound_wave: "Waves",
         sound_keyboard: "Typing",
+        sound_bug: "Crickets",
         play: "Play",
         stop: "Stop"
     },
@@ -88,6 +91,7 @@ const translations = {
         sound_book: "本をめくる音",
         sound_wave: "波の音",
         sound_keyboard: "タイピング",
+        sound_bug: "虫の音",
         play: "再生",
         stop: "停止"
     },
@@ -115,6 +119,7 @@ const translations = {
         sound_book: "翻书声",
         sound_wave: "海浪声",
         sound_keyboard: "打字声",
+        sound_bug: "虫鸣声",
         play: "播放",
         stop: "停止"
     },
@@ -142,6 +147,7 @@ const translations = {
         sound_book: "Pasar páginas",
         sound_wave: "Olas",
         sound_keyboard: "Teclado",
+        sound_bug: "Grillos",
         play: "Reprod.",
         stop: "Parar"
     }
