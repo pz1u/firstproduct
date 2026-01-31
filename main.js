@@ -1,12 +1,12 @@
 // 소리 데이터 설정
 const soundsData = [
-    { id: 'rain', icon: 'cloud-rain', file: 'rain.mp3' },
-    { id: 'fire', icon: 'flame', file: 'fire.mp3' },
-    { id: 'bird', icon: 'bird', file: 'bird.mp3' },
-    { id: 'book', icon: 'book', file: 'book.mp3' },
-    { id: 'wave', icon: 'waves', file: 'wave.mp3' },
-    { id: 'keyboard', icon: 'keyboard', file: 'keyboard.mp3' },
-    { id: 'bug', icon: 'bug', file: 'bug.mp3' }
+    { id: 'rain', icon: 'cloud-rain', file: 'rain.mp3', tags: ['nature', 'sleep', 'relax'] },
+    { id: 'fire', icon: 'flame', file: 'fire.mp3', tags: ['nature', 'relax', 'warm'] },
+    { id: 'bird', icon: 'bird', file: 'bird.mp3', tags: ['nature', 'morning', 'focus'] },
+    { id: 'book', icon: 'book', file: 'book.mp3', tags: ['study', 'focus', 'calm'] },
+    { id: 'wave', icon: 'waves', file: 'wave.mp3', tags: ['nature', 'sleep', 'relax'] },
+    { id: 'keyboard', icon: 'keyboard', file: 'keyboard.mp3', tags: ['work', 'focus', 'study'] },
+    { id: 'bug', icon: 'bug', file: 'bug.mp3', tags: ['nature', 'night', 'sleep'] }
 ];
 
 // 다국어 데이터
@@ -40,7 +40,19 @@ const translations = {
         play: "재생",
         stop: "정지",
         theme_dark: "다크 모드",
-        theme_light: "라이트 모드"
+        theme_light: "라이트 모드",
+        tag_nature: "자연",
+        tag_sleep: "수면",
+        tag_relax: "휴식",
+        tag_warm: "따뜻함",
+        tag_morning: "아침",
+        tag_focus: "집중",
+        tag_study: "공부",
+        tag_calm: "차분함",
+        tag_work: "작업",
+        tag_night: "밤",
+        sitemap: "사이트맵",
+        contact_link: "문의하기"
     },
     en: {
         title: "My ASMR Space",
@@ -71,7 +83,19 @@ const translations = {
         play: "Play",
         stop: "Stop",
         theme_dark: "Dark Mode",
-        theme_light: "Light Mode"
+        theme_light: "Light Mode",
+        tag_nature: "Nature",
+        tag_sleep: "Sleep",
+        tag_relax: "Relax",
+        tag_warm: "Warm",
+        tag_morning: "Morning",
+        tag_focus: "Focus",
+        tag_study: "Study",
+        tag_calm: "Calm",
+        tag_work: "Work",
+        tag_night: "Night",
+        sitemap: "Sitemap",
+        contact_link: "Contact Us"
     },
     ja: {
         title: "My ASMR Space",
@@ -102,7 +126,19 @@ const translations = {
         play: "再生",
         stop: "停止",
         theme_dark: "ダークモード",
-        theme_light: "ライトモード"
+        theme_light: "ライトモード",
+        tag_nature: "自然",
+        tag_sleep: "睡眠",
+        tag_relax: "リラックス",
+        tag_warm: "暖かい",
+        tag_morning: "朝",
+        tag_focus: "集中",
+        tag_study: "勉強",
+        tag_calm: "落ち着く",
+        tag_work: "作業",
+        tag_night: "夜",
+        sitemap: "サイトマップ",
+        contact_link: "お問い合わせ"
     },
     zh: {
         title: "My ASMR Space",
@@ -133,7 +169,19 @@ const translations = {
         play: "播放",
         stop: "停止",
         theme_dark: "深色模式",
-        theme_light: "浅色模式"
+        theme_light: "浅色模式",
+        tag_nature: "自然",
+        tag_sleep: "睡眠",
+        tag_relax: "放松",
+        tag_warm: "温暖",
+        tag_morning: "早晨",
+        tag_focus: "专注",
+        tag_study: "学习",
+        tag_calm: "平静",
+        tag_work: "工作",
+        tag_night: "夜晚",
+        sitemap: "网站地图",
+        contact_link: "联系我们"
     },
     es: {
         title: "My ASMR Space",
@@ -164,7 +212,19 @@ const translations = {
         play: "Reprod.",
         stop: "Parar",
         theme_dark: "Modo Oscuro",
-        theme_light: "Modo Claro"
+        theme_light: "Modo Claro",
+        tag_nature: "Naturaleza",
+        tag_sleep: "Dormir",
+        tag_relax: "Relajarse",
+        tag_warm: "Cálido",
+        tag_morning: "Mañana",
+        tag_focus: "Enfoque",
+        tag_study: "Estudio",
+        tag_calm: "Calma",
+        tag_work: "Trabajo",
+        tag_night: "Noche",
+        sitemap: "Mapa del sitio",
+        contact_link: "Contáctenos"
     }
 };
 
@@ -201,8 +261,17 @@ const quotes = [
     "내일은 오늘보다 더 빛날 거예요.",
     "지친 마음을 토닥여주세요. 수고했어요, 오늘도.",
     "행복은 강도가 아니라 빈도입니다. 소소한 행복을 느껴보세요.",
-    "당신은 사랑받기 위해 태어난 사람입니다.",
-    "깊은 숨을 들이마시고, 천천히 내쉬어보세요."
+    "깊은 숨을 들이마시고, 천천히 내쉬어보세요.",
+    "조금 느려도 괜찮아요. 당신은 이미 충분히 잘하고 있어요.",
+    "오늘 버텨낸 것만으로도, 당신은 정말 대단한 사람이에요.",
+    "쉬어가는 시간도 성장의 일부예요. 멈춘 게 아니라 준비 중인 거예요.",
+    "완벽하지 않아도 괜찮아요. 지금의 당신도 충분히 소중해요.",
+    "조급해하지 않아도 돼요. 당신만의 속도가 있어요.",
+    "작은 한 걸음이라도, 멈추지 않는 당신은 이미 멋져요.",
+    "오늘의 최선이 내일의 자랑이 될 거예요.",
+    "스스로에게 조금 더 친절해도 괜찮아요.",
+    "당신이 버텨온 시간들이 이미 답이에요.",
+    "지금 이 자리에서도, 당신은 계속 성장하고 있어요."
 ];
 
 // 즐겨찾기 데이터 로드
@@ -213,6 +282,7 @@ try {
     console.log('Local Storage not available');
 }
 let showFavoritesOnly = false;
+let activeTag = null;
 
 // Initialize Sound Cards
 // 카드 생성 및 오디오 초기화
@@ -223,6 +293,11 @@ if (soundGrid) {
         card.className = 'w-full sm:w-72 bg-white dark:bg-slate-800 border-2 border-transparent rounded-xl p-6 flex flex-col items-center gap-4 transition-all duration-300 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm';
         card.id = `card-${sound.id}`;
         card.dataset.id = sound.id; // 필터링용
+        
+        const tagsHtml = sound.tags.map(tag => 
+            `<span class="tag-btn text-xs px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-300 transition-colors" data-tag="${tag}">#${translations[currentLang]['tag_' + tag] || tag}</span>`
+        ).join(' ');
+
         card.innerHTML = `
             <div class="w-full flex justify-between items-start">
                 <div class="w-8"></div> <!-- Spacer for centering -->
@@ -232,6 +307,7 @@ if (soundGrid) {
                 </button>
             </div>
             <h3 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="sound_${sound.id}">${translations[currentLang]['sound_' + sound.id]}</h3>
+            <div class="flex gap-2 mb-2 flex-wrap justify-center">${tagsHtml}</div>
             <div class="w-full flex flex-col gap-3 mt-2">
                 <button id="btn-${sound.id}" class="w-full py-2 rounded-lg bg-slate-100 dark:bg-slate-600 hover:bg-blue-500 dark:hover:bg-blue-500 text-slate-700 dark:text-white hover:text-white font-medium transition-colors flex justify-center items-center gap-2"
                     onclick="if(typeof Android !== 'undefined') Android.playAudio('https://asmrspace.shop/sounds/${sound.file}')">
@@ -270,6 +346,13 @@ if (soundGrid) {
         });
         volSlider.addEventListener('input', (e) => gainNode.gain.value = e.target.value);
         favBtn.addEventListener('click', () => toggleFavorite(sound.id, favBtn));
+    });
+
+    soundGrid.addEventListener('click', (e) => {
+        if (e.target.classList.contains('tag-btn')) {
+            const tag = e.target.dataset.tag;
+            filterByTag(tag);
+        }
     });
 }
 
@@ -345,22 +428,49 @@ function toggleFavorite(id, btn) {
     }
     
     // 필터가 켜져있으면 즉시 반영
-    if (showFavoritesOnly) {
-        applyFavoriteFilter();
-    }
+    applyFilters();
 }
 
-// 즐겨찾기 필터 적용
-function applyFavoriteFilter() {
+// 통합 필터 적용 함수
+function applyFilters() {
     const cards = document.querySelectorAll('[id^="card-"]');
     cards.forEach(card => {
-        const id = card.dataset.id;
-        if (showFavoritesOnly && !favorites.includes(id)) {
-            card.classList.add('hidden');
-        } else {
+        const soundId = card.dataset.id;
+        const sound = soundsData.find(s => s.id === soundId);
+        let visible = true;
+
+        // 즐겨찾기 필터 확인
+        if (showFavoritesOnly && !favorites.includes(soundId)) {
+            visible = false;
+        }
+
+        // 태그 필터 확인
+        if (visible && activeTag && !sound.tags.includes(activeTag)) {
+            visible = false;
+        }
+
+        if (visible) {
             card.classList.remove('hidden');
+        } else {
+            card.classList.add('hidden');
         }
     });
+
+    // 태그 버튼 스타일 업데이트
+    document.querySelectorAll('.tag-btn').forEach(btn => {
+        if (btn.dataset.tag === activeTag) {
+            btn.classList.add('bg-blue-500', 'text-white');
+            btn.classList.remove('bg-slate-100', 'dark:bg-slate-700', 'text-slate-600', 'dark:text-slate-300');
+        } else {
+            btn.classList.remove('bg-blue-500', 'text-white');
+            btn.classList.add('bg-slate-100', 'dark:bg-slate-700', 'text-slate-600', 'dark:text-slate-300');
+        }
+    });
+}
+
+function filterByTag(tag) {
+    activeTag = (activeTag === tag) ? null : tag;
+    applyFilters();
 }
 
 if (favFilterBtn) {
@@ -370,7 +480,7 @@ if (favFilterBtn) {
         favFilterBtn.classList.toggle('dark:bg-red-900/30', showFavoritesOnly);
         favFilterBtn.classList.toggle('border-red-200', showFavoritesOnly);
         favFilterBtn.classList.toggle('text-red-500', showFavoritesOnly);
-        applyFavoriteFilter();
+        applyFilters();
     });
 }
 
