@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free ASMR Sounds for Sleep & Focus | 잠 잘 오는 무료 ASMR - asmrspace.shop</title>
-    <meta name="description" content="Free ASMR website for sleep and focus. Listen to rain, fire, typing sounds, and white noise. 잠 잘 오는 무료 ASMR 사이트입니다. 빗소리, 장작불 등 백색소음을 무료로 들어보세요.">
+    <meta name="description" content="Free ASMR service for sleep and focus, available on App and Web. Listen to rain, fire, typing sounds, and white noise. 애플리케이션과 웹에서 즐기는 잠 잘 오는 무료 ASMR입니다. 빗소리, 장작불 등 백색소음을 무료로 들어보세요.">
     <meta name="keywords" content="ASMR, White Noise, Sleep Sounds, Focus Music, Rain Sounds, Fire Sounds, 백색소음, 수면유도, 빗소리, 장작불">
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -49,6 +49,9 @@
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-white min-h-screen flex flex-col transition-colors duration-300">
     <!-- Audio Visualizer Canvas -->
     <canvas id="visualizer" class="fixed bottom-0 left-0 w-full h-64 pointer-events-none z-0 opacity-30"></canvas>
+    
+    <!-- Ambient Light Effect -->
+    <div id="ambient-light" class="fixed inset-0 pointer-events-none z-0 transition-opacity duration-100 ease-out opacity-0"></div>
 
     <header class="p-6 text-center relative z-10">
         <div class="flex justify-end mb-4 sm:absolute sm:top-4 sm:right-4 sm:mb-0 gap-2">
@@ -149,10 +152,33 @@
                 </ul>
                 
                 <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="site_desc">
-                    이 사이트는 사용자에게 무료로 휴식과 집중을 위한 소리를 제공합니다. 
-                    별도의 설치 없이 웹 브라우저에서 바로 이용할 수 있습니다.
+                    이 사이트는 사용자에게 무료로 휴식과 집중을 위한 소리를 제공합니다. 웹사이트와 애플리케이션 어디서든 자유롭게 이용할 수 있습니다.
                 </p>
             </article>
+        </section>
+
+        <!-- Contact Form -->
+        <section id="contact" class="mt-16 max-w-2xl mx-auto px-4 mb-12">
+            <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg">
+                <h2 class="text-2xl font-bold mb-6 text-slate-900 dark:text-white flex items-center gap-2">
+                    <i data-lucide="mail" class="w-6 h-6 text-blue-400"></i>
+                    <span data-i18n="contact_title">ASMR 추가 문의</span>
+                </h2>
+                <form id="contact-form" class="space-y-4" action="https://formspree.io/f/xreqwqpe" method="POST">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" data-i18n="email_label">이메일</label>
+                        <input type="email" name="email" id="contact-email" class="w-full px-4 py-2 rounded-lg bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-400 outline-none transition-all" data-i18n-placeholder="email_placeholder" placeholder="답변 받으실 이메일 주소">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" data-i18n="msg_label">메시지</label>
+                        <textarea name="message" id="contact-msg" rows="4" class="w-full px-4 py-2 rounded-lg bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-400 outline-none transition-all" data-i18n-placeholder="msg_placeholder" placeholder="문의하실 내용을 적어주세요."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                        <span data-i18n="send_btn">보내기</span>
+                    </button>
+                </form>
+            </div>
         </section>
 
     </main>

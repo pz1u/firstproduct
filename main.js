@@ -22,7 +22,7 @@ const translations = {
         // 공통 (Common)
         title: "My ASMR Space",
         subtitle: "나만의 소리로 휴식하세요.",
-        site_desc: "이 사이트는 사용자에게 무료로 휴식과 집중을 위한 소리를 제공합니다. 별도의 설치 없이 웹 브라우저에서 바로 이용할 수 있습니다.",
+        site_desc: "이 사이트는 사용자에게 무료로 휴식과 집중을 위한 소리를 제공합니다. 웹사이트와 애플리케이션 어디서든 자유롭게 이용할 수 있습니다.",
         copyright: "&copy; 2026 My ASMR Space. All rights reserved.",
         
         // 버튼 & 레이블 (Buttons & Labels)
@@ -139,12 +139,12 @@ const translations = {
         guide_meditation_title: "3. 명상과 호흡",
         guide_meditation_desc: "파도 소리나 빗소리는 명상 호흡의 훌륭한 가이드가 됩니다. 파도가 밀려올 때 숨을 들이마시고, 나갈 때 내뱉어보세요. 자연의 리듬에 맞춰 호흡하면 심박수가 안정되고 스트레스가 감소합니다.",
         guide_mobile_title: "📱 모바일 및 오프라인 사용",
-        guide_mobile_desc: "별도의 앱 설치 없이 모바일 웹 브라우저(Chrome, Safari 등)에서 완벽하게 작동합니다. 오디오 파일은 데이터 절약을 위해 최적화되어 있으며, 한 번 로드되면 브라우저 캐시에 저장되어 데이터 소모를 최소화합니다.<br><br><strong>Tip:</strong> 아이폰(iOS) 사용자는 제어 센터에서 백그라운드 재생을 지원합니다. 화면을 끄고 소리만 들으며 배터리를 절약하세요.",
+        guide_mobile_desc: "모바일 애플리케이션과 웹 브라우저(Chrome, Safari 등) 어디서든 완벽하게 작동합니다. 오디오 파일은 데이터 절약을 위해 최적화되어 있으며, 한 번 로드되면 캐시에 저장되어 데이터 소모를 최소화합니다.<br><br><strong>Tip:</strong> 아이폰(iOS) 사용자는 제어 센터에서 백그라운드 재생을 지원합니다. 화면을 끄고 소리만 들으며 배터리를 절약하세요.",
         btn_guide_listen: "나만의 소리 들으러 가기",
 
         // 용어 사전 (Glossary) - 상세 복구됨
         glossary_asmr_title: "ASMR (Autonomous Sensory Meridian Response)",
-        glossary_asmr_desc: "'자율 감각 쾌락 반응'이라고 번역됩니다. 시각적, 청각적, 촉각적 자극에 반응하여 나타나는 심리적 안정감이나 쾌감, 따끔거리는 느낌(Tingle)을 의미합니다.",
+        glossary_asmr_desc: "'자율 감각 쾌락 반응'이라고 번역됩니다. 시각적, 청각적, 촉각적 자극에 반응하여 나타나는 심리적 안정감이나 쾌감, 따끔거리는 느낌(Tingle)을 의미합니다. 주로 수면 유도, 스트레스 해소, 집중력 향상 등을 위해 활용됩니다.",
         glossary_white_title: "백색소음 (White Noise)",
         glossary_white_desc: "넓은 주파수 대역에서 거의 일정한 주파수 스펙트럼을 가지는 신호로, 특정한 청각 패턴을 갖지 않아 귀에 쉽게 익숙해지는 소음입니다.",
         glossary_trigger_title: "트리거 (Trigger)",
@@ -172,8 +172,8 @@ const translations = {
         // FAQ & Privacy & Sitemap
         faq_q1: "Q. 이 사이트는 무료인가요?",
         faq_a1: "네, 100% 무료입니다. 별도의 회원가입 없이 이용 가능합니다.",
-        faq_q2: "Q. 앱(App)으로도 출시되어 있나요?",
-        faq_a2: "현재 별도의 앱 스토어(구글 플레이, 앱스토어) 다운로드 버전은 제공하지 않습니다. 대신 본 사이트는 '웹 앱(Web App)' 기술을 사용하여 모바일 브라우저에서도 앱처럼 부드럽게 작동합니다. 브라우저 메뉴에서 '홈 화면에 추가'를 하시면 앱 아이콘처럼 바탕화면에 두고 편리하게 접속하실 수 있습니다.",
+        faq_q2: "Q. 애플리케이션(App)으로도 출시되어 있나요?",
+        faq_a2: "네, 안드로이드 애플리케이션과 웹 브라우저 모두 지원합니다. 애플리케이션을 설치하여 이용하거나, 별도의 설치 없이 웹에서 바로 이용하실 수도 있습니다.",
         faq_q3: "Q. 오프라인에서도 재생이 가능한가요?",
         faq_a3: "기본적으로 인터넷 연결이 필요합니다. 하지만 웹 브라우저의 캐시 기능을 통해 한 번 재생했던 소리는 일시적으로 데이터 소모 없이 재생될 수 있습니다. 완벽한 오프라인 재생 기능은 추후 업데이트를 통해 지원할 예정입니다.",
         faq_q4: "Q. 소리가 중간에 끊겨요.",
@@ -220,7 +220,7 @@ const translations = {
         // Common
         title: "My ASMR Space",
         subtitle: "Relax with your own sounds.",
-        site_desc: "Free sounds for relaxation and focus. No installation required.",
+        site_desc: "Free sounds for relaxation and focus. Available on both Web and App.",
         copyright: "&copy; 2026 My ASMR Space. All rights reserved.",
         play: "Play",
         stop: "Stop",
@@ -329,12 +329,12 @@ const translations = {
         guide_meditation_title: "3. Meditation and Breathing",
         guide_meditation_desc: "Wave or rain sounds are great guides for meditation breathing. Inhale when the wave comes in, exhale when it goes out. Breathing to the rhythm of nature stabilizes heart rate and reduces stress.",
         guide_mobile_title: "📱 Mobile & Offline Use",
-        guide_mobile_desc: "This site works perfectly on mobile web browsers (Chrome, Safari, etc.) without installing a separate app. Audio files are optimized to save data, and once loaded, sounds are stored in the browser cache to minimize data consumption.<br><br><strong>Tip:</strong> For iPhone (iOS) users, background playback is supported in the Control Center. Turn off the screen and listen to the sound to save battery.",
+        guide_mobile_desc: "Works perfectly on both the mobile app and web browsers (Chrome, Safari, etc.). Audio files are optimized to save data, and once loaded, sounds are stored in the cache to minimize data consumption.<br><br><strong>Tip:</strong> For iPhone (iOS) users, background playback is supported in the Control Center. Turn off the screen and listen to the sound to save battery.",
         btn_guide_listen: "Go listen to my sounds",
 
         // Glossary
         glossary_asmr_title: "ASMR (Autonomous Sensory Meridian Response)",
-        glossary_asmr_desc: "Translated as Autonomous Sensory Meridian Response. It refers to the psychological stability, pleasure, or tingling sensation felt in response to visual, auditory, or tactile stimuli. It is mainly used for insomnia treatment, stress relief, and concentration improvement.",
+        glossary_asmr_desc: "Translated as Autonomous Sensory Meridian Response. It refers to the psychological stability, pleasure, or tingling sensation felt in response to visual, auditory, or tactile stimuli. It is mainly used for sleep induction, stress relief, and concentration improvement.",
         glossary_white_title: "White Noise",
         glossary_white_desc: "A signal with almost constant frequency spectrum over a wide frequency band. It masks annoying ambient noises (masking effect), making it effective for improving concentration and inducing sleep. Examples include rain and wave sounds.",
         glossary_trigger_title: "Trigger",
@@ -361,7 +361,7 @@ const translations = {
         faq_q1: "Q. Is this site free to use?",
         faq_a1: "Yes, it is 100% free. You can use it without signing up.",
         faq_q2: "Q. Is there an app version available?",
-        faq_a2: "Currently, there is no downloadable app on app stores (Google Play or App Store). However, this site uses Web App technology, so it works smoothly like an app on mobile browsers. You can add it to your home screen via your browser menu for quick and convenient access.",
+        faq_a2: "Yes, it is available on both the Android App and Web browsers. You can install the app or use it directly on the web.",
         faq_q3: "Q. Can I play sounds offline?",
         faq_a3: "An internet connection is generally required. However, thanks to browser caching, sounds you have previously played may temporarily work without additional data usage. Full offline playback support is planned in a future update.",
         faq_q4: "Q. The sound keeps stopping or cutting out.",
@@ -407,7 +407,7 @@ const translations = {
     ja: {
         title: "My ASMR Space",
         subtitle: "自分だけの音でリラックス。",
-        site_desc: "リラックスと集中のための無料サウンドサイトです。",
+        site_desc: "リラックスと集中のための無料サウンドサービスです。ウェブとアプリの両方でご利用いただけます。",
         copyright: "&copy; 2026 My ASMR Space. All rights reserved.",
         play: "再生",
         stop: "停止",
@@ -510,11 +510,11 @@ const translations = {
         guide_meditation_title: "3. 瞑想と呼吸",
         guide_meditation_desc: "波の音や雨音は瞑想呼吸の良いガイドになります。波が押し寄せるときに息を吸い、引くときに吐いてみてください。自然の音に合わせて呼吸すると、心拍数が安定しストレスが減少します。",
         guide_mobile_title: "📱 モバイルおよびオフライン使用",
-        guide_mobile_desc: "別途アプリをインストールすることなく、モバイルウェブブラウザ（Chrome、Safariなど）で完璧に動作します。オーディオファイルはデータ節約のために最適化されており、一度読み込まれるとブラウザのキャッシュに保存され、データ消費を最小限に抑えます。<br><br><strong>ヒント：</strong> iPhone（iOS）ユーザーは、コントロールセンターでバックグラウンド再生が可能です。画面をオフにして音だけを聞き、バッテリーを節約してください。",
+        guide_mobile_desc: "モバイルアプリとウェブブラウザ（Chrome、Safariなど）の両方で完璧に動作します。オーディオファイルはデータ節約のために最適化されており、一度読み込まれるとキャッシュに保存され、データ消費を最小限に抑えます。<br><br><strong>ヒント：</strong> iPhone（iOS）ユーザーは、コントロールセンターでバックグラウンド再生が可能です。画面をオフにして音だけを聞き、バッテリーを節約してください。",
         btn_guide_listen: "自分だけの音を聴きに行く",
 
         glossary_asmr_title: "ASMR (Autonomous Sensory Meridian Response)",
-        glossary_asmr_desc: "自律感覚絶頂反応と訳されます。視覚、聴覚、触覚への刺激によって感じる、心理的な安定感や快感、ぞくぞくする感じ（ティングル）を意味します。主に不眠症治療、ストレス解消、集中力向上などのために活用されます。",
+        glossary_asmr_desc: "自律感覚絶頂反応と訳されます。視覚、聴覚、触覚への刺激によって感じる、心理的な安定感や快感、ぞくぞくする感じ（ティングル）を意味します。主に睡眠導入、ストレス解消、集中力向上などのために活用されます。",
         glossary_white_title: "ホワイトノイズ (White Noise)",
         glossary_white_desc: "広い周波数帯域でほぼ一定の周波数スペクトルを持つ信号で、特定の聴覚パターンを持たず耳に馴染みやすい騒音です。雨音、波の音などがこれに該当し、周囲の騒音を覆う「マスキング効果」があり、集中力向上や睡眠誘導に効果的です。",
         glossary_trigger_title: "トリガー (Trigger)",
@@ -540,7 +540,7 @@ const translations = {
         faq_q1: "Q. 無料ですか？",
         faq_a1: "はい、My ASMR Spaceのすべての機能とサウンドは100％無料で提供されます。会員登録や決済なしでいつでも自由にご利用いただけます。サイト運営のために最小限の広告が含まれる場合がありますが、ユーザー体験を損なわない範囲で運営されます。",
         faq_q2: "Q. アプリはありますか？",
-        faq_a2: "現在、別途アプリストア（Google Play、App Store）でのダウンロード版は提供しておりません。代わりに、当サイトは「ウェブアプリ（Web App）」技術を使用しており、モバイルブラウザでもアプリのようにスムーズに動作します。ブラウザメニューから「ホーム画面に追加」を行うと、アプリアイコンのようにデスクトップに置いて便利にアクセスできます。",
+        faq_a2: "はい、Androidアプリとウェブブラウザの両方に対応しています。アプリをインストールするか、ウェブで直接利用できます。",
         faq_q3: "Q. オフライン再生は？",
         faq_a3: "基本的にインターネット接続が必要です。ただし、ウェブブラウザのキャッシュ機能により、一度再生した音は一時的にデータ消費なしで再生される場合があります。完全なオフライン再生機能は、今後のアップデートでサポートする予定です。",
         faq_q4: "Q. 音が途切れます。",
@@ -585,7 +585,7 @@ const translations = {
     zh: {
         title: "My ASMR Space",
         subtitle: "用属于你的声音放松。",
-        site_desc: "免费提供放松和集中的声音。无需安装。",
+        site_desc: "免费提供放松和集中的声音。支持 App 和 Web。",
         copyright: "&copy; 2026 My ASMR Space. All rights reserved.",
         play: "播放",
         stop: "停止",
@@ -688,11 +688,11 @@ const translations = {
         guide_meditation_title: "3. 冥想与呼吸",
         guide_meditation_desc: "海浪声或雨声是冥想呼吸的好向导。海浪涌来时吸气，退去时呼气。跟随自然的声音呼吸可以稳定心率并减轻压力。",
         guide_mobile_title: "📱 移动和离线使用",
-        guide_mobile_desc: "无需安装单独的应用程序，在移动网络浏览器（Chrome、Safari等）上即可完美运行。音频文件经过优化以节省数据，加载一次后，声音将存储在浏览器缓存中，以最大限度地减少数据消耗。<br><br><strong>提示：</strong> iPhone (iOS) 用户可以在控制中心使用后台播放。关闭屏幕只听声音以节省电池。",
+        guide_mobile_desc: "在移动应用程序和 Web 浏览器（Chrome、Safari等）上均可完美运行。音频文件经过优化以节省数据，加载一次后，声音将存储在缓存中，以最大限度地减少数据消耗。<br><br><strong>提示：</strong> iPhone (iOS) 用户可以在控制中心使用后台播放。关闭屏幕只听声音以节省电池。",
         btn_guide_listen: "去听属于我的声音",
 
         glossary_asmr_title: "ASMR (自发性知觉经络反应)",
-        glossary_asmr_desc: "翻译为自发性知觉经络反应。指对视觉、听觉、触觉刺激产生反应而出现的心理稳定感或愉悦感、刺痛感（Tingle）。主要用于治疗失眠、缓解压力、提高注意力等。",
+        glossary_asmr_desc: "翻译为自发性知觉经络反应。指对视觉、听觉、触觉刺激产生反应而出现的心理稳定感或愉悦感、刺痛感（Tingle）。主要用于辅助睡眠、缓解压力、提高注意力等。",
         glossary_white_title: "白噪音 (White Noise)",
         glossary_white_desc: "在宽频带内具有几乎恒定频率谱的信号，没有特定的听觉模式，耳朵容易适应。雨声、海浪声等属于此类，具有掩盖周围噪音的“掩蔽效应”，对提高注意力和诱导睡眠有效。",
         glossary_trigger_title: "触发器 (Trigger)",
@@ -718,7 +718,7 @@ const translations = {
         faq_q1: "Q. 免费吗？",
         faq_a1: "是的，My ASMR Space 的所有功能和声音都是 100% 免费提供的。无需注册或付款即可随时自由使用。为了运营网站，可能会包含最少的广告，但不会影响用户体验。",
         faq_q2: "Q. 有应用程序吗？",
-        faq_a2: "目前不提供单独的应用商店（Google Play、App Store）下载版本。相反，本网站使用“Web App”技术，在移动浏览器中也能像应用程序一样流畅运行。如果在浏览器菜单中选择“添加到主屏幕”，您可以像应用程序图标一样将其放在桌面上，方便访问。",
+        faq_a2: "是的，支持 Android 应用程序和 Web 浏览器。您可以安装应用程序或直接在 Web 上使用。",
         faq_q3: "Q. 离线播放？",
         faq_a3: "基本上需要互联网连接。但是，通过 Web 浏览器的缓存功能，播放过的声音可以暂时在不消耗数据的情况下播放。完整的离线播放功能将在未来的更新中支持。",
         faq_q4: "Q. 声音中断。",
@@ -763,7 +763,7 @@ const translations = {
     es: {
         title: "My ASMR Space",
         subtitle: "Relájate con tus propios sonidos.",
-        site_desc: "Sonidos gratuitos para relajación y concentración.",
+        site_desc: "Sonidos gratuitos para relajación y concentración. Disponible en Web y App.",
         copyright: "&copy; 2026 My ASMR Space. All rights reserved.",
         play: "Reprod.",
         stop: "Parar",
@@ -866,11 +866,11 @@ const translations = {
         guide_meditation_title: "3. Meditación y Respiración",
         guide_meditation_desc: "Los sonidos de olas o lluvia son excelentes guías para la respiración en meditación. Inhala cuando viene la ola, exhala cuando se va. Respirar al ritmo de la naturaleza estabiliza el ritmo cardíaco y reduce el estrés.",
         guide_mobile_title: "📱 Uso móvil y sin conexión",
-        guide_mobile_desc: "Este sitio funciona perfectamente en navegadores web móviles (Chrome, Safari, etc.) sin instalar una aplicación separada. Los archivos de audio están optimizados para ahorrar datos y, una vez cargados, los sonidos se almacenan en la caché del navegador para minimizar el consumo de datos.<br><br><strong>Consejo:</strong> Para los usuarios de iPhone (iOS), la reproducción en segundo plano es compatible en el Centro de control. Apaga la pantalla y escucha el sonido para ahorrar batería.",
+        guide_mobile_desc: "Funciona perfectamente tanto en la aplicación móvil como en navegadores web (Chrome, Safari, etc.). Los archivos de audio están optimizados para ahorrar datos y, una vez cargados, los sonidos se almacenan en la caché para minimizar el consumo de datos.<br><br><strong>Consejo:</strong> Para los usuarios de iPhone (iOS), la reproducción en segundo plano es compatible en el Centro de control. Apaga la pantalla y escucha el sonido para ahorrar batería.",
         btn_guide_listen: "Ir a escuchar mis sonidos",
 
         glossary_asmr_title: "ASMR (Respuesta Sensorial Meridiana Autónoma)",
-        glossary_asmr_desc: "Se traduce como Respuesta Sensorial Meridiana Autónoma. Se refiere a la estabilidad psicológica, placer o sensación de hormigueo que se siente en respuesta a estímulos visuales, auditivos o táctiles. Se utiliza principalmente para el tratamiento del insomnio, alivio del estrés y mejora de la concentración.",
+        glossary_asmr_desc: "Se traduce como Respuesta Sensorial Meridiana Autónoma. Se refiere a la estabilidad psicológica, placer o sensación de hormigueo que se siente en respuesta a estímulos visuales, auditivos o táctiles. Se utiliza principalmente para la inducción del sueño, alivio del estrés y mejora de la concentración.",
         glossary_white_title: "Ruido Blanco",
         glossary_white_desc: "Una señal con un espectro de frecuencia casi constante en una banda ancha. Enmascara los ruidos ambientales molestos (efecto de enmascaramiento), lo que lo hace efectivo para mejorar la concentración e inducir el sueño. Ejemplos incluyen sonidos de lluvia y olas.",
         glossary_trigger_title: "Desencadenante (Trigger)",
@@ -896,7 +896,7 @@ const translations = {
         faq_q1: "Q. ¿Es gratis?",
         faq_a1: "Sí, todas las funciones y sonidos de My ASMR Space se proporcionan 100% gratis. Puede utilizarlos libremente en cualquier momento sin registrarse ni realizar pagos. Se pueden incluir anuncios mínimos para operar el sitio, pero no interferirán con su experiencia de usuario.",
         faq_q2: "Q. ¿Hay una app?",
-        faq_a2: "Actualmente no proporcionamos una versión de descarga separada en la tienda de aplicaciones (Google Play, App Store). En cambio, este sitio utiliza tecnología 'Web App' para funcionar sin problemas como una aplicación en navegadores móviles. Si utiliza 'Agregar a la pantalla de inicio' desde el menú de su navegador, puede colocarlo en su escritorio como un icono de aplicación para un fácil acceso.",
+        faq_a2: "Sí, está disponible tanto en la aplicación de Android como en navegadores web. Puede instalar la aplicación o usarla directamente en la web.",
         faq_q3: "Q. ¿Reproducción offline?",
         faq_a3: "Básicamente, se requiere una conexión a Internet. Sin embargo, a través de la función de caché del navegador web, los sonidos que se han reproducido una vez se pueden reproducir temporalmente sin consumo de datos. La funcionalidad completa de reproducción sin conexión se admitirá en una actualización futura.",
         faq_q4: "Q. El sonido se corta.",
@@ -1256,6 +1256,7 @@ function updateQuote() {
 
 function initVisualizer() {
     const canvas = document.getElementById('visualizer');
+    const ambientLight = document.getElementById('ambient-light');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const bufferLength = analyser.frequencyBinCount;
@@ -1273,12 +1274,14 @@ function initVisualizer() {
         analyser.getByteFrequencyData(dataArray);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        let sum = 0;
         const barWidth = (canvas.width / bufferLength) * 2.5;
         let barHeight;
         let x = 0;
 
         for (let i = 0; i < bufferLength; i++) {
             barHeight = dataArray[i] / 2;
+            sum += dataArray[i]; // 소리 크기 합산
             const isDark = document.documentElement.classList.contains('dark');
             const r = barHeight + (25 * (i / bufferLength));
             const g = 250 * (i / bufferLength);
@@ -1286,6 +1289,14 @@ function initVisualizer() {
             ctx.fillStyle = isDark ? `rgba(${r},${g},${b}, 0.5)` : `rgba(${r},${g},${b}, 0.3)`;
             ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
             x += barWidth + 1;
+        }
+
+        // 앰비언트 라이트 효과 업데이트
+        if (ambientLight) {
+            const average = sum / bufferLength;
+            // 평균 볼륨(0~255)을 투명도(0~1)로 변환 (감도 조절)
+            const opacity = Math.min(average / 120, 0.8); 
+            ambientLight.style.opacity = opacity;
         }
     }
     draw();
