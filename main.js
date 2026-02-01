@@ -1135,7 +1135,7 @@ function initSoundCards() {
     soundsData.forEach(sound => {
         const card = document.createElement('div');
         const isFav = appState.favorites.includes(sound.id);
-        card.className = 'w-full sm:w-72 bg-white dark:bg-slate-800 border-2 border-transparent rounded-xl p-6 flex flex-col items-center gap-4 transition-all duration-300 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm';
+        card.className = 'w-[calc(50%-0.5rem)] sm:w-72 bg-white dark:bg-slate-800 border-2 border-transparent rounded-xl p-4 sm:p-6 flex flex-col items-center gap-2 sm:gap-4 transition-all duration-300 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm';
         card.id = `card-${sound.id}`;
         card.dataset.id = sound.id; 
         
@@ -1146,16 +1146,16 @@ function initSoundCards() {
         card.innerHTML = `
             <div class="w-full flex justify-between items-start">
                 <div class="w-8"></div>
-                <div class="text-blue-400 mb-2"><i data-lucide="${sound.icon}" width="48" height="48"></i></div>
+                <div class="text-blue-400 mb-2"><i data-lucide="${sound.icon}" class="w-8 h-8 sm:w-12 sm:h-12"></i></div>
                 <button class="fav-btn w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors ${isFav ? 'text-red-500' : 'text-slate-300 dark:text-slate-600'}" data-id="${sound.id}">
                     <i data-lucide="heart" class="w-5 h-5 ${isFav ? 'fill-current' : ''}"></i>
                 </button>
             </div>
-            <h3 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="sound_${sound.id}">${translations[appState.currentLang]['sound_' + sound.id]}</h3>
+            <h3 class="text-base sm:text-xl font-bold text-slate-900 dark:text-white" data-i18n="sound_${sound.id}">${translations[appState.currentLang]['sound_' + sound.id]}</h3>
             <div class="flex gap-2 mb-2 flex-wrap justify-center">${tagsHtml}</div>
             <div class="w-full flex flex-col gap-3 mt-2">
                 <button id="btn-${sound.id}" class="w-full py-2 rounded-lg bg-slate-100 dark:bg-slate-600 hover:bg-blue-500 dark:hover:bg-blue-500 text-slate-700 dark:text-white hover:text-white font-medium transition-colors flex justify-center items-center gap-2"
-                    onclick="if(typeof Android !== 'undefined') Android.playAudio('https://asmrspace.shop/sounds/${sound.file}')">
+                    onclick="if(typeof Android !== 'undefined') Android.playAudio('https://asmrspace.shop/sounds/${sound.file}', '${translations[appState.currentLang]['sound_' + sound.id]}')">
                     <i data-lucide="play" width="16"></i> <span data-i18n="play">${translations[appState.currentLang].play}</span>
                 </button>
             </div>`;
@@ -1793,7 +1793,8 @@ function updateUI(id, isPlaying) {
         btn.className = 'w-full py-2 rounded-lg bg-slate-100 dark:bg-slate-600 hover:bg-blue-500 dark:hover:bg-blue-500 text-slate-700 dark:text-white hover:text-white font-medium transition-colors flex justify-center items-center gap-2';
         btn.innerHTML = `<i data-lucide="${icon}" width="16"></i> <span data-i18n="${textKey}">${translations[appState.currentLang][textKey]}</span>`;
         if (sound) {
-            btn.setAttribute('onclick', `if(typeof Android !== 'undefined') Android.playAudio('https://asmrspace.shop/sounds/${sound.file}')`);
+            const name = translations[appState.currentLang]['sound_' + sound.id];
+            btn.setAttribute('onclick', `if(typeof Android !== 'undefined') Android.playAudio('https://asmrspace.shop/sounds/${sound.file}', '${name}')`);
         }
         card.classList.remove('card-active');
     }
@@ -1966,6 +1967,16 @@ function updateQuote() {
     }
 }
 
+function updateAndroidPlaylist() {
+    if (typeof Android !== 'undefined' && typeof Android.updatePlaylist === 'function') {
+        const playlist = soundsData.map(sound => ({
+            url: `https://asmrspace.shop/sounds/${sound.file}`,
+            title: translations[appState.currentLang]['sound_' + sound.id] || sound.id
+        }));
+        Android.updatePlaylist(JSON.stringify(playlist));
+    }
+}
+
 function updateLanguage() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -2006,6 +2017,7 @@ function updateLanguage() {
     if (customMixGrid) {
         renderCustomMixes();
     }
+    updateAndroidPlaylist();
 }
 
 // 1. 초기화 순서 & 3. 이벤트 리스너 중복 방지
