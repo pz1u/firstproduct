@@ -1155,7 +1155,7 @@ function initSoundCards() {
             <div class="flex gap-2 mb-2 flex-wrap justify-center">${tagsHtml}</div>
             <div class="w-full flex flex-col gap-3 mt-2">
                 <button id="btn-${sound.id}" class="w-full py-2 rounded-lg bg-slate-100 dark:bg-slate-600 hover:bg-blue-500 dark:hover:bg-blue-500 text-slate-700 dark:text-white hover:text-white font-medium transition-colors flex justify-center items-center gap-2"
-                    onclick="if(typeof Android !== 'undefined') Android.playAudio('https://asmrspace.shop/sounds/${sound.file}', '${translations[appState.currentLang]['sound_' + sound.id]}')">
+                    onclick="if(typeof Android !== 'undefined') Android.addSound('https://asmrspace.shop/sounds/${sound.file}', '${translations[appState.currentLang]['sound_' + sound.id]}')">
                     <i data-lucide="play" width="16"></i> <span data-i18n="play">${translations[appState.currentLang].play}</span>
                 </button>
             </div>`;
@@ -1681,6 +1681,7 @@ function updatePlayerBar() {
 }
 
 function stopAllSounds() {
+    if (typeof Android !== 'undefined') Android.pauseAll();
     // 모든 활성 사운드 정지 및 목록 초기화
     [...appState.activeSounds].forEach(id => {
         const player = audioPlayers[id];
@@ -1752,6 +1753,14 @@ async function toggleSound(id) {
 async function toggleGlobalPlayback() {
     const isAnyPlaying = appState.activeSounds.some(id => audioPlayers[id] && audioPlayers[id].isPlaying);
     
+    if (typeof Android !== 'undefined') {
+        if (isAnyPlaying) {
+            Android.pauseAll();
+        } else {
+            Android.resumeAll();
+        }
+    }
+
     if (isAnyPlaying) {
         // 일시정지: 소리는 멈추지만 activeSounds 목록은 유지
         appState.activeSounds.forEach(id => {
@@ -1787,14 +1796,16 @@ function updateUI(id, isPlaying) {
     if (isPlaying) {
         btn.className = 'w-full py-2 rounded-lg bg-sky-400 hover:bg-sky-500 text-white font-medium transition-colors flex justify-center items-center gap-2';
         btn.innerHTML = `<i data-lucide="${icon}" width="16"></i> <span data-i18n="${textKey}">${translations[appState.currentLang][textKey]}</span>`;
-        btn.setAttribute('onclick', "if(typeof Android !== 'undefined') Android.pauseAudio()");
+        if (sound) {
+            btn.setAttribute('onclick', `if(typeof Android !== 'undefined') Android.removeSound('https://asmrspace.shop/sounds/${sound.file}')`);
+        }
         card.classList.add('card-active');
     } else {
         btn.className = 'w-full py-2 rounded-lg bg-slate-100 dark:bg-slate-600 hover:bg-blue-500 dark:hover:bg-blue-500 text-slate-700 dark:text-white hover:text-white font-medium transition-colors flex justify-center items-center gap-2';
         btn.innerHTML = `<i data-lucide="${icon}" width="16"></i> <span data-i18n="${textKey}">${translations[appState.currentLang][textKey]}</span>`;
         if (sound) {
             const name = translations[appState.currentLang]['sound_' + sound.id];
-            btn.setAttribute('onclick', `if(typeof Android !== 'undefined') Android.playAudio('https://asmrspace.shop/sounds/${sound.file}', '${name}')`);
+            btn.setAttribute('onclick', `if(typeof Android !== 'undefined') Android.addSound('https://asmrspace.shop/sounds/${sound.file}', '${name}')`);
         }
         card.classList.remove('card-active');
     }
