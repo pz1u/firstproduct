@@ -1510,7 +1510,7 @@ function updatePlayerBar() {
                 
                 if (player && sound) {
                     const row = document.createElement('div');
-                    row.className = 'flex items-center justify-between gap-4 p-3 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-xl border border-white/20 dark:border-slate-700/30 shadow-sm w-full transition-all hover:bg-white/60 dark:hover:bg-slate-800/60';
+                    row.className = 'flex items-center justify-between gap-2 sm:gap-4 p-3 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-xl border border-white/20 dark:border-slate-700/30 shadow-sm w-full transition-all hover:bg-white/60 dark:hover:bg-slate-800/60';
                     
                     // Info (Icon + Name)
                     const infoDiv = document.createElement('div');
@@ -1523,7 +1523,7 @@ function updatePlayerBar() {
 
                     // Controls (Volume + Toggle + Close)
                     const controlsDiv = document.createElement('div');
-                    controlsDiv.className = 'flex items-center gap-3 shrink-0';
+                    controlsDiv.className = 'flex items-center gap-2 sm:gap-3 shrink-0';
 
                     // Volume Slider
                     const volInput = document.createElement('input');
@@ -1533,7 +1533,7 @@ function updatePlayerBar() {
                     volInput.step = '0.01';
                     volInput.value = player.gainNode.gain.value;
                     volInput.title = `${Math.round(player.gainNode.gain.value * 100)}%`;
-                    volInput.className = 'w-16 sm:w-24 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-600 accent-blue-500';
+                    volInput.className = 'w-12 sm:w-24 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-600 accent-blue-500';
                     volInput.addEventListener('input', (e) => {
                         const val = parseFloat(e.target.value);
                         player.gainNode.gain.value = val;
