@@ -1084,6 +1084,35 @@ const safeStorage = {
     }
 };
 
+// 세션 저장 및 복원 (Session Persistence)
+function saveSession() {
+    const session = {
+        activeSounds: appState.activeSounds,
+        volumes: {}
+    };
+    appState.activeSounds.forEach(id => {
+        if (audioPlayers[id]) {
+            session.volumes[id] = audioPlayers[id].gainNode.gain.value;
+        }
+    });
+    safeStorage.set('asmr_session', session);
+}
+
+function restoreSession() {
+    const session = safeStorage.get('asmr_session', null);
+    if (session && session.activeSounds && Array.isArray(session.activeSounds)) {
+        appState.activeSounds = session.activeSounds.filter(id => soundsData.some(s => s.id === id));
+        
+        appState.activeSounds.forEach(id => {
+            const player = audioPlayers[id];
+            if (player && session.volumes && typeof session.volumes[id] === 'number') {
+                player.gainNode.gain.value = session.volumes[id];
+            }
+        });
+        updatePlayerBar();
+    }
+}
+
 // 초기 상태 로드
 let savedLang = safeStorage.getStr('asmr_lang', null);
 if (!savedLang) {
@@ -1135,7 +1164,7 @@ function initSoundCards() {
         const audio = new Audio(sound.file);
         audio.crossOrigin = "anonymous";
         audio.loop = true;
-        audio.preload = 'metadata';
+        audio.preload = 'none';
         
         const track = audioCtx.createMediaElementSource(audio);
         const gainNode = audioCtx.createGain();
@@ -1552,6 +1581,7 @@ function createPlayerRow(id, isMobile) {
         const otherSlider = document.getElementById(`vol-${otherType}-${id}`);
         if (otherSlider) otherSlider.value = val;
     });
+    volInput.addEventListener('change', saveSession);
 
     // PC only controls (Mobile has global controls at bottom)
     if (!isMobile) {
@@ -1596,6 +1626,7 @@ function createPlayerRow(id, isMobile) {
         const idx = appState.activeSounds.indexOf(id);
         if (idx !== -1) appState.activeSounds.splice(idx, 1);
         updateUI(id, false);
+        saveSession();
     };
 
     row.appendChild(infoDiv);
@@ -1661,6 +1692,7 @@ function stopAllSounds() {
     });
     appState.activeSounds = [];
     updatePlayerBar();
+    saveSession();
 }
 
 async function playMix(mix) {
@@ -1690,15 +1722,14 @@ async function playMix(mix) {
     });
 
     await Promise.all(promises);
+    saveSession();
 }
 
 async function toggleSound(id) {
     const player = audioPlayers[id];
     
     if (player.isPlaying) {
-        // 재생 중이면 정지하고 activeSounds에서 제거
-        const idx = appState.activeSounds.indexOf(id);
-        if (idx !== -1) appState.activeSounds.splice(idx, 1);
+        // 재생 중이면 정지 (목록에서는 유지, X 버튼으로만 제거)
         
         player.audio.pause();
         player.isPlaying = false;
@@ -1715,6 +1746,7 @@ async function toggleSound(id) {
         }
     }
     lucide.createIcons();
+    saveSession();
 }
 
 async function toggleGlobalPlayback() {
@@ -1996,6 +2028,7 @@ function init() {
     // 홈 페이지 전용 초기화
     if (soundGrid) {
         initSoundCards();
+        restoreSession();
     }
     
     // 2. Null 체크 (Event Listeners)
