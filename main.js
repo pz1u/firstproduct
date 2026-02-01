@@ -1570,6 +1570,26 @@ function createPlayerRow(id, isMobile) {
     // Unique ID for syncing
     volInput.id = `vol-${isMobile ? 'mobile' : 'pc'}-${id}`;
 
+    const handleToggle = () => {
+        if (player.isPlaying) {
+            // ▼ 안드로이드 앱에 개별 정지 신호 전송
+            if (window.Android && window.Android.removeAudio) {
+                window.Android.removeAudio(`https://asmrspace.shop/sounds/${sound.file}`);
+            }
+            player.audio.pause();
+            player.isPlaying = false;
+        } else {
+            // ▼ 안드로이드 앱에 개별 재생 신호 전송
+            if (window.Android && window.Android.playAudio) {
+                window.Android.playAudio(`https://asmrspace.shop/sounds/${sound.file}`, name);
+            }
+            player.audio.play();
+            player.isPlaying = true;
+        }
+        updateUI(id, player.isPlaying);
+        saveSession();
+    };
+
     volInput.addEventListener('input', (e) => {
         const val = parseFloat(e.target.value);
         player.gainNode.gain.value = val;
@@ -1580,8 +1600,10 @@ function createPlayerRow(id, isMobile) {
         const otherSlider = document.getElementById(`vol-${otherType}-${id}`);
         if (otherSlider) otherSlider.value = val;
 
-        if (typeof Android !== 'undefined' && typeof Android.setVolume === 'function') {
-            Android.setVolume(`https://asmrspace.shop/sounds/${sound.file}`, val);
+        // ▼ 안드로이드 앱에 개별 볼륨 신호 전송
+        if (window.Android && window.Android.setVolume) {
+            const soundFileUrl = `https://asmrspace.shop/sounds/${sound.file}`;
+            window.Android.setVolume(soundFileUrl, val);
         }
     });
     volInput.addEventListener('change', saveSession);
@@ -1592,7 +1614,7 @@ function createPlayerRow(id, isMobile) {
         const toggleBtn = document.createElement('button');
         toggleBtn.className = 'p-1 text-slate-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 transition-colors shrink-0';
         toggleBtn.innerHTML = `<i data-lucide="${player.isPlaying ? 'pause' : 'play'}" class="w-4 h-4 fill-current"></i>`;
-        toggleBtn.onclick = () => toggleSound(id);
+        toggleBtn.onclick = handleToggle;
         controlsDiv.appendChild(volInput);
         controlsDiv.appendChild(toggleBtn);
     } else {
@@ -1613,7 +1635,7 @@ function createPlayerRow(id, isMobile) {
         const toggleBtn = document.createElement('button');
         toggleBtn.className = 'p-1 text-slate-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 transition-colors shrink-0';
         toggleBtn.innerHTML = `<i data-lucide="${player.isPlaying ? 'pause' : 'play'}" class="w-4 h-4 fill-current"></i>`;
-        toggleBtn.onclick = () => toggleSound(id);
+        toggleBtn.onclick = handleToggle;
         controlsDiv.appendChild(toggleBtn);
     }
 
