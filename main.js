@@ -1574,14 +1574,14 @@ function createPlayerRow(id, isMobile) {
         if (player.isPlaying) {
             // ▼ 안드로이드 앱에 개별 정지 신호 전송
             if (window.Android && window.Android.removeAudio) {
-                window.Android.removeAudio(`https://asmrspace.shop/sound/${sound.file}`);
+                window.Android.removeAudio(`https://asmrspace.shop/${sound.file}`);
             }
             player.audio.pause();
             player.isPlaying = false;
         } else {
             // ▼ 안드로이드 앱에 개별 재생 신호 전송
             if (window.Android && window.Android.playAudio) {
-                window.Android.playAudio(`https://asmrspace.shop/sound/${sound.file}`, name);
+                window.Android.playAudio(`https://asmrspace.shop/${sound.file}`, name);
             }
             player.audio.play();
             player.isPlaying = true;
@@ -1762,7 +1762,7 @@ async function playMix(mix) {
 async function toggleSound(id) {
     const player = audioPlayers[id];
     const sound = soundsData.find(s => s.id === id);
-    const url = `https://asmrspace.shop/sound/${sound.file}`;
+    const url = `https://asmrspace.shop/${sound.file}`;
     
     if (player.isPlaying) {
         // 재생 중이면 정지 (목록에서는 유지, X 버튼으로만 제거)
@@ -2030,7 +2030,7 @@ function updateQuote() {
 function updateAndroidPlaylist() {
     if (typeof Android !== 'undefined' && typeof Android.updatePlaylist === 'function') {
         const playlist = soundsData.map(sound => ({
-            url: `https://asmrspace.shop/sound/${sound.file}`,
+            url: `https://asmrspace.shop/${sound.file}`,
             title: translations[appState.currentLang]['sound_' + sound.id] || sound.id
         }));
         Android.updatePlaylist(JSON.stringify(playlist));
