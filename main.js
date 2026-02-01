@@ -1510,20 +1510,20 @@ function updatePlayerBar() {
                 
                 if (player && sound) {
                     const row = document.createElement('div');
-                    row.className = 'flex items-center justify-between gap-2 sm:gap-4 p-3 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-xl border border-white/20 dark:border-slate-700/30 shadow-sm w-full transition-all hover:bg-white/60 dark:hover:bg-slate-800/60';
+                    row.className = 'flex flex-wrap sm:flex-nowrap items-center justify-between gap-x-2 gap-y-3 sm:gap-4 p-3 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-xl border border-white/20 dark:border-slate-700/30 shadow-sm w-full transition-all hover:bg-white/60 dark:hover:bg-slate-800/60';
                     
                     // Info (Icon + Name)
                     const infoDiv = document.createElement('div');
-                    infoDiv.className = 'flex items-center gap-3 overflow-hidden flex-1 min-w-0';
+                    infoDiv.className = 'flex items-center gap-3 overflow-hidden flex-1 min-w-0 order-1';
                     
                     infoDiv.innerHTML = `
                         <i data-lucide="${sound.icon}" class="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0"></i>
                         <span class="text-sm font-medium text-slate-700 dark:text-slate-200 truncate">${name}</span>
                     `;
 
-                    // Controls (Volume + Toggle + Close)
+                    // Controls (Volume + Toggle + Heart)
                     const controlsDiv = document.createElement('div');
-                    controlsDiv.className = 'flex items-center gap-2 sm:gap-3 shrink-0';
+                    controlsDiv.className = 'flex items-center gap-3 w-full sm:w-auto sm:shrink-0 order-3 sm:order-2';
 
                     // Volume Slider
                     const volInput = document.createElement('input');
@@ -1533,7 +1533,7 @@ function updatePlayerBar() {
                     volInput.step = '0.01';
                     volInput.value = player.gainNode.gain.value;
                     volInput.title = `${Math.round(player.gainNode.gain.value * 100)}%`;
-                    volInput.className = 'w-12 sm:w-24 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-600 accent-blue-500';
+                    volInput.className = 'flex-1 sm:flex-none sm:w-24 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-600 accent-blue-500';
                     volInput.addEventListener('input', (e) => {
                         const val = parseFloat(e.target.value);
                         player.gainNode.gain.value = val;
@@ -1546,7 +1546,7 @@ function updatePlayerBar() {
 
                     // Play/Pause Button (Individual)
                     const toggleBtn = document.createElement('button');
-                    toggleBtn.className = 'p-1 text-slate-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 transition-colors';
+                    toggleBtn.className = 'p-1 text-slate-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 transition-colors shrink-0';
                     toggleBtn.innerHTML = `<i data-lucide="${player.isPlaying ? 'pause' : 'play'}" class="w-4 h-4 fill-current"></i>`;
                     toggleBtn.onclick = async () => {
                         if (player.isPlaying) {
@@ -1565,14 +1565,14 @@ function updatePlayerBar() {
                     // Favorite Button (Individual)
                     const isFav = appState.favorites.includes(id);
                     const favBtn = document.createElement('button');
-                    favBtn.className = `player-fav-btn p-1 transition-colors ${isFav ? 'text-red-500' : 'text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400'}`;
+                    favBtn.className = `player-fav-btn p-1 transition-colors shrink-0 ${isFav ? 'text-red-500' : 'text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400'}`;
                     favBtn.dataset.id = id;
                     favBtn.innerHTML = `<i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-current' : ''}"></i>`;
                     favBtn.onclick = () => toggleFavorite(id);
 
                     // Close Button (Individual)
                     const closeBtn = document.createElement('button');
-                    closeBtn.className = 'p-1 text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400 transition-colors';
+                    closeBtn.className = 'p-1 text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400 transition-colors order-2 sm:order-3 shrink-0';
                     closeBtn.innerHTML = `<i data-lucide="x" class="w-4 h-4"></i>`;
                     closeBtn.onclick = () => {
                         player.audio.pause();
@@ -1585,10 +1585,10 @@ function updatePlayerBar() {
                     controlsDiv.appendChild(volInput);
                     controlsDiv.appendChild(toggleBtn);
                     controlsDiv.appendChild(favBtn);
-                    controlsDiv.appendChild(closeBtn);
                     
                     row.appendChild(infoDiv);
                     row.appendChild(controlsDiv);
+                    row.appendChild(closeBtn);
                     playerBarList.appendChild(row);
                 }
             });
