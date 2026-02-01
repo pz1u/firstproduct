@@ -1907,7 +1907,11 @@ if (favFilterBtn) {
         favFilterBtn.classList.toggle('bg-red-50', appState.showFavoritesOnly);
         favFilterBtn.classList.toggle('dark:bg-red-900/30', appState.showFavoritesOnly);
         favFilterBtn.classList.toggle('border-red-200', appState.showFavoritesOnly);
+        favFilterBtn.classList.toggle('dark:border-red-900', appState.showFavoritesOnly);
         favFilterBtn.classList.toggle('text-red-500', appState.showFavoritesOnly);
+        favFilterBtn.classList.toggle('dark:text-red-400', appState.showFavoritesOnly);
+        favFilterBtn.classList.toggle('border-slate-200', !appState.showFavoritesOnly);
+        favFilterBtn.classList.toggle('dark:border-slate-700', !appState.showFavoritesOnly);
         applyFilters();
     });
 }
