@@ -1904,14 +1904,23 @@ function filterByTag(tag) {
 if (favFilterBtn) {
     favFilterBtn.addEventListener('click', () => {
         appState.showFavoritesOnly = !appState.showFavoritesOnly;
+        
+        // 활성화 상태 스타일 (빨간색)
         favFilterBtn.classList.toggle('bg-red-50', appState.showFavoritesOnly);
         favFilterBtn.classList.toggle('dark:bg-red-900/30', appState.showFavoritesOnly);
         favFilterBtn.classList.toggle('border-red-200', appState.showFavoritesOnly);
         favFilterBtn.classList.toggle('dark:border-red-900', appState.showFavoritesOnly);
         favFilterBtn.classList.toggle('text-red-500', appState.showFavoritesOnly);
         favFilterBtn.classList.toggle('dark:text-red-400', appState.showFavoritesOnly);
+        
+        // 기본 상태 스타일 (흰색/회색) - 활성화 시 제거, 비활성화 시 추가
+        favFilterBtn.classList.toggle('bg-white', !appState.showFavoritesOnly);
+        favFilterBtn.classList.toggle('dark:bg-slate-800', !appState.showFavoritesOnly);
+        favFilterBtn.classList.toggle('text-slate-600', !appState.showFavoritesOnly);
+        favFilterBtn.classList.toggle('dark:text-slate-300', !appState.showFavoritesOnly);
         favFilterBtn.classList.toggle('border-slate-200', !appState.showFavoritesOnly);
         favFilterBtn.classList.toggle('dark:border-slate-700', !appState.showFavoritesOnly);
+        
         applyFilters();
     });
 }
