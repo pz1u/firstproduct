@@ -29,6 +29,7 @@ const translations = {
         play: "재생",
         stop: "정지",
         stop_all: "일괄 정지",
+        now_playing: "재생 중",
         theme_dark: "다크 모드",
         theme_light: "라이트 모드",
         btn_home: "홈으로 가기",
@@ -38,11 +39,21 @@ const translations = {
         email_placeholder: "답변 받으실 이메일 주소",
         msg_label: "메시지",
         msg_placeholder: "문의하실 내용을 적어주세요.",
-        my_saved: "내가 저장한 소리",
+        my_saved: "즐겨찾기",
         mix_title: "추천 사운드 믹스",
         mix_rainy_cabin: "비 오는 오두막",
         mix_beach_reading: "해변의 독서",
         mix_night_studio: "심야의 작업실",
+        btn_save_mix: "현재 믹스 저장",
+        my_mix_title: "나만의 믹스",
+        prompt_mix_name: "믹스 이름을 입력하세요:",
+        alert_no_sound: "재생 중인 소리가 없습니다.",
+        no_custom_mixes: "저장된 믹스가 없습니다.",
+        btn_confirm: "확인",
+        btn_cancel: "취소",
+        msg_delete_confirm: "정말 삭제하시겠습니까?",
+        search_placeholder: "믹스 검색...",
+        msg_saved: "저장되었습니다.",
         
         // 메뉴 & 링크 (Menu & Links)
         sitemap: "사이트맵",
@@ -66,7 +77,7 @@ const translations = {
         notice_title: "📢 공지사항 및 업데이트",
         sitemap_title: "🗺️ 사이트맵 (Sitemap)",
         privacy_title: "개인정보처리방침",
-        contact_title: "ASMR 추가 문의",
+        contact_title: "버그 제보 및 문의",
 
         // 태그 (Tags)
         tag_nature: "자연",
@@ -159,6 +170,11 @@ const translations = {
         glossary_notalking_desc: "말소리 없이 오직 사물이나 자연의 소리만으로 구성된 ASMR 콘텐츠를 의미합니다.",
 
         // 공지사항 (Notice)
+        notice_v2_title: "v1.2.0 플레이어 바 업데이트",
+        notice_v2_date: "2026.02.01",
+        notice_v2_desc: "플레이어 바 디자인 및 편의성 개선",
+        notice_v2_list1: "플로팅 글래스 디자인 및 개별 볼륨 조절",
+        notice_v2_list2: "플레이어 바 내 즐겨찾기 및 UI 최적화",
         notice_v1_title: "v1.1.0 통합 업데이트",
         notice_v1_date: "2026.01.31",
         notice_v1_desc: "주요 기능 통합 및 개선",
@@ -225,6 +241,7 @@ const translations = {
         play: "Play",
         stop: "Stop",
         stop_all: "Stop All",
+        now_playing: "Now Playing",
         theme_dark: "Dark Mode",
         theme_light: "Light Mode",
         btn_home: "Go Home",
@@ -234,11 +251,21 @@ const translations = {
         email_placeholder: "Your email address",
         msg_label: "Message",
         msg_placeholder: "Your message here",
-        my_saved: "My Saved Sounds",
+        my_saved: "Favorites",
         mix_title: "Recommended Mixes",
         mix_rainy_cabin: "Rainy Cabin",
         mix_beach_reading: "Beach Reading",
         mix_night_studio: "Late Night Studio",
+        btn_save_mix: "Save Current Mix",
+        my_mix_title: "My Custom Mixes",
+        prompt_mix_name: "Enter mix name:",
+        alert_no_sound: "No sounds are playing.",
+        no_custom_mixes: "No saved mixes.",
+        btn_confirm: "Confirm",
+        btn_cancel: "Cancel",
+        msg_delete_confirm: "Are you sure you want to delete?",
+        search_placeholder: "Search mixes...",
+        msg_saved: "Saved successfully.",
         sitemap: "Sitemap",
         contact_link: "Contact Us",
         privacy: "Privacy Policy",
@@ -258,7 +285,7 @@ const translations = {
         notice_title: "📢 Notice & Updates",
         sitemap_title: "🗺️ Sitemap",
         privacy_title: "Privacy Policy",
-        contact_title: "Request New Sounds",
+        contact_title: "Bug Report & Inquiry",
 
         // Tags & Sounds
         tag_nature: "Nature",
@@ -349,6 +376,11 @@ const translations = {
         glossary_notalking_desc: "ASMR content consisting only of object or nature sounds without speech. Suitable for users who are sensitive to human voices or want to focus purely on sound without processing linguistic information.",
 
         // Notice, FAQ, etc.
+        notice_v2_title: "v1.2.0 Player Bar Major Update",
+        notice_v2_date: "2026.02.01",
+        notice_v2_desc: "Player bar design and usability improvements",
+        notice_v2_list1: "Floating glass design & Individual volume control",
+        notice_v2_list2: "Favorites in player bar & UI optimization",
         notice_v1_title: "v1.1.0 Integrated Update",
         notice_v1_date: "2026.01.31",
         notice_v1_desc: "Major features integration & improvement",
@@ -412,6 +444,7 @@ const translations = {
         play: "再生",
         stop: "停止",
         stop_all: "全停止",
+        now_playing: "再生中",
         theme_dark: "ダークモード",
         theme_light: "ライトモード",
         btn_home: "ホームへ",
@@ -421,11 +454,21 @@ const translations = {
         email_placeholder: "返信先メールアドレス",
         msg_label: "メッセージ",
         msg_placeholder: "お問い合わせ内容",
-        my_saved: "保存したサウンド",
+        my_saved: "お気に入り",
         mix_title: "おすすめミックス",
         mix_rainy_cabin: "雨の小屋",
         mix_beach_reading: "海辺の読書",
         mix_night_studio: "深夜の作業室",
+        btn_save_mix: "現在のミックスを保存",
+        my_mix_title: "マイミックス",
+        prompt_mix_name: "ミックス名を入力してください：",
+        alert_no_sound: "再生中の音がありません。",
+        no_custom_mixes: "保存されたミックスはありません。",
+        btn_confirm: "確認",
+        btn_cancel: "キャンセル",
+        msg_delete_confirm: "本当に削除しますか？",
+        search_placeholder: "ミックスを検索...",
+        msg_saved: "保存しました。",
         sitemap: "サイトマップ",
         contact_link: "お問い合わせ",
         privacy: "プライバシーポリシー",
@@ -444,7 +487,7 @@ const translations = {
         notice_title: "📢 お知らせ",
         sitemap_title: "🗺️ サイトマップ",
         privacy_title: "プライバシーポリシー",
-        contact_title: "ASMR追加リクエスト",
+        contact_title: "バグ報告・お問い合わせ",
 
         tag_nature: "自然",
         tag_sleep: "睡眠",
@@ -528,6 +571,11 @@ const translations = {
         glossary_notalking_title: "ノートーキング (No Talking)",
         glossary_notalking_desc: "話し声がなく、物音や自然音のみで構成されたASMRコンテンツを意味します。人の声に敏感だったり、言語的な情報処理なしに純粋に音だけに集中したいユーザーに適しています。",
 
+        notice_v2_title: "v1.2.0 プレーヤーバー大型アップデート",
+        notice_v2_date: "2026.02.01",
+        notice_v2_desc: "プレーヤーバーのデザインと利便性の向上",
+        notice_v2_list1: "フローティンググラスデザイン＆個別音量調節",
+        notice_v2_list2: "プレーヤーバー内のお気に入り＆UI最適化",
         notice_v1_title: "v1.1.0 統合アップデート",
         notice_v1_date: "2026.01.31",
         notice_v1_desc: "主要機能の統合と改善",
@@ -590,6 +638,7 @@ const translations = {
         play: "播放",
         stop: "停止",
         stop_all: "全部停止",
+        now_playing: "正在播放",
         theme_dark: "深色模式",
         theme_light: "浅色模式",
         btn_home: "返回首页",
@@ -599,11 +648,21 @@ const translations = {
         email_placeholder: "您的邮箱地址",
         msg_label: "留言",
         msg_placeholder: "请输入内容",
-        my_saved: "我保存的声音",
+        my_saved: "收藏夹",
         mix_title: "推荐混合音效",
         mix_rainy_cabin: "雨中小屋",
         mix_beach_reading: "海边读书",
         mix_night_studio: "深夜工作室",
+        btn_save_mix: "保存当前混音",
+        my_mix_title: "我的混音",
+        prompt_mix_name: "请输入混音名称：",
+        alert_no_sound: "没有正在播放的声音。",
+        no_custom_mixes: "没有保存的混音。",
+        btn_confirm: "确认",
+        btn_cancel: "取消",
+        msg_delete_confirm: "确定要删除吗？",
+        search_placeholder: "搜索混音...",
+        msg_saved: "保存成功。",
         sitemap: "网站地图",
         contact_link: "联系我们",
         privacy: "隐私政策",
@@ -622,7 +681,7 @@ const translations = {
         notice_title: "📢 公告与更新",
         sitemap_title: "🗺️ 网站地图",
         privacy_title: "隐私政策",
-        contact_title: "ASMR 添加请求",
+        contact_title: "错误报告与咨询",
 
         tag_nature: "自然",
         tag_sleep: "睡眠",
@@ -706,6 +765,11 @@ const translations = {
         glossary_notalking_title: "无人声 (No Talking)",
         glossary_notalking_desc: "没有说话声，仅由物体或自然声音组成的 ASMR 内容。适合对人声敏感或想在没有语言信息处理的情况下纯粹专注于声音的用户。",
 
+        notice_v2_title: "v1.2.0 播放栏重大更新",
+        notice_v2_date: "2026.02.01",
+        notice_v2_desc: "播放栏设计与易用性改进",
+        notice_v2_list1: "悬浮玻璃设计与单独音量控制",
+        notice_v2_list2: "播放栏内收藏夹与UI优化",
         notice_v1_title: "v1.1.0 综合更新",
         notice_v1_date: "2026.01.31",
         notice_v1_desc: "主要功能整合与改进",
@@ -768,6 +832,7 @@ const translations = {
         play: "Reprod.",
         stop: "Parar",
         stop_all: "Detener todo",
+        now_playing: "Reproduciendo",
         theme_dark: "Modo Oscuro",
         theme_light: "Modo Claro",
         btn_home: "Ir a Inicio",
@@ -777,11 +842,21 @@ const translations = {
         email_placeholder: "Tu correo electrónico",
         msg_label: "Mensaje",
         msg_placeholder: "Escribe tu mensaje",
-        my_saved: "Mis sonidos guardados",
+        my_saved: "Favoritos",
         mix_title: "Mezclas Recomendadas",
         mix_rainy_cabin: "Cabaña Lluviosa",
         mix_beach_reading: "Lectura en la Playa",
         mix_night_studio: "Estudio Nocturno",
+        btn_save_mix: "Guardar mezcla actual",
+        my_mix_title: "Mis mezclas",
+        prompt_mix_name: "Ingrese el nombre de la mezcla:",
+        alert_no_sound: "No hay sonidos reproduciéndose.",
+        no_custom_mixes: "No hay mezclas guardadas.",
+        btn_confirm: "Confirmar",
+        btn_cancel: "Cancelar",
+        msg_delete_confirm: "¿Estás seguro de que quieres eliminar?",
+        search_placeholder: "Buscar mezclas...",
+        msg_saved: "Guardado exitosamente.",
         sitemap: "Mapa del sitio",
         contact_link: "Contáctenos",
         privacy: "Política de Privacidad",
@@ -800,7 +875,7 @@ const translations = {
         notice_title: "📢 Avisos y Actualizaciones",
         sitemap_title: "🗺️ Mapa del sitio",
         privacy_title: "Política de Privacidad",
-        contact_title: "Solicitar nuevos sonidos",
+        contact_title: "Informe de errores y contacto",
 
         tag_nature: "Naturaleza",
         tag_sleep: "Dormir",
@@ -884,6 +959,11 @@ const translations = {
         glossary_notalking_title: "Sin Hablar (No Talking)",
         glossary_notalking_desc: "Contenido de ASMR que consiste solo en sonidos de objetos o naturaleza sin habla. Adecuado para usuarios que son sensibles a las voces humanas o quieren concentrarse puramente en el sonido sin procesar información lingüística.",
 
+        notice_v2_title: "v1.2.0 Gran actualización de la barra de reproducción",
+        notice_v2_date: "2026.02.01",
+        notice_v2_desc: "Mejoras en el diseño y usabilidad de la barra de reproducción",
+        notice_v2_list1: "Diseño de cristal flotante y control de volumen individual",
+        notice_v2_list2: "Favoritos en la barra de reproducción y optimización de UI",
         notice_v1_title: "Actualización Integrada v1.1.0",
         notice_v1_date: "2026.01.31",
         notice_v1_desc: "Integración y mejora de funciones principales",
@@ -941,56 +1021,99 @@ const translations = {
 };
 
 const soundGrid = document.getElementById('sound-grid');
-const langBtn = document.getElementById('lang-btn');
-const langMenu = document.getElementById('lang-menu');
-const themeBtn = document.getElementById('theme-btn');
 const favFilterBtn = document.getElementById('fav-filter-btn');
-const stopAllBtn = document.getElementById('stop-all-btn');
 const mixGrid = document.getElementById('mix-grid');
+const customMixGrid = document.getElementById('custom-mix-grid');
+const saveMixBtn = document.getElementById('save-mix-btn');
+const showMixesBtn = document.getElementById('show-mixes-btn');
+
+const mixListModal = document.getElementById('mix-list-modal');
+const mixListClose = document.getElementById('mix-list-close');
+const mixSearchInput = document.getElementById('mix-search-input');
+
+const playerBar = document.getElementById('player-bar');
+const playerBarList = document.getElementById('player-bar-list');
+const playerBarToggle = document.getElementById('player-bar-toggle');
+const playerBarClose = document.getElementById('player-bar-close');
+
+const modal = document.getElementById('custom-modal');
+const modalTitle = document.getElementById('modal-title');
+const modalMessage = document.getElementById('modal-message');
+const modalInput = document.getElementById('modal-input');
+const modalIcons = document.getElementById('modal-icons');
+const modalColors = document.getElementById('modal-colors');
+const modalCancel = document.getElementById('modal-cancel');
+const modalConfirm = document.getElementById('modal-confirm');
 
 // Web Audio API 설정
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
-const analyser = audioCtx.createAnalyser();
-analyser.fftSize = 256;
 
 const audioPlayers = {};
 
-// 브라우저 언어 감지 및 설정
-let currentLang = 'en'; 
-const savedLang = localStorage.getItem('asmr_lang');
+// 4. 전역 변수 관리 (State Management)
+const appState = {
+    currentLang: 'en',
+    favorites: [],
+    customMixes: [],
+    showFavoritesOnly: false,
+    activeTag: null,
+    activeSounds: []
+};
 
-if (savedLang) {
-    currentLang = savedLang;
-} else {
+// Helper: Safe LocalStorage
+const safeStorage = {
+    get: (key, fallback) => {
+        try {
+            const stored = localStorage.getItem(key);
+            return stored ? JSON.parse(stored) : fallback;
+        } catch (e) { return fallback; }
+    },
+    set: (key, value) => {
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+        } catch (e) { }
+    },
+    getStr: (key, fallback) => {
+        try {
+            return localStorage.getItem(key) || fallback;
+        } catch (e) { return fallback; }
+    },
+    setStr: (key, value) => {
+        try {
+            localStorage.setItem(key, value);
+        } catch (e) { }
+    }
+};
+
+// 초기 상태 로드
+let savedLang = safeStorage.getStr('asmr_lang', null);
+if (!savedLang) {
     const userLang = navigator.language || navigator.userLanguage;
-    if (userLang.includes('ko')) currentLang = 'ko';
-    else if (userLang.includes('ja')) currentLang = 'ja';
-    else if (userLang.includes('zh')) currentLang = 'zh';
-    else if (userLang.includes('es')) currentLang = 'es';
+    if (userLang.includes('ko')) savedLang = 'ko';
+    else if (userLang.includes('ja')) savedLang = 'ja';
+    else if (userLang.includes('zh')) savedLang = 'zh';
+    else if (userLang.includes('es')) savedLang = 'es';
+    else savedLang = 'en';
 }
-
-// 즐겨찾기 데이터 로드
-let favorites = [];
-try {
-    favorites = JSON.parse(localStorage.getItem('asmr_favorites')) || [];
-} catch (e) {
-    console.log('Local Storage not available');
-}
-let showFavoritesOnly = false;
-let activeTag = null;
+appState.currentLang = savedLang;
+appState.favorites = safeStorage.get('asmr_favorites', []);
+appState.customMixes = safeStorage.get('asmr_custom_mixes', []);
 
 // Initialize Sound Cards
-if (soundGrid) {
+function initSoundCards() {
+    if (!soundGrid) return;
+    soundGrid.innerHTML = '';
+
     soundsData.forEach(sound => {
         const card = document.createElement('div');
-        const isFav = favorites.includes(sound.id);
+        const isFav = appState.favorites.includes(sound.id);
         card.className = 'w-full sm:w-72 bg-white dark:bg-slate-800 border-2 border-transparent rounded-xl p-6 flex flex-col items-center gap-4 transition-all duration-300 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm';
         card.id = `card-${sound.id}`;
         card.dataset.id = sound.id; 
         
         const tagsHtml = sound.tags.map(tag => 
-            `<span class="tag-btn text-xs px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-300 transition-colors" data-tag="${tag}">#<span data-i18n="tag_${tag}">${translations[currentLang]['tag_' + tag] || tag}</span></span>`
+            `<span class="tag-btn text-xs px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-300 transition-colors" data-tag="${tag}">#<span data-i18n="tag_${tag}">${translations[appState.currentLang]['tag_' + tag] || tag}</span></span>`
         ).join(' ');
 
         card.innerHTML = `
@@ -1001,53 +1124,44 @@ if (soundGrid) {
                     <i data-lucide="heart" class="w-5 h-5 ${isFav ? 'fill-current' : ''}"></i>
                 </button>
             </div>
-            <h3 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="sound_${sound.id}">${translations[currentLang]['sound_' + sound.id]}</h3>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="sound_${sound.id}">${translations[appState.currentLang]['sound_' + sound.id]}</h3>
             <div class="flex gap-2 mb-2 flex-wrap justify-center">${tagsHtml}</div>
             <div class="w-full flex flex-col gap-3 mt-2">
                 <button id="btn-${sound.id}" class="w-full py-2 rounded-lg bg-slate-100 dark:bg-slate-600 hover:bg-blue-500 dark:hover:bg-blue-500 text-slate-700 dark:text-white hover:text-white font-medium transition-colors flex justify-center items-center gap-2"
                     onclick="if(typeof Android !== 'undefined') Android.playAudio('https://asmrspace.shop/sounds/${sound.file}')">
-                    <i data-lucide="play" width="16"></i> <span data-i18n="play">${translations[currentLang].play}</span>
+                    <i data-lucide="play" width="16"></i> <span data-i18n="play">${translations[appState.currentLang].play}</span>
                 </button>
-                <div class="flex items-center gap-2">
-                    <i data-lucide="volume-2" width="16" class="text-slate-400"></i>
-                    <input type="range" id="vol-${sound.id}" min="0" max="1" step="0.01" value="0.5" class="flex-1">
-                    <span id="vol-display-${sound.id}" class="text-xs text-slate-500 w-9 text-right font-mono">50%</span>
-                </div>
             </div>`;
         soundGrid.appendChild(card);
 
         const audio = new Audio(sound.file);
         audio.crossOrigin = "anonymous";
         audio.loop = true;
+        audio.preload = 'metadata';
         
         const track = audioCtx.createMediaElementSource(audio);
         const gainNode = audioCtx.createGain();
         gainNode.gain.value = 0.5;
         
         track.connect(gainNode);
-        gainNode.connect(analyser);
         gainNode.connect(audioCtx.destination);
 
         audioPlayers[sound.id] = { audio, gainNode, isPlaying: false };
 
         const playBtn = card.querySelector(`#btn-${sound.id}`);
-        const volSlider = card.querySelector(`#vol-${sound.id}`);
         const favBtn = card.querySelector('.fav-btn');
 
         playBtn.addEventListener('click', () => {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             toggleSound(sound.id);
         });
-        volSlider.addEventListener('input', (e) => {
-            gainNode.gain.value = e.target.value;
-            document.getElementById(`vol-display-${sound.id}`).textContent = Math.round(e.target.value * 100) + '%';
-        });
-        favBtn.addEventListener('click', () => toggleFavorite(sound.id, favBtn));
+        favBtn.addEventListener('click', () => toggleFavorite(sound.id));
     });
 
     soundGrid.addEventListener('click', (e) => {
-        if (e.target.classList.contains('tag-btn')) {
-            const tag = e.target.dataset.tag;
+        const btn = e.target.closest('.tag-btn');
+        if (btn) {
+            const tag = btn.dataset.tag;
             filterByTag(tag);
         }
     });
@@ -1062,7 +1176,7 @@ function renderMixes() {
         btn.className = 'flex items-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-700 hover:border-blue-300 dark:hover:border-blue-500 transition-all shadow-sm group';
         btn.innerHTML = `
             <i data-lucide="${mix.icon}" class="w-5 h-5 text-blue-400 group-hover:text-blue-500 transition-colors"></i>
-            <span class="font-medium" data-i18n="mix_${mix.id}">${translations[currentLang]['mix_' + mix.id]}</span>
+            <span class="font-medium" data-i18n="mix_${mix.id}">${translations[appState.currentLang]['mix_' + mix.id]}</span>
         `;
         btn.onclick = () => playMix(mix);
         mixGrid.appendChild(btn);
@@ -1070,22 +1184,455 @@ function renderMixes() {
     lucide.createIcons();
 }
 
-function stopAllSounds() {
+function renderCustomMixes() {
+    if (!customMixGrid) return;
+    customMixGrid.innerHTML = '';
+
+    const searchText = mixSearchInput ? mixSearchInput.value.toLowerCase() : '';
+    const filteredMixes = appState.customMixes.filter(mix => mix.name.toLowerCase().includes(searchText));
+    
+    if (filteredMixes.length === 0) {
+        const emptyMsg = translations[appState.currentLang].no_custom_mixes || "No saved mixes.";
+        customMixGrid.innerHTML = `<p class="text-slate-400 dark:text-slate-500 text-sm w-full text-center">${emptyMsg}</p>`;
+        return;
+    }
+
+    filteredMixes.forEach(mix => {
+        const btnContainer = document.createElement('div');
+        btnContainer.className = 'relative group';
+        
+        const btn = document.createElement('button');
+        btn.className = 'flex items-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-purple-50 dark:hover:bg-slate-700 hover:border-purple-300 dark:hover:border-purple-500 transition-all shadow-sm pr-16';
+        const iconName = mix.icon || 'music';
+        const iconColor = mix.color || '#3b82f6'; // Default blue-500
+        
+        // 믹스에 포함된 소리 정보 생성
+        const soundDetails = Object.entries(mix.sounds).map(([id, vol]) => {
+            const sound = soundsData.find(s => s.id === id);
+            const name = sound ? (translations[appState.currentLang]['sound_' + id] || id) : id;
+            return `${name} (${Math.round(vol * 100)}%)`;
+        }).join(', ');
+
+        const soundIcons = Object.keys(mix.sounds).map(id => {
+            const sound = soundsData.find(s => s.id === id);
+            return sound ? `<i data-lucide="${sound.icon}" class="w-3 h-3"></i>` : '';
+        }).join('');
+
+        btn.innerHTML = `
+            <div class="flex items-center gap-3">
+                <i data-lucide="${iconName}" class="w-6 h-6 transition-colors" style="color: ${iconColor}"></i>
+                <div class="flex flex-col items-start">
+                    <span class="font-medium">${mix.name}</span>
+                    <div class="flex gap-1 text-slate-400 dark:text-slate-500 mt-0.5">
+                        ${soundIcons}
+                    </div>
+                </div>
+            </div>
+        `;
+        btn.title = soundDetails; // 툴팁으로 상세 정보 표시
+        btn.onclick = () => {
+            playMix(mix);
+            if (mixListModal) {
+                mixListModal.classList.add('opacity-0');
+                const modalContent = mixListModal.querySelector('div');
+                if (modalContent) {
+                    modalContent.classList.remove('scale-100');
+                    modalContent.classList.add('scale-95');
+                }
+                setTimeout(() => {
+                    mixListModal.classList.add('hidden');
+                }, 300);
+            }
+        };
+        
+        const editBtn = document.createElement('button');
+        editBtn.className = 'absolute right-8 top-2 p-1 text-slate-300 hover:text-blue-500 transition-colors opacity-0 group-hover:opacity-100';
+        editBtn.innerHTML = `<i data-lucide="pencil" class="w-4 h-4"></i>`;
+        editBtn.onclick = (e) => {
+            e.stopPropagation();
+            editCustomMix(mix.id);
+        };
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'absolute right-2 top-2 p-1 text-slate-300 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100';
+        delBtn.innerHTML = `<i data-lucide="trash-2" class="w-4 h-4"></i>`;
+        delBtn.onclick = (e) => {
+            e.stopPropagation();
+            deleteCustomMix(mix.id, mix.name);
+        };
+
+        btnContainer.appendChild(btn);
+        btnContainer.appendChild(editBtn);
+        btnContainer.appendChild(delBtn);
+        customMixGrid.appendChild(btnContainer);
+    });
+    lucide.createIcons();
+}
+
+let currentModalConfirmHandler = null;
+let currentSelectedIcon = 'music';
+let currentSelectedColor = '#3b82f6';
+
+const availableIcons = [
+    'music', 'headphones', 'cloud-rain', 'flame', 'wind', 
+    'moon', 'sun', 'star', 'coffee', 'book', 
+    'heart', 'smile', 'zap', 'anchor', 'feather',
+    'droplets', 'trees', 'mountain', 'waves'
+];
+
+const availableColors = [
+    '#ef4444', '#f97316', '#f59e0b', '#84cc16', '#10b981', '#06b6d4', 
+    '#3b82f6', '#6366f1', '#8b5cf6', '#d946ef', '#f43f5e', '#64748b'
+];
+
+function showModal({ title, message, type, placeholder, showIcons, showColors, initialValue, initialIcon, initialColor, onConfirm }) {
+    if (!modal) return;
+    modalTitle.textContent = title;
+    
+    // Reset UI
+    modalMessage.classList.add('hidden');
+    modalInput.classList.add('hidden');
+    if (modalIcons) modalIcons.classList.add('hidden');
+    if (modalColors) modalColors.classList.add('hidden');
+    modalCancel.classList.remove('hidden');
+    
+    // Initialize state
+    currentSelectedColor = initialColor || '#3b82f6';
+
+    if (type === 'input') {
+        modalInput.classList.remove('hidden');
+        modalInput.value = initialValue || '';
+        modalInput.placeholder = placeholder || '';
+        setTimeout(() => modalInput.focus(), 100);
+    } else if (type === 'confirm') {
+        modalMessage.textContent = message;
+        modalMessage.classList.remove('hidden');
+    } else if (type === 'alert') {
+        modalMessage.textContent = message;
+        modalMessage.classList.remove('hidden');
+        modalCancel.classList.add('hidden');
+    }
+
+    if (showIcons && modalIcons) {
+        modalIcons.classList.remove('hidden');
+        modalIcons.innerHTML = '';
+        currentSelectedIcon = initialIcon || 'music';
+        
+        availableIcons.forEach(icon => {
+            const btn = document.createElement('button');
+            const isActive = icon === currentSelectedIcon;
+            btn.className = `p-2 rounded-lg border transition-all ${isActive ? 'bg-blue-100 border-blue-500 text-blue-500' : 'bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-600'}`;
+            btn.innerHTML = `<i data-lucide="${icon}" class="w-5 h-5" style="color: ${currentSelectedColor}"></i>`;
+            btn.onclick = () => {
+                // Remove active class from all
+                Array.from(modalIcons.children).forEach(c => {
+                    c.className = 'p-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-600 transition-all';
+                });
+                // Add active class to clicked
+                btn.className = 'p-2 rounded-lg border border-blue-500 bg-blue-100 text-blue-500 transition-all';
+                currentSelectedIcon = icon;
+            };
+            modalIcons.appendChild(btn);
+        });
+        lucide.createIcons();
+    }
+
+    if (showColors && modalColors) {
+        modalColors.classList.remove('hidden');
+        modalColors.innerHTML = '';
+
+        availableColors.forEach(color => {
+            const btn = document.createElement('button');
+            const isActive = color === currentSelectedColor;
+            btn.className = `w-8 h-8 rounded-full border-2 transition-all ${isActive ? 'border-slate-600 dark:border-white scale-110' : 'border-transparent hover:scale-110'}`;
+            btn.style.backgroundColor = color;
+            btn.onclick = () => {
+                Array.from(modalColors.children).forEach(c => {
+                    c.className = 'w-8 h-8 rounded-full border-2 border-transparent hover:scale-110 transition-all';
+                });
+                btn.className = 'w-8 h-8 rounded-full border-2 border-slate-600 dark:border-white scale-110 transition-all';
+                currentSelectedColor = color;
+                
+                // Update icon colors in real-time
+                if (modalIcons) {
+                    modalIcons.querySelectorAll('svg, i').forEach(el => el.style.color = color);
+                }
+            };
+            modalColors.appendChild(btn);
+        });
+    }
+
+    modalCancel.textContent = translations[appState.currentLang].btn_cancel || "Cancel";
+    modalConfirm.textContent = translations[appState.currentLang].btn_confirm || "Confirm";
+
+    modal.classList.remove('hidden');
+    // Trigger reflow
+    void modal.offsetWidth;
+    modal.classList.remove('opacity-0');
+    modal.querySelector('div').classList.remove('scale-95');
+    modal.querySelector('div').classList.add('scale-100');
+
+    currentModalConfirmHandler = onConfirm;
+}
+
+function closeModal() {
+    if (!modal) return;
+    modal.classList.add('opacity-0');
+    modal.querySelector('div').classList.remove('scale-100');
+    modal.querySelector('div').classList.add('scale-95');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300);
+    currentModalConfirmHandler = null;
+}
+
+if (modalCancel) modalCancel.addEventListener('click', closeModal);
+if (modalConfirm) modalConfirm.addEventListener('click', () => {
+    if (currentModalConfirmHandler) {
+        const inputValue = !modalInput.classList.contains('hidden') ? modalInput.value : null;
+        currentModalConfirmHandler(inputValue, currentSelectedIcon, currentSelectedColor);
+    }
+    if (!modalInput.classList.contains('hidden') && !modalInput.value) return; // 입력창이 비었을 때 닫지 않으려면 이 줄 유지, 아니면 제거
+    closeModal();
+});
+if (modalInput) modalInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') modalConfirm.click(); });
+
+function showToast(message) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = 'bg-slate-800/90 dark:bg-white/90 text-white dark:text-slate-900 px-6 py-3 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 opacity-0 translate-y-4 font-medium text-sm';
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => {
+        toast.classList.remove('opacity-0', 'translate-y-4');
+    });
+
+    setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-4');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+function saveCurrentMix() {
+    const activeSounds = {};
+    let hasActive = false;
+
     Object.keys(audioPlayers).forEach(id => {
         const player = audioPlayers[id];
         if (player.isPlaying) {
+            activeSounds[id] = player.gainNode.gain.value;
+            hasActive = true;
+        }
+    });
+
+    if (!hasActive) {
+        showModal({
+            title: "My ASMR Space",
+            message: translations[appState.currentLang].alert_no_sound || "No sounds playing",
+            type: 'alert'
+        });
+        return;
+    }
+
+    showModal({
+        title: translations[appState.currentLang].btn_save_mix,
+        type: 'input',
+        placeholder: translations[appState.currentLang].prompt_mix_name,
+        showIcons: true,
+        showColors: true,
+        onConfirm: (mixName, icon, color) => {
+            if (mixName) {
+                const newMix = { id: 'custom_' + Date.now(), name: mixName, icon: icon || 'music', color: color || '#3b82f6', sounds: activeSounds };
+                appState.customMixes.push(newMix);
+                safeStorage.set('asmr_custom_mixes', appState.customMixes);
+                renderCustomMixes();
+                showToast(translations[appState.currentLang].msg_saved || "Saved successfully.");
+            }
+        }
+    });
+}
+
+function editCustomMix(id) {
+    const mix = appState.customMixes.find(m => m.id === id);
+    if (!mix) return;
+
+    showModal({
+        title: translations[appState.currentLang].my_mix_title,
+        type: 'input',
+        placeholder: translations[appState.currentLang].prompt_mix_name,
+        initialValue: mix.name,
+        initialIcon: mix.icon,
+        initialColor: mix.color,
+        showIcons: true,
+        showColors: true,
+        onConfirm: (newName, newIcon, newColor) => {
+            if (newName) {
+                mix.name = newName;
+                mix.icon = newIcon || mix.icon;
+                mix.color = newColor || mix.color;
+                safeStorage.set('asmr_custom_mixes', appState.customMixes);
+                renderCustomMixes();
+                showToast(translations[appState.currentLang].msg_saved || "Saved successfully.");
+            }
+        }
+    });
+}
+
+function deleteCustomMix(id, name) {
+    const confirmMsg = translations[appState.currentLang].msg_delete_confirm || "Delete?";
+    showModal({
+        title: translations[appState.currentLang].my_mix_title,
+        message: `'${name}' ${confirmMsg}`,
+        type: 'confirm',
+        onConfirm: () => {
+            appState.customMixes = appState.customMixes.filter(m => m.id !== id);
+            safeStorage.set('asmr_custom_mixes', appState.customMixes);
+            renderCustomMixes();
+        }
+    });
+}
+
+function updatePlayerBar() {
+    if (!playerBar) return;
+    
+    if (appState.activeSounds.length > 0) {
+        // 리스트 초기화 및 재생 중인 사운드 추가
+        if (playerBarList) {
+            playerBarList.innerHTML = '';
+            appState.activeSounds.forEach(id => {
+                const name = translations[appState.currentLang]['sound_' + id] || id;
+                const sound = soundsData.find(s => s.id === id);
+                const player = audioPlayers[id];
+                
+                if (player && sound) {
+                    const row = document.createElement('div');
+                    row.className = 'flex items-center justify-between gap-4 p-3 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-xl border border-white/20 dark:border-slate-700/30 shadow-sm w-full transition-all hover:bg-white/60 dark:hover:bg-slate-800/60';
+                    
+                    // Info (Icon + Name)
+                    const infoDiv = document.createElement('div');
+                    infoDiv.className = 'flex items-center gap-3 overflow-hidden flex-1 min-w-0';
+                    
+                    infoDiv.innerHTML = `
+                        <i data-lucide="${sound.icon}" class="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0"></i>
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-200 truncate">${name}</span>
+                    `;
+
+                    // Controls (Volume + Toggle + Close)
+                    const controlsDiv = document.createElement('div');
+                    controlsDiv.className = 'flex items-center gap-3 shrink-0';
+
+                    // Volume Slider
+                    const volInput = document.createElement('input');
+                    volInput.type = 'range';
+                    volInput.min = '0';
+                    volInput.max = '1';
+                    volInput.step = '0.01';
+                    volInput.value = player.gainNode.gain.value;
+                    volInput.title = `${Math.round(player.gainNode.gain.value * 100)}%`;
+                    volInput.className = 'w-16 sm:w-24 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-600 accent-blue-500';
+                    volInput.addEventListener('input', (e) => {
+                        const val = parseFloat(e.target.value);
+                        player.gainNode.gain.value = val;
+                        volInput.title = `${Math.round(val * 100)}%`;
+                        const mainSlider = document.getElementById(`vol-${id}`);
+                        if (mainSlider) mainSlider.value = val;
+                        const mainDisplay = document.getElementById(`vol-display-${id}`);
+                        if (mainDisplay) mainDisplay.textContent = Math.round(val * 100) + '%';
+                    });
+
+                    // Play/Pause Button (Individual)
+                    const toggleBtn = document.createElement('button');
+                    toggleBtn.className = 'p-1 text-slate-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 transition-colors';
+                    toggleBtn.innerHTML = `<i data-lucide="${player.isPlaying ? 'pause' : 'play'}" class="w-4 h-4 fill-current"></i>`;
+                    toggleBtn.onclick = async () => {
+                        if (player.isPlaying) {
+                            player.audio.pause();
+                            player.isPlaying = false;
+                            updateUI(id, false);
+                        } else {
+                            try {
+                                await player.audio.play();
+                                player.isPlaying = true;
+                                updateUI(id, true);
+                            } catch (e) { console.error(e); }
+                        }
+                    };
+
+                    // Favorite Button (Individual)
+                    const isFav = appState.favorites.includes(id);
+                    const favBtn = document.createElement('button');
+                    favBtn.className = `player-fav-btn p-1 transition-colors ${isFav ? 'text-red-500' : 'text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400'}`;
+                    favBtn.dataset.id = id;
+                    favBtn.innerHTML = `<i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-current' : ''}"></i>`;
+                    favBtn.onclick = () => toggleFavorite(id);
+
+                    // Close Button (Individual)
+                    const closeBtn = document.createElement('button');
+                    closeBtn.className = 'p-1 text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400 transition-colors';
+                    closeBtn.innerHTML = `<i data-lucide="x" class="w-4 h-4"></i>`;
+                    closeBtn.onclick = () => {
+                        player.audio.pause();
+                        player.isPlaying = false;
+                        const idx = appState.activeSounds.indexOf(id);
+                        if (idx !== -1) appState.activeSounds.splice(idx, 1);
+                        updateUI(id, false);
+                    };
+
+                    controlsDiv.appendChild(volInput);
+                    controlsDiv.appendChild(toggleBtn);
+                    controlsDiv.appendChild(favBtn);
+                    controlsDiv.appendChild(closeBtn);
+                    
+                    row.appendChild(infoDiv);
+                    row.appendChild(controlsDiv);
+                    playerBarList.appendChild(row);
+                }
+            });
+            lucide.createIcons();
+        }
+        
+        playerBar.classList.remove('translate-y-[150%]');
+        document.body.style.paddingBottom = (playerBar.offsetHeight + 32) + 'px';
+        
+        // 토글 버튼 아이콘 업데이트 (하나라도 재생 중이면 일시정지 버튼 표시)
+        const isAnyPlaying = appState.activeSounds.some(id => audioPlayers[id] && audioPlayers[id].isPlaying);
+
+        if (playerBarToggle) {
+            playerBarToggle.innerHTML = isAnyPlaying 
+                ? `<i data-lucide="pause" class="w-6 h-6 fill-current"></i>` 
+                : `<i data-lucide="play" class="w-6 h-6 fill-current"></i>`;
+            lucide.createIcons();
+        }
+    } else {
+        playerBar.classList.add('translate-y-[150%]');
+        document.body.style.paddingBottom = '0';
+    }
+}
+
+function stopAllSounds() {
+    // 모든 활성 사운드 정지 및 목록 초기화
+    [...appState.activeSounds].forEach(id => {
+        const player = audioPlayers[id];
+        if (player) {
             player.audio.pause();
             player.isPlaying = false;
             updateUI(id, false);
         }
     });
+    appState.activeSounds = [];
+    updatePlayerBar();
 }
 
-function playMix(mix) {
+async function playMix(mix) {
     stopAllSounds();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
+    if (audioCtx.state === 'suspended') await audioCtx.resume();
 
-    Object.entries(mix.sounds).forEach(([soundId, volume]) => {
+    const promises = Object.entries(mix.sounds).map(async ([soundId, volume]) => {
+        if (!appState.activeSounds.includes(soundId)) appState.activeSounds.push(soundId);
         const player = audioPlayers[soundId];
         if (player) {
             player.gainNode.gain.value = volume;
@@ -1096,26 +1643,70 @@ function playMix(mix) {
                 if (volDisplay) volDisplay.textContent = Math.round(volume * 100) + '%';
             }
             
-            player.audio.play();
-            player.isPlaying = true;
-            updateUI(soundId, true);
+            try {
+                await player.audio.play();
+                player.isPlaying = true;
+                updateUI(soundId, true);
+            } catch (e) {
+                console.error(`Mix play error for ${soundId}:`, e);
+            }
         }
     });
+
+    await Promise.all(promises);
 }
 
-function toggleSound(id) {
+async function toggleSound(id) {
     const player = audioPlayers[id];
     
     if (player.isPlaying) {
+        // 재생 중이면 정지하고 activeSounds에서 제거
+        const idx = appState.activeSounds.indexOf(id);
+        if (idx !== -1) appState.activeSounds.splice(idx, 1);
+        
         player.audio.pause();
         player.isPlaying = false;
         updateUI(id, false);
     } else {
-        player.audio.play();
-        player.isPlaying = true;
-        updateUI(id, true);
+        // 정지 상태면 재생하고 activeSounds에 추가
+        if (!appState.activeSounds.includes(id)) appState.activeSounds.push(id);
+        try {
+            await player.audio.play();
+            player.isPlaying = true;
+            updateUI(id, true);
+        } catch (e) {
+            console.error('Play error:', e);
+        }
     }
     lucide.createIcons();
+}
+
+async function toggleGlobalPlayback() {
+    const isAnyPlaying = appState.activeSounds.some(id => audioPlayers[id] && audioPlayers[id].isPlaying);
+    
+    if (isAnyPlaying) {
+        // 일시정지: 소리는 멈추지만 activeSounds 목록은 유지
+        appState.activeSounds.forEach(id => {
+            const player = audioPlayers[id];
+            if (player && player.isPlaying) {
+                player.audio.pause();
+                player.isPlaying = false;
+                updateUI(id, false);
+            }
+        });
+    } else {
+        // 재생: activeSounds 목록에 있는 소리들 다시 재생
+        appState.activeSounds.forEach(async id => {
+            const player = audioPlayers[id];
+            if (player && !player.isPlaying) {
+                try {
+                    await player.audio.play();
+                    player.isPlaying = true;
+                    updateUI(id, true);
+                } catch (e) { console.error(e); }
+            }
+        });
+    }
 }
 
 function updateUI(id, isPlaying) {
@@ -1127,55 +1718,84 @@ function updateUI(id, isPlaying) {
     
     if (isPlaying) {
         btn.className = 'w-full py-2 rounded-lg bg-sky-400 hover:bg-sky-500 text-white font-medium transition-colors flex justify-center items-center gap-2';
-        btn.innerHTML = `<i data-lucide="${icon}" width="16"></i> <span data-i18n="${textKey}">${translations[currentLang][textKey]}</span>`;
+        btn.innerHTML = `<i data-lucide="${icon}" width="16"></i> <span data-i18n="${textKey}">${translations[appState.currentLang][textKey]}</span>`;
         btn.setAttribute('onclick', "if(typeof Android !== 'undefined') Android.pauseAudio()");
         card.classList.add('card-active');
     } else {
         btn.className = 'w-full py-2 rounded-lg bg-slate-100 dark:bg-slate-600 hover:bg-blue-500 dark:hover:bg-blue-500 text-slate-700 dark:text-white hover:text-white font-medium transition-colors flex justify-center items-center gap-2';
-        btn.innerHTML = `<i data-lucide="${icon}" width="16"></i> <span data-i18n="${textKey}">${translations[currentLang][textKey]}</span>`;
+        btn.innerHTML = `<i data-lucide="${icon}" width="16"></i> <span data-i18n="${textKey}">${translations[appState.currentLang][textKey]}</span>`;
         if (sound) {
             btn.setAttribute('onclick', `if(typeof Android !== 'undefined') Android.playAudio('https://asmrspace.shop/sounds/${sound.file}')`);
         }
         card.classList.remove('card-active');
     }
+    updatePlayerBar();
     lucide.createIcons();
 }
 
-function toggleFavorite(id, btn) {
-    const index = favorites.indexOf(id);
-    const icon = btn.querySelector('svg');
+function toggleFavorite(id) {
+    const index = appState.favorites.indexOf(id);
+    const isFav = index === -1;
     
-    if (index === -1) {
-        favorites.push(id);
-        btn.classList.remove('text-slate-300', 'dark:text-slate-600');
-        btn.classList.add('text-red-500');
-        if (icon) icon.classList.add('fill-current');
+    if (isFav) {
+        appState.favorites.push(id);
     } else {
-        favorites.splice(index, 1);
-        btn.classList.remove('text-red-500');
-        btn.classList.add('text-slate-300', 'dark:text-slate-600');
-        if (icon) icon.classList.remove('fill-current');
+        appState.favorites.splice(index, 1);
     }
-    try {
-        localStorage.setItem('asmr_favorites', JSON.stringify(favorites));
-    } catch (e) {
-        console.log('Local Storage save failed');
+    safeStorage.set('asmr_favorites', appState.favorites);
+
+    // Update Card Button
+    const card = document.getElementById(`card-${id}`);
+    if (card) {
+        const btn = card.querySelector('.fav-btn');
+        if (btn) {
+            const icon = btn.querySelector('svg') || btn.querySelector('i');
+            if (isFav) {
+                btn.classList.remove('text-slate-300', 'dark:text-slate-600');
+                btn.classList.add('text-red-500');
+                if (icon) icon.classList.add('fill-current');
+            } else {
+                btn.classList.remove('text-red-500');
+                btn.classList.add('text-slate-300', 'dark:text-slate-600');
+                if (icon) icon.classList.remove('fill-current');
+            }
+        }
     }
+
+    // Update Player Bar Button
+    const playerBarList = document.getElementById('player-bar-list');
+    if (playerBarList) {
+        const pBtn = playerBarList.querySelector(`.player-fav-btn[data-id="${id}"]`);
+        if (pBtn) {
+            const icon = pBtn.querySelector('svg') || pBtn.querySelector('i');
+            if (isFav) {
+                pBtn.classList.remove('text-slate-400', 'hover:text-red-500', 'dark:text-slate-500', 'dark:hover:text-red-400');
+                pBtn.classList.add('text-red-500');
+                if (icon) icon.classList.add('fill-current');
+            } else {
+                pBtn.classList.remove('text-red-500');
+                pBtn.classList.add('text-slate-400', 'hover:text-red-500', 'dark:text-slate-500', 'dark:hover:text-red-400');
+                if (icon) icon.classList.remove('fill-current');
+            }
+        }
+    }
+    
     applyFilters();
 }
 
 function applyFilters() {
-    const cards = document.querySelectorAll('[id^="card-"]');
-    cards.forEach(card => {
-        const soundId = card.dataset.id;
-        const sound = soundsData.find(s => s.id === soundId);
+    // 7. 성능 이슈 개선
+    soundsData.forEach(sound => {
+        const card = document.getElementById(`card-${sound.id}`);
+        if (!card) return;
+        
         let visible = true;
 
-        if (showFavoritesOnly && !favorites.includes(soundId)) {
+        if (appState.showFavoritesOnly && !appState.favorites.includes(sound.id)) {
             visible = false;
         }
 
-        if (visible && activeTag && !sound.tags.includes(activeTag)) {
+        if (visible && appState.activeTag && !sound.tags.includes(appState.activeTag)) {
             visible = false;
         }
 
@@ -1187,7 +1807,7 @@ function applyFilters() {
     });
 
     document.querySelectorAll('.tag-btn').forEach(btn => {
-        if (btn.dataset.tag === activeTag) {
+        if (btn.dataset.tag === appState.activeTag) {
             btn.classList.add('bg-blue-500', 'text-white');
             btn.classList.remove('bg-slate-100', 'dark:bg-slate-700', 'text-slate-600', 'dark:text-slate-300');
         } else {
@@ -1198,32 +1818,71 @@ function applyFilters() {
 }
 
 function filterByTag(tag) {
-    activeTag = (activeTag === tag) ? null : tag;
+    appState.activeTag = (appState.activeTag === tag) ? null : tag;
     applyFilters();
 }
 
 if (favFilterBtn) {
     favFilterBtn.addEventListener('click', () => {
-        showFavoritesOnly = !showFavoritesOnly;
-        favFilterBtn.classList.toggle('bg-red-50', showFavoritesOnly);
-        favFilterBtn.classList.toggle('dark:bg-red-900/30', showFavoritesOnly);
-        favFilterBtn.classList.toggle('border-red-200', showFavoritesOnly);
-        favFilterBtn.classList.toggle('text-red-500', showFavoritesOnly);
+        appState.showFavoritesOnly = !appState.showFavoritesOnly;
+        favFilterBtn.classList.toggle('bg-red-50', appState.showFavoritesOnly);
+        favFilterBtn.classList.toggle('dark:bg-red-900/30', appState.showFavoritesOnly);
+        favFilterBtn.classList.toggle('border-red-200', appState.showFavoritesOnly);
+        favFilterBtn.classList.toggle('text-red-500', appState.showFavoritesOnly);
         applyFilters();
     });
 }
 
-if (stopAllBtn) {
-    stopAllBtn.addEventListener('click', stopAllSounds);
+if (playerBarToggle) {
+    playerBarToggle.addEventListener('click', toggleGlobalPlayback);
 }
 
-function initTheme() {
-    let savedTheme = null;
-    try {
-        savedTheme = localStorage.getItem('asmr_theme');
-    } catch (e) {
-        console.log('Local Storage not available');
+if (playerBarClose) {
+    playerBarClose.addEventListener('click', stopAllSounds);
+}
+
+if (saveMixBtn) {
+    saveMixBtn.addEventListener('click', saveCurrentMix);
+}
+
+if (showMixesBtn && mixListModal) {
+    showMixesBtn.addEventListener('click', () => {
+        mixListModal.classList.remove('hidden');
+        // Trigger reflow
+        void mixListModal.offsetWidth;
+        mixListModal.classList.remove('opacity-0');
+        mixListModal.querySelector('div').classList.remove('scale-95');
+        mixListModal.querySelector('div').classList.add('scale-100');
+        renderCustomMixes();
+    });
+
+    const closeMixList = () => {
+        mixListModal.classList.add('opacity-0');
+        mixListModal.querySelector('div').classList.remove('scale-100');
+        mixListModal.querySelector('div').classList.add('scale-95');
+        setTimeout(() => {
+            mixListModal.classList.add('hidden');
+        }, 300);
+    };
+
+    if (mixListClose) mixListClose.addEventListener('click', closeMixList);
+    mixListModal.addEventListener('click', (e) => {
+        if (e.target === mixListModal) closeMixList();
+    });
+}
+
+if (mixSearchInput) {
+    mixSearchInput.addEventListener('input', renderCustomMixes);
+}
+
+window.addEventListener('resize', () => {
+    if (playerBar && !playerBar.classList.contains('translate-y-[150%]')) {
+        document.body.style.paddingBottom = (playerBar.offsetHeight + 32) + 'px';
     }
+});
+
+function initTheme() {
+    const savedTheme = safeStorage.getStr('asmr_theme', null);
     if (savedTheme === 'light') {
         document.documentElement.classList.remove('dark');
     } else {
@@ -1231,22 +1890,12 @@ function initTheme() {
     }
 }
 
-themeBtn.addEventListener('click', () => {
-    document.documentElement.classList.toggle('dark');
-    const isDark = document.documentElement.classList.contains('dark');
-    try {
-        localStorage.setItem('asmr_theme', isDark ? 'dark' : 'light');
-    } catch (e) {
-        console.log('Local Storage save failed');
-    }
-});
-
 function updateQuote() {
     const quoteEl = document.getElementById('daily-quote');
     if (!quoteEl) return;
     
     // 현재 언어의 명언 배열 가져오기 (없으면 한국어 기본값)
-    const currentQuotes = translations[currentLang].quotes || translations['ko'].quotes;
+    const currentQuotes = translations[appState.currentLang].quotes || translations['ko'].quotes;
     
     if (currentQuotes && currentQuotes.length > 0) {
         const randomQuote = currentQuotes[Math.floor(Math.random() * currentQuotes.length)];
@@ -1254,85 +1903,17 @@ function updateQuote() {
     }
 }
 
-function initVisualizer() {
-    const canvas = document.getElementById('visualizer');
-    const ambientLight = document.getElementById('ambient-light');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight * 0.3;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    function draw() {
-        requestAnimationFrame(draw);
-        analyser.getByteFrequencyData(dataArray);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        let sum = 0;
-        const barWidth = (canvas.width / bufferLength) * 2.5;
-        let barHeight;
-        let x = 0;
-
-        for (let i = 0; i < bufferLength; i++) {
-            barHeight = dataArray[i] / 2;
-            sum += dataArray[i]; // 소리 크기 합산
-            const isDark = document.documentElement.classList.contains('dark');
-            const r = barHeight + (25 * (i / bufferLength));
-            const g = 250 * (i / bufferLength);
-            const b = 50;
-            ctx.fillStyle = isDark ? `rgba(${r},${g},${b}, 0.5)` : `rgba(${r},${g},${b}, 0.3)`;
-            ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-            x += barWidth + 1;
-        }
-
-        // 앰비언트 라이트 효과 업데이트
-        if (ambientLight) {
-            const average = sum / bufferLength;
-            // 평균 볼륨(0~255)을 투명도(0~1)로 변환 (감도 조절)
-            const opacity = Math.min(average / 120, 0.8); 
-            ambientLight.style.opacity = opacity;
-        }
-    }
-    draw();
-}
-
-langBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    langMenu.classList.toggle('hidden');
-});
-
-document.addEventListener('click', (e) => {
-    if (!langBtn.contains(e.target) && !langMenu.contains(e.target)) {
-        langMenu.classList.add('hidden');
-    }
-});
-
-document.querySelectorAll('[data-lang]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        currentLang = e.target.getAttribute('data-lang');
-        localStorage.setItem('asmr_lang', currentLang);
-        updateLanguage();
-        langMenu.classList.add('hidden');
-    });
-});
-
 function updateLanguage() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[currentLang][key]) {
-            el.innerHTML = translations[currentLang][key];
+        if (translations[appState.currentLang][key]) {
+            el.innerHTML = translations[appState.currentLang][key];
         }
     });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
-        if (translations[currentLang][key]) {
-            el.placeholder = translations[currentLang][key];
+        if (translations[appState.currentLang][key]) {
+            el.placeholder = translations[appState.currentLang][key];
         }
     });
 
@@ -1343,22 +1924,76 @@ function updateLanguage() {
         zh: '中文',
         es: 'Español'
     };
-    const langSpan = langBtn.querySelector('span');
-    if (langSpan) {
-        langSpan.textContent = langNames[currentLang];
+    const langBtn = document.getElementById('lang-btn');
+    if (langBtn) {
+        const langSpan = langBtn.querySelector('span');
+        if (langSpan) {
+            langSpan.textContent = langNames[appState.currentLang];
+        }
     }
     
-    // 언어 변경 시 명언도 새로고침
-    updateQuote();
-    renderMixes();
+    // 홈 페이지에만 있는 요소들 업데이트
+    if (document.getElementById('daily-quote')) {
+        updateQuote();
+    }
+    if (playerBar) {
+        updatePlayerBar();
+    }
+    if (mixGrid) {
+        renderMixes();
+    }
+    if (customMixGrid) {
+        renderCustomMixes();
+    }
 }
 
-// 초기화 순서
-lucide.createIcons();
-initTheme();
-// 언어 설정이 먼저 된 후 텍스트 업데이트
-updateLanguage();
-// 그 후 명언 업데이트
-updateQuote();
-renderMixes();
-initVisualizer();
+// 1. 초기화 순서 & 3. 이벤트 리스너 중복 방지
+function init() {
+    lucide.createIcons();
+    initTheme();
+    
+    const langBtn = document.getElementById('lang-btn');
+    const langMenu = document.getElementById('lang-menu');
+    const themeBtn = document.getElementById('theme-btn');
+
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        const isDark = document.documentElement.classList.contains('dark');
+        safeStorage.setStr('asmr_theme', isDark ? 'dark' : 'light');
+    });
+
+    updateLanguage();
+    
+    // 홈 페이지 전용 초기화
+    if (soundGrid) {
+        initSoundCards();
+    }
+    
+    // 2. Null 체크 (Event Listeners)
+    if (langBtn && langMenu) {
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!langBtn.contains(e.target) && !langMenu.contains(e.target)) {
+                langMenu.classList.add('hidden');
+            }
+        });
+
+        document.querySelectorAll('[data-lang]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const selectedLang = e.currentTarget.getAttribute('data-lang');
+                if (selectedLang && translations[selectedLang]) {
+                    appState.currentLang = selectedLang;
+                    safeStorage.setStr('asmr_lang', appState.currentLang);
+                    updateLanguage();
+                    langMenu.classList.add('hidden');
+                }
+            });
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', init);

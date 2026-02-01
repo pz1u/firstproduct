@@ -46,14 +46,8 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css?v=1.1">
 </head>
-<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-white min-h-screen flex flex-col transition-colors duration-300">
-    <!-- Audio Visualizer Canvas -->
-    <canvas id="visualizer" class="fixed bottom-0 left-0 w-full h-64 pointer-events-none z-0 opacity-30"></canvas>
-    
-    <!-- Ambient Light Effect -->
-    <div id="ambient-light" class="fixed inset-0 pointer-events-none z-0 transition-opacity duration-100 ease-out opacity-0"></div>
-
-    <header class="p-6 text-center relative z-10">
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-white min-h-screen flex flex-col transition-all duration-300">
+    <header class="p-6 text-center relative z-50">
         <div class="flex justify-end mb-4 sm:absolute sm:top-4 sm:right-4 sm:mb-0 gap-2">
             <button id="theme-btn" class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
                 <i data-lucide="moon" class="w-4 h-4 hidden dark:block"></i>
@@ -91,11 +85,11 @@
         <div class="flex justify-center gap-4 mb-8">
             <button id="fav-filter-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 hover:border-red-200 dark:hover:border-red-900 transition-all shadow-sm">
                 <i data-lucide="heart" class="w-4 h-4"></i>
-                <span data-i18n="my_saved">내가 저장한 소리</span>
+                <span data-i18n="my_saved">즐겨찾기</span>
             </button>
-            <button id="stop-all-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-blue-500 dark:hover:text-blue-400 hover:border-blue-200 dark:hover:border-blue-900 transition-all shadow-sm">
-                <i data-lucide="square" class="w-4 h-4 text-sky-500 fill-sky-200 dark:fill-sky-900"></i>
-                <span data-i18n="stop_all">일괄 정지</span>
+            <button id="show-mixes-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-purple-500 dark:hover:text-purple-400 hover:border-purple-200 dark:hover:border-purple-900 transition-all shadow-sm">
+                <i data-lucide="list-music" class="w-4 h-4"></i>
+                <span data-i18n="my_mix_title">나만의 믹스</span>
             </button>
         </div>
 
@@ -162,7 +156,7 @@
             <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg">
                 <h2 class="text-2xl font-bold mb-6 text-slate-900 dark:text-white flex items-center gap-2">
                     <i data-lucide="mail" class="w-6 h-6 text-blue-400"></i>
-                    <span data-i18n="contact_title">ASMR 추가 문의</span>
+                    <span data-i18n="contact_title">버그 제보 및 문의</span>
                 </h2>
                 <form id="contact-form" class="space-y-4" action="https://formspree.io/f/xreqwqpe" method="POST">
                     <div>
@@ -198,6 +192,69 @@
             </div>
         </div>
     </footer>
+
+    <!-- Custom Modal -->
+    <div id="custom-modal" class="fixed inset-0 z-[70] hidden flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-6 w-full max-w-md transform scale-95 transition-transform duration-300 border border-slate-200 dark:border-slate-700 mx-4">
+            <h3 id="modal-title" class="text-xl font-bold text-slate-900 dark:text-white mb-4"></h3>
+            <p id="modal-message" class="text-slate-600 dark:text-slate-300 mb-6 hidden leading-relaxed"></p>
+            <input type="text" id="modal-input" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-400 outline-none transition-all mb-6 hidden text-slate-900 dark:text-white placeholder-slate-400" autocomplete="off">
+            <div id="modal-icons" class="flex flex-wrap justify-center gap-2 mb-6 hidden max-h-32 overflow-y-auto p-1"></div>
+            <div id="modal-colors" class="flex flex-wrap justify-center gap-3 mb-6 hidden p-1"></div>
+            <div class="flex justify-end gap-3">
+                <button id="modal-cancel" class="px-5 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors font-medium">Cancel</button>
+                <button id="modal-confirm" class="px-5 py-2.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-bold transition-colors shadow-lg shadow-blue-500/30">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mix List Modal -->
+    <div id="mix-list-modal" class="fixed inset-0 z-[60] hidden flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-6 w-full max-w-2xl transform scale-95 transition-transform duration-300 border border-slate-200 dark:border-slate-700 mx-4 max-h-[80vh] flex flex-col">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i data-lucide="music" class="w-6 h-6 text-purple-500"></i>
+                    <span data-i18n="my_mix_title">나만의 믹스</span>
+                </h3>
+                <button id="mix-list-close" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="mb-4 relative px-2">
+                <i data-lucide="search" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                <input type="text" id="mix-search-input" class="w-full pl-10 pr-4 py-2 rounded-lg bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-400 outline-none transition-all text-slate-900 dark:text-white placeholder-slate-400" data-i18n-placeholder="search_placeholder" placeholder="Search...">
+            </div>
+            <div id="custom-mix-grid" class="flex flex-wrap justify-center gap-4 overflow-y-auto p-2 min-h-[100px]"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-container" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[80] flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Player Bar -->
+    <div id="player-bar" class="fixed bottom-6 left-4 right-4 md:left-1/2 md:right-auto md:w-full md:max-w-3xl md:-translate-x-1/2 bg-white/60 dark:bg-slate-900/60 backdrop-blur-3xl border border-white/40 dark:border-slate-700/40 rounded-[2rem] p-4 transform translate-y-[150%] transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) z-40 shadow-2xl ring-1 ring-black/5">
+        <div class="container mx-auto flex items-center gap-4">
+            <div class="flex-1 flex items-center gap-4 overflow-hidden">
+                <div class="p-3 bg-blue-500/10 dark:bg-blue-400/10 rounded-2xl text-blue-500 shrink-0 backdrop-blur-sm">
+                    <i data-lucide="music" class="w-6 h-6"></i>
+                </div>
+                <div class="flex flex-col overflow-hidden w-full justify-center">
+                    <div id="player-bar-list" class="flex flex-col gap-2 w-full max-h-[40vh] overflow-y-auto pr-1"></div>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+                <button id="save-mix-btn" class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-purple-100 dark:hover:bg-purple-900/30 text-slate-600 dark:text-slate-300 hover:text-purple-500 transition-colors">
+                    <i data-lucide="save" class="w-5 h-5"></i>
+                </button>
+                <button id="player-bar-toggle" class="flex items-center justify-center w-14 h-14 rounded-full bg-blue-500 hover:bg-blue-600 text-white shadow-lg shadow-blue-500/30 transition-all hover:scale-105 active:scale-95">
+                    <i data-lucide="pause" class="w-6 h-6 fill-current"></i>
+                </button>
+                <button id="player-bar-close" class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-red-100 dark:hover:bg-red-900/30 text-slate-600 dark:text-slate-300 hover:text-red-500 transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Main JS -->
     <script src="main.js?v=1.1"></script>
