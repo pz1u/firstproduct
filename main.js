@@ -1419,9 +1419,9 @@ function saveCurrentMix() {
     const activeSounds = {};
     let hasActive = false;
 
-    Object.keys(audioPlayers).forEach(id => {
+    appState.activeSounds.forEach(id => {
         const player = audioPlayers[id];
-        if (player.isPlaying) {
+        if (player) {
             activeSounds[id] = player.gainNode.gain.value;
             hasActive = true;
         }
@@ -1574,6 +1574,15 @@ function createPlayerRow(id, isMobile) {
     favBtn.innerHTML = `<i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-current' : ''}"></i>`;
     favBtn.onclick = () => toggleFavorite(id);
     controlsDiv.appendChild(favBtn);
+
+    // Mobile Play/Pause Button
+    if (isMobile) {
+        const toggleBtn = document.createElement('button');
+        toggleBtn.className = 'p-1 text-slate-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 transition-colors shrink-0';
+        toggleBtn.innerHTML = `<i data-lucide="${player.isPlaying ? 'pause' : 'play'}" class="w-4 h-4 fill-current"></i>`;
+        toggleBtn.onclick = () => toggleSound(id);
+        controlsDiv.appendChild(toggleBtn);
+    }
 
     // Close Button (Individual)
     const closeBtn = document.createElement('button');
