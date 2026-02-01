@@ -231,25 +231,49 @@
     <!-- Toast Notification -->
     <div id="toast-container" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[80] flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- Player Bar -->
-    <div id="player-bar" class="fixed bottom-0 left-0 right-0 md:bottom-6 md:left-1/2 md:right-auto md:w-full md:max-w-3xl md:-translate-x-1/2 bg-white/80 dark:bg-slate-900/80 md:bg-white/60 md:dark:bg-slate-900/60 backdrop-blur-3xl border-t md:border border-white/40 dark:border-slate-700/40 rounded-t-2xl md:rounded-[2rem] p-4 pb-6 md:pb-4 transform translate-y-[150%] transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) z-40 shadow-2xl ring-1 ring-black/5">
+    <!-- Mobile Player Bar (Fixed Bottom) -->
+    <div id="mobile-player-bar" class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-700 pb-6 pt-3 px-4 z-40 transform translate-y-[150%] transition-transform duration-300 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+        <div class="flex flex-col gap-3">
+            <!-- List Container -->
+            <div id="mobile-player-list" class="flex flex-col gap-2 w-full max-h-[40vh] overflow-y-auto"></div>
+            
+            <!-- Global Controls (Bottom Row) -->
+            <div class="flex items-center justify-between pt-2 border-t border-slate-200/50 dark:border-slate-700/50">
+                <button id="mobile-save-btn" class="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-purple-500 transition-colors">
+                    <i data-lucide="save" class="w-4 h-4"></i>
+                    <span data-i18n="btn_save_mix">Save Mix</span>
+                </button>
+                <div class="flex items-center gap-4">
+                    <button id="mobile-player-toggle" class="p-2 rounded-full bg-blue-500 text-white shadow-lg shadow-blue-500/30 active:scale-95 transition-transform">
+                        <i data-lucide="pause" class="w-6 h-6 fill-current"></i>
+                    </button>
+                    <button id="mobile-player-close" class="p-2 text-slate-400 hover:text-red-500 transition-colors">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PC Player Bar (Floating) -->
+    <div id="pc-player-bar" class="hidden md:block fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-3xl bg-white/60 dark:bg-slate-900/60 backdrop-blur-3xl border border-white/40 dark:border-slate-700/40 rounded-[2rem] p-4 transform translate-y-[150%] transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) z-40 shadow-2xl ring-1 ring-black/5">
         <div class="container mx-auto flex items-center gap-4">
             <div class="flex-1 flex items-center gap-4 overflow-hidden">
                 <div class="p-3 bg-blue-500/10 dark:bg-blue-400/10 rounded-2xl text-blue-500 shrink-0 backdrop-blur-sm">
                     <i data-lucide="music" class="w-6 h-6"></i>
                 </div>
                 <div class="flex flex-col overflow-hidden w-full justify-center">
-                    <div id="player-bar-list" class="flex flex-col gap-2 w-full max-h-[40vh] overflow-y-auto pr-1"></div>
+                    <div id="pc-player-list" class="flex flex-col gap-2 w-full max-h-[40vh] overflow-y-auto pr-1"></div>
                 </div>
             </div>
             <div class="flex items-center gap-2 shrink-0">
-                <button id="save-mix-btn" class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-purple-100 dark:hover:bg-purple-900/30 text-slate-600 dark:text-slate-300 hover:text-purple-500 transition-colors">
+                <button id="pc-save-btn" class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-purple-100 dark:hover:bg-purple-900/30 text-slate-600 dark:text-slate-300 hover:text-purple-500 transition-colors">
                     <i data-lucide="save" class="w-5 h-5"></i>
                 </button>
-                <button id="player-bar-toggle" class="flex items-center justify-center w-14 h-14 rounded-full bg-blue-500 hover:bg-blue-600 text-white shadow-lg shadow-blue-500/30 transition-all hover:scale-105 active:scale-95">
+                <button id="pc-player-toggle" class="flex items-center justify-center w-14 h-14 rounded-full bg-blue-500 hover:bg-blue-600 text-white shadow-lg shadow-blue-500/30 transition-all hover:scale-105 active:scale-95">
                     <i data-lucide="pause" class="w-6 h-6 fill-current"></i>
                 </button>
-                <button id="player-bar-close" class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-red-100 dark:hover:bg-red-900/30 text-slate-600 dark:text-slate-300 hover:text-red-500 transition-colors">
+                <button id="pc-player-close" class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-red-100 dark:hover:bg-red-900/30 text-slate-600 dark:text-slate-300 hover:text-red-500 transition-colors">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>

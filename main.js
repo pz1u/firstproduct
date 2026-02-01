@@ -1031,10 +1031,8 @@ const mixListModal = document.getElementById('mix-list-modal');
 const mixListClose = document.getElementById('mix-list-close');
 const mixSearchInput = document.getElementById('mix-search-input');
 
-const playerBar = document.getElementById('player-bar');
-const playerBarList = document.getElementById('player-bar-list');
-const playerBarToggle = document.getElementById('player-bar-toggle');
-const playerBarClose = document.getElementById('player-bar-close');
+const mobilePlayerBar = document.getElementById('mobile-player-bar');
+const pcPlayerBar = document.getElementById('pc-player-bar');
 
 const modal = document.getElementById('custom-modal');
 const modalTitle = document.getElementById('modal-title');
@@ -1496,119 +1494,148 @@ function deleteCustomMix(id, name) {
     });
 }
 
+// Helper to create player row
+function createPlayerRow(id, isMobile) {
+    const name = translations[appState.currentLang]['sound_' + id] || id;
+    const sound = soundsData.find(s => s.id === id);
+    const player = audioPlayers[id];
+    
+    if (!player || !sound) return null;
+
+    const row = document.createElement('div');
+    // Mobile: 2 lines (flex-wrap), PC: 1 line (flex-nowrap)
+    if (isMobile) {
+        row.className = 'flex flex-wrap items-center justify-between gap-x-3 gap-y-2 p-3 bg-white/60 dark:bg-slate-800/60 backdrop-blur-md rounded-xl border border-white/20 dark:border-slate-700/30 shadow-sm w-full';
+    } else {
+        row.className = 'flex items-center justify-between gap-4 p-3 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-xl border border-white/20 dark:border-slate-700/30 shadow-sm w-full transition-all hover:bg-white/60 dark:hover:bg-slate-800/60';
+    }
+    
+    // Info (Icon + Name)
+    const infoDiv = document.createElement('div');
+    infoDiv.className = isMobile 
+        ? 'flex items-center gap-3 overflow-hidden flex-1 min-w-0 order-1'
+        : 'flex items-center gap-3 overflow-hidden flex-1 min-w-0';
+    
+    infoDiv.innerHTML = `
+        <i data-lucide="${sound.icon}" class="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0"></i>
+        <span class="text-sm font-medium text-slate-700 dark:text-slate-200 truncate">${name}</span>
+    `;
+
+    // Controls
+    const controlsDiv = document.createElement('div');
+    controlsDiv.className = isMobile
+        ? 'flex items-center gap-3 w-full order-3 pt-1'
+        : 'flex items-center gap-3 shrink-0';
+
+    // Volume Slider
+    const volInput = document.createElement('input');
+    volInput.type = 'range';
+    volInput.min = '0';
+    volInput.max = '1';
+    volInput.step = '0.01';
+    volInput.value = player.gainNode.gain.value;
+    volInput.title = `${Math.round(player.gainNode.gain.value * 100)}%`;
+    volInput.className = isMobile
+        ? 'flex-1 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-600 accent-blue-500'
+        : 'w-24 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-600 accent-blue-500';
+    
+    // Unique ID for syncing
+    volInput.id = `vol-${isMobile ? 'mobile' : 'pc'}-${id}`;
+
+    volInput.addEventListener('input', (e) => {
+        const val = parseFloat(e.target.value);
+        player.gainNode.gain.value = val;
+        volInput.title = `${Math.round(val * 100)}%`;
+        
+        // Sync other sliders
+        const otherType = isMobile ? 'pc' : 'mobile';
+        const otherSlider = document.getElementById(`vol-${otherType}-${id}`);
+        if (otherSlider) otherSlider.value = val;
+    });
+
+    // PC only controls (Mobile has global controls at bottom)
+    if (!isMobile) {
+        // Play/Pause Button
+        const toggleBtn = document.createElement('button');
+        toggleBtn.className = 'p-1 text-slate-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 transition-colors shrink-0';
+        toggleBtn.innerHTML = `<i data-lucide="${player.isPlaying ? 'pause' : 'play'}" class="w-4 h-4 fill-current"></i>`;
+        toggleBtn.onclick = () => toggleSound(id);
+        controlsDiv.appendChild(volInput);
+        controlsDiv.appendChild(toggleBtn);
+    } else {
+        controlsDiv.appendChild(volInput);
+    }
+
+    // Favorite Button (Both)
+    const isFav = appState.favorites.includes(id);
+    const favBtn = document.createElement('button');
+    favBtn.className = `player-fav-btn p-1 transition-colors shrink-0 ${isFav ? 'text-red-500' : 'text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400'}`;
+    favBtn.dataset.id = id;
+    favBtn.innerHTML = `<i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-current' : ''}"></i>`;
+    favBtn.onclick = () => toggleFavorite(id);
+    controlsDiv.appendChild(favBtn);
+
+    // Close Button (Individual)
+    const closeBtn = document.createElement('button');
+    closeBtn.className = isMobile
+        ? 'p-1 text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400 transition-colors order-2 shrink-0 ml-2'
+        : 'p-1 text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400 transition-colors shrink-0';
+    closeBtn.innerHTML = `<i data-lucide="x" class="w-4 h-4"></i>`;
+    closeBtn.onclick = () => {
+        player.audio.pause();
+        player.isPlaying = false;
+        const idx = appState.activeSounds.indexOf(id);
+        if (idx !== -1) appState.activeSounds.splice(idx, 1);
+        updateUI(id, false);
+    };
+
+    row.appendChild(infoDiv);
+    row.appendChild(controlsDiv);
+    if (!isMobile) row.appendChild(closeBtn); // Mobile uses global close or individual close? Let's keep individual close for mobile too in the row
+    if (isMobile) row.appendChild(closeBtn);
+
+    return row;
+}
+
 function updatePlayerBar() {
-    if (!playerBar) return;
+    const mobileList = document.getElementById('mobile-player-list');
+    const pcList = document.getElementById('pc-player-list');
     
     if (appState.activeSounds.length > 0) {
-        // 리스트 초기화 및 재생 중인 사운드 추가
-        if (playerBarList) {
-            playerBarList.innerHTML = '';
-            appState.activeSounds.forEach(id => {
-                const name = translations[appState.currentLang]['sound_' + id] || id;
-                const sound = soundsData.find(s => s.id === id);
-                const player = audioPlayers[id];
-                
-                if (player && sound) {
-                    const row = document.createElement('div');
-                    row.className = 'flex flex-wrap sm:flex-nowrap items-center justify-between gap-x-3 gap-y-2 sm:gap-4 p-3 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-xl border border-white/20 dark:border-slate-700/30 shadow-sm w-full transition-all hover:bg-white/60 dark:hover:bg-slate-800/60';
-                    
-                    // Info (Icon + Name)
-                    const infoDiv = document.createElement('div');
-                    infoDiv.className = 'flex items-center gap-3 overflow-hidden flex-1 min-w-0 order-1';
-                    
-                    infoDiv.innerHTML = `
-                        <i data-lucide="${sound.icon}" class="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0"></i>
-                        <span class="text-sm font-medium text-slate-700 dark:text-slate-200 truncate">${name}</span>
-                    `;
+        if (mobileList) mobileList.innerHTML = '';
+        if (pcList) pcList.innerHTML = '';
 
-                    // Controls (Volume + Toggle + Heart)
-                    const controlsDiv = document.createElement('div');
-                    controlsDiv.className = 'flex items-center gap-3 w-full sm:w-auto sm:shrink-0 order-3 sm:order-2 pt-1 sm:pt-0';
-
-                    // Volume Slider
-                    const volInput = document.createElement('input');
-                    volInput.type = 'range';
-                    volInput.min = '0';
-                    volInput.max = '1';
-                    volInput.step = '0.01';
-                    volInput.value = player.gainNode.gain.value;
-                    volInput.title = `${Math.round(player.gainNode.gain.value * 100)}%`;
-                    volInput.className = 'flex-1 sm:flex-none sm:w-24 min-w-[80px] h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-600 accent-blue-500';
-                    volInput.addEventListener('input', (e) => {
-                        const val = parseFloat(e.target.value);
-                        player.gainNode.gain.value = val;
-                        volInput.title = `${Math.round(val * 100)}%`;
-                        const mainSlider = document.getElementById(`vol-${id}`);
-                        if (mainSlider) mainSlider.value = val;
-                        const mainDisplay = document.getElementById(`vol-display-${id}`);
-                        if (mainDisplay) mainDisplay.textContent = Math.round(val * 100) + '%';
-                    });
-
-                    // Play/Pause Button (Individual)
-                    const toggleBtn = document.createElement('button');
-                    toggleBtn.className = 'p-1 text-slate-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 transition-colors shrink-0';
-                    toggleBtn.innerHTML = `<i data-lucide="${player.isPlaying ? 'pause' : 'play'}" class="w-4 h-4 fill-current"></i>`;
-                    toggleBtn.onclick = async () => {
-                        if (player.isPlaying) {
-                            player.audio.pause();
-                            player.isPlaying = false;
-                            updateUI(id, false);
-                        } else {
-                            try {
-                                await player.audio.play();
-                                player.isPlaying = true;
-                                updateUI(id, true);
-                            } catch (e) { console.error(e); }
-                        }
-                    };
-
-                    // Favorite Button (Individual)
-                    const isFav = appState.favorites.includes(id);
-                    const favBtn = document.createElement('button');
-                    favBtn.className = `player-fav-btn p-1 transition-colors shrink-0 ${isFav ? 'text-red-500' : 'text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400'}`;
-                    favBtn.dataset.id = id;
-                    favBtn.innerHTML = `<i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-current' : ''}"></i>`;
-                    favBtn.onclick = () => toggleFavorite(id);
-
-                    // Close Button (Individual)
-                    const closeBtn = document.createElement('button');
-                    closeBtn.className = 'p-1 text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400 transition-colors order-2 sm:order-3 shrink-0 ml-2 sm:ml-0';
-                    closeBtn.innerHTML = `<i data-lucide="x" class="w-4 h-4"></i>`;
-                    closeBtn.onclick = () => {
-                        player.audio.pause();
-                        player.isPlaying = false;
-                        const idx = appState.activeSounds.indexOf(id);
-                        if (idx !== -1) appState.activeSounds.splice(idx, 1);
-                        updateUI(id, false);
-                    };
-
-                    controlsDiv.appendChild(volInput);
-                    controlsDiv.appendChild(toggleBtn);
-                    controlsDiv.appendChild(favBtn);
-                    
-                    row.appendChild(infoDiv);
-                    row.appendChild(controlsDiv);
-                    row.appendChild(closeBtn);
-                    playerBarList.appendChild(row);
-                }
-            });
-            lucide.createIcons();
-        }
+        appState.activeSounds.forEach(id => {
+            if (mobileList) {
+                const mRow = createPlayerRow(id, true);
+                if (mRow) mobileList.appendChild(mRow);
+            }
+            if (pcList) {
+                const pRow = createPlayerRow(id, false);
+                if (pRow) pcList.appendChild(pRow);
+            }
+        });
         
-        playerBar.classList.remove('translate-y-[150%]');
-        document.body.style.paddingBottom = (playerBar.offsetHeight + 32) + 'px';
+        if (mobilePlayerBar) mobilePlayerBar.classList.remove('translate-y-[150%]');
+        if (pcPlayerBar) pcPlayerBar.classList.remove('translate-y-[150%]');
+        
+        // Adjust padding (approximate height of mobile bar)
+        document.body.style.paddingBottom = '140px';
         
         // 토글 버튼 아이콘 업데이트 (하나라도 재생 중이면 일시정지 버튼 표시)
         const isAnyPlaying = appState.activeSounds.some(id => audioPlayers[id] && audioPlayers[id].isPlaying);
+        const icon = isAnyPlaying ? 'pause' : 'play';
+        const iconHtml = `<i data-lucide="${icon}" class="w-6 h-6 fill-current"></i>`;
 
-        if (playerBarToggle) {
-            playerBarToggle.innerHTML = isAnyPlaying 
-                ? `<i data-lucide="pause" class="w-6 h-6 fill-current"></i>` 
-                : `<i data-lucide="play" class="w-6 h-6 fill-current"></i>`;
-            lucide.createIcons();
-        }
+        const mToggle = document.getElementById('mobile-player-toggle');
+        const pToggle = document.getElementById('pc-player-toggle');
+        if (mToggle) mToggle.innerHTML = iconHtml;
+        if (pToggle) pToggle.innerHTML = iconHtml;
+        
+        lucide.createIcons();
     } else {
-        playerBar.classList.add('translate-y-[150%]');
+        if (mobilePlayerBar) mobilePlayerBar.classList.add('translate-y-[150%]');
+        if (pcPlayerBar) pcPlayerBar.classList.add('translate-y-[150%]');
         document.body.style.paddingBottom = '0';
     }
 }
@@ -1637,11 +1664,11 @@ async function playMix(mix) {
         if (player) {
             player.gainNode.gain.value = volume;
             const volSlider = document.getElementById(`vol-${soundId}`);
-            if (volSlider) {
-                volSlider.value = volume;
-                const volDisplay = document.getElementById(`vol-display-${soundId}`);
-                if (volDisplay) volDisplay.textContent = Math.round(volume * 100) + '%';
-            }
+            // Sync both sliders
+            const mSlider = document.getElementById(`vol-mobile-${soundId}`);
+            const pSlider = document.getElementById(`vol-pc-${soundId}`);
+            if (mSlider) mSlider.value = volume;
+            if (pSlider) pSlider.value = volume;
             
             try {
                 await player.audio.play();
@@ -1763,9 +1790,8 @@ function toggleFavorite(id) {
     }
 
     // Update Player Bar Button
-    const playerBarList = document.getElementById('player-bar-list');
-    if (playerBarList) {
-        const pBtn = playerBarList.querySelector(`.player-fav-btn[data-id="${id}"]`);
+    // Update all instances (mobile and pc)
+    document.querySelectorAll(`.player-fav-btn[data-id="${id}"]`).forEach(pBtn => {
         if (pBtn) {
             const icon = pBtn.querySelector('svg') || pBtn.querySelector('i');
             if (isFav) {
@@ -1778,7 +1804,7 @@ function toggleFavorite(id) {
                 if (icon) icon.classList.remove('fill-current');
             }
         }
-    }
+    });
     
     applyFilters();
 }
@@ -1833,17 +1859,15 @@ if (favFilterBtn) {
     });
 }
 
-if (playerBarToggle) {
-    playerBarToggle.addEventListener('click', toggleGlobalPlayback);
-}
-
-if (playerBarClose) {
-    playerBarClose.addEventListener('click', stopAllSounds);
-}
-
-if (saveMixBtn) {
-    saveMixBtn.addEventListener('click', saveCurrentMix);
-}
+['mobile', 'pc'].forEach(type => {
+    const toggle = document.getElementById(`${type}-player-toggle`);
+    const close = document.getElementById(`${type}-player-close`);
+    const save = document.getElementById(`${type}-save-btn`);
+    
+    if (toggle) toggle.addEventListener('click', toggleGlobalPlayback);
+    if (close) close.addEventListener('click', stopAllSounds);
+    if (save) save.addEventListener('click', saveCurrentMix);
+});
 
 if (showMixesBtn && mixListModal) {
     showMixesBtn.addEventListener('click', () => {
@@ -1876,9 +1900,7 @@ if (mixSearchInput) {
 }
 
 window.addEventListener('resize', () => {
-    if (playerBar && !playerBar.classList.contains('translate-y-[150%]')) {
-        document.body.style.paddingBottom = (playerBar.offsetHeight + 32) + 'px';
-    }
+    // Padding logic is handled in updatePlayerBar
 });
 
 function initTheme() {
@@ -1936,9 +1958,7 @@ function updateLanguage() {
     if (document.getElementById('daily-quote')) {
         updateQuote();
     }
-    if (playerBar) {
-        updatePlayerBar();
-    }
+    updatePlayerBar();
     if (mixGrid) {
         renderMixes();
     }
