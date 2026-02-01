@@ -1573,15 +1573,15 @@ function createPlayerRow(id, isMobile) {
     const handleToggle = () => {
         if (player.isPlaying) {
             // ▼ 안드로이드 앱에 개별 정지 신호 전송
-            if (window.Android && window.Android.removeAudio) {
-                window.Android.removeAudio(`https://asmrspace.shop/${sound.file}`);
+            if (typeof Android !== 'undefined' && Android.removeAudio) {
+                Android.removeAudio(`https://asmrspace.shop/${sound.file}`);
             }
             player.audio.pause();
             player.isPlaying = false;
         } else {
             // ▼ 안드로이드 앱에 개별 재생 신호 전송
-            if (window.Android && window.Android.playAudio) {
-                window.Android.playAudio(`https://asmrspace.shop/${sound.file}`, name);
+            if (typeof Android !== 'undefined' && Android.playAudio) {
+                Android.playAudio(`https://asmrspace.shop/${sound.file}`, name);
             }
             player.audio.play();
             player.isPlaying = true;
@@ -1601,9 +1601,9 @@ function createPlayerRow(id, isMobile) {
         if (otherSlider) otherSlider.value = val;
 
         // ▼ 안드로이드 앱에 개별 볼륨 신호 전송
-        if (window.Android && window.Android.setVolume) {
+        if (typeof Android !== 'undefined' && Android.setVolume) {
             const soundFileUrl = `https://asmrspace.shop/${sound.file}`;
-            window.Android.setVolume(soundFileUrl, val);
+            Android.setVolume(soundFileUrl, val);
         }
     });
     volInput.addEventListener('change', saveSession);
@@ -1647,8 +1647,8 @@ function createPlayerRow(id, isMobile) {
     closeBtn.innerHTML = `<i data-lucide="x" class="w-4 h-4"></i>`;
     closeBtn.onclick = () => {
         // ▼ 안드로이드 앱에 정지 신호 전송 (X 버튼 클릭 시)
-        if (player.isPlaying && window.Android && window.Android.removeAudio) {
-            window.Android.removeAudio(`https://asmrspace.shop/${sound.file}`);
+        if (player.isPlaying && typeof Android !== 'undefined' && Android.removeAudio) {
+            Android.removeAudio(`https://asmrspace.shop/${sound.file}`);
         }
         player.audio.pause();
         player.isPlaying = false;
