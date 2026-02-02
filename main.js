@@ -34,6 +34,7 @@ const translations = {
         theme_light: "라이트 모드",
         btn_home: "홈으로 가기",
         btn_msg: "메시지 보내기",
+        btn_timer: "타이머",
         send_btn: "보내기",
         email_label: "이메일",
         email_placeholder: "답변 받으실 이메일 주소",
@@ -54,6 +55,8 @@ const translations = {
         msg_delete_confirm: "정말 삭제하시겠습니까?",
         search_placeholder: "믹스 검색...",
         msg_saved: "저장되었습니다.",
+        timer_set: "{minutes}분 뒤에 소리가 꺼집니다.",
+        timer_canceled: "타이머가 취소되었습니다.",
         
         // 메뉴 & 링크 (Menu & Links)
         sitemap: "사이트맵",
@@ -246,6 +249,7 @@ const translations = {
         theme_light: "Light Mode",
         btn_home: "Go Home",
         btn_msg: "Send Message",
+        btn_timer: "Timer",
         send_btn: "Send",
         email_label: "Email",
         email_placeholder: "Your email address",
@@ -266,6 +270,8 @@ const translations = {
         msg_delete_confirm: "Are you sure you want to delete?",
         search_placeholder: "Search mixes...",
         msg_saved: "Saved successfully.",
+        timer_set: "Sound will turn off in {minutes} minutes.",
+        timer_canceled: "Timer has been canceled.",
         sitemap: "Sitemap",
         contact_link: "Contact Us",
         privacy: "Privacy Policy",
@@ -449,6 +455,7 @@ const translations = {
         theme_light: "ライトモード",
         btn_home: "ホームへ",
         btn_msg: "メッセージを送る",
+        btn_timer: "タイマー",
         send_btn: "送信",
         email_label: "メール",
         email_placeholder: "返信先メールアドレス",
@@ -469,6 +476,8 @@ const translations = {
         msg_delete_confirm: "本当に削除しますか？",
         search_placeholder: "ミックスを検索...",
         msg_saved: "保存しました。",
+        timer_set: "{minutes}分後に音が消えます。",
+        timer_canceled: "タイマーがキャンセルされました。",
         sitemap: "サイトマップ",
         contact_link: "お問い合わせ",
         privacy: "プライバシーポリシー",
@@ -643,6 +652,7 @@ const translations = {
         theme_light: "浅色模式",
         btn_home: "返回首页",
         btn_msg: "发送信息",
+        btn_timer: "定时器",
         send_btn: "发送",
         email_label: "邮箱",
         email_placeholder: "您的邮箱地址",
@@ -663,6 +673,8 @@ const translations = {
         msg_delete_confirm: "确定要删除吗？",
         search_placeholder: "搜索混音...",
         msg_saved: "保存成功。",
+        timer_set: "声音将在{minutes}分钟后关闭。",
+        timer_canceled: "计时器已取消。",
         sitemap: "网站地图",
         contact_link: "联系我们",
         privacy: "隐私政策",
@@ -837,6 +849,7 @@ const translations = {
         theme_light: "Modo Claro",
         btn_home: "Ir a Inicio",
         btn_msg: "Enviar mensaje",
+        btn_timer: "Temporizador",
         send_btn: "Enviar",
         email_label: "Correo",
         email_placeholder: "Tu correo electrónico",
@@ -857,6 +870,8 @@ const translations = {
         msg_delete_confirm: "¿Estás seguro de que quieres eliminar?",
         search_placeholder: "Buscar mezclas...",
         msg_saved: "Guardado exitosamente.",
+        timer_set: "El sonido se apagará en {minutes} minutos.",
+        timer_canceled: "El temporizador ha sido cancelado.",
         sitemap: "Mapa del sitio",
         contact_link: "Contáctenos",
         privacy: "Política de Privacidad",
@@ -1047,6 +1062,23 @@ const modalConfirm = document.getElementById('modal-confirm');
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
 
+// 오디오 버퍼 캐시 (무손실 루프를 위해 디코딩된 데이터 저장)
+const audioBuffers = {};
+
+async function loadAudioBuffer(url) {
+    if (audioBuffers[url]) return audioBuffers[url];
+    try {
+        const response = await fetch(url);
+        const arrayBuffer = await response.arrayBuffer();
+        const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+        audioBuffers[url] = audioBuffer;
+        return audioBuffer;
+    } catch (e) {
+        console.error("Audio load failed:", e);
+        return null;
+    }
+}
+
 const audioPlayers = {};
 
 // 4. 전역 변수 관리 (State Management)
@@ -1106,7 +1138,7 @@ function restoreSession() {
         appState.activeSounds.forEach(id => {
             const player = audioPlayers[id];
             if (player && session.volumes && typeof session.volumes[id] === 'number') {
-                player.gainNode.gain.value = session.volumes[id];
+                player.userVolume = session.volumes[id]; // 사용자 볼륨 복원
             }
         });
         updatePlayerBar();
@@ -1160,22 +1192,26 @@ function initSoundCards() {
             </div>`;
         soundGrid.appendChild(card);
 
-        const audio = new Audio(sound.file);
-        audio.crossOrigin = "anonymous";
-        audio.loop = true;
-        audio.preload = 'none';
-        
-        const track = audioCtx.createMediaElementSource(audio);
+        // Web Audio API: GainNode만 미리 생성 (Source는 재생 시 생성)
         const gainNode = audioCtx.createGain();
         gainNode.gain.value = 0.5;
-        
-        track.connect(gainNode);
         gainNode.connect(audioCtx.destination);
 
-        audioPlayers[sound.id] = { audio, gainNode, isPlaying: false };
+        audioPlayers[sound.id] = { 
+            gainNode, 
+            source: null, // AudioBufferSourceNode (재생 시 생성)
+            isPlaying: false,
+            userVolume: 0.5, // 사용자 설정 볼륨 저장
+            file: sound.file 
+        };
 
         const playBtn = card.querySelector(`#btn-${sound.id}`);
         const favBtn = card.querySelector('.fav-btn');
+
+        // Accessibility: Add ARIA Labels
+        const soundName = translations[appState.currentLang]['sound_' + sound.id] || sound.id;
+        playBtn.setAttribute('aria-label', `${soundName} ${translations[appState.currentLang].play}`);
+        favBtn.setAttribute('aria-label', `${soundName} ${translations[appState.currentLang].my_saved}`);
 
         playBtn.addEventListener('click', () => {
             if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -1204,6 +1240,8 @@ function renderMixes() {
             <i data-lucide="${mix.icon}" class="w-5 h-5 text-blue-400 group-hover:text-blue-500 transition-colors"></i>
             <span class="font-medium" data-i18n="mix_${mix.id}">${translations[appState.currentLang]['mix_' + mix.id]}</span>
         `;
+        // Accessibility
+        btn.setAttribute('aria-label', `${translations[appState.currentLang]['mix_' + mix.id]} Mix`);
         btn.onclick = () => playMix(mix);
         mixGrid.appendChild(btn);
     });
@@ -1256,6 +1294,7 @@ function renderCustomMixes() {
             </div>
         `;
         btn.title = soundDetails; // 툴팁으로 상세 정보 표시
+        btn.setAttribute('aria-label', `Play ${mix.name} Mix`);
         btn.onclick = () => {
             playMix(mix);
             if (mixListModal) {
@@ -1272,16 +1311,18 @@ function renderCustomMixes() {
         };
         
         const editBtn = document.createElement('button');
-        editBtn.className = 'absolute right-8 top-2 p-1 text-slate-300 hover:text-blue-500 transition-colors opacity-0 group-hover:opacity-100';
+        editBtn.className = 'absolute right-8 top-2 p-1 text-slate-300 hover:text-blue-500 transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100';
         editBtn.innerHTML = `<i data-lucide="pencil" class="w-4 h-4"></i>`;
+        editBtn.setAttribute('aria-label', `Edit ${mix.name}`);
         editBtn.onclick = (e) => {
             e.stopPropagation();
             editCustomMix(mix.id);
         };
 
         const delBtn = document.createElement('button');
-        delBtn.className = 'absolute right-2 top-2 p-1 text-slate-300 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100';
+        delBtn.className = 'absolute right-2 top-2 p-1 text-slate-300 hover:text-red-500 transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100';
         delBtn.innerHTML = `<i data-lucide="trash-2" class="w-4 h-4"></i>`;
+        delBtn.setAttribute('aria-label', `Delete ${mix.name}`);
         delBtn.onclick = (e) => {
             e.stopPropagation();
             deleteCustomMix(mix.id, mix.name);
@@ -1561,7 +1602,7 @@ function createPlayerRow(id, isMobile) {
     volInput.min = '0';
     volInput.max = '1';
     volInput.step = '0.01';
-    volInput.value = player.gainNode.gain.value;
+    volInput.value = player.userVolume; // 저장된 사용자 볼륨 사용
     volInput.title = `${Math.round(player.gainNode.gain.value * 100)}%`;
     volInput.className = isMobile
         ? 'w-16 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-600 accent-blue-500'
@@ -1569,6 +1610,8 @@ function createPlayerRow(id, isMobile) {
     
     // Unique ID for syncing
     volInput.id = `vol-${isMobile ? 'mobile' : 'pc'}-${id}`;
+    // Accessibility
+    volInput.setAttribute('aria-label', `${name} Volume`);
 
     const handleToggle = () => {
         if (player.isPlaying) {
@@ -1576,15 +1619,14 @@ function createPlayerRow(id, isMobile) {
             if (typeof Android !== 'undefined' && Android.removeAudio) {
                 Android.removeAudio(`https://asmrspace.shop/${sound.file}`);
             }
-            player.audio.pause();
+            if (player.source) {
+                try { player.source.stop(); } catch(e){}
+                player.source.disconnect();
+                player.source = null;
+            }
             player.isPlaying = false;
         } else {
-            // ▼ 안드로이드 앱에 개별 재생 신호 전송
-            if (typeof Android !== 'undefined' && Android.playAudio) {
-                Android.playAudio(`https://asmrspace.shop/${sound.file}`, name);
-            }
-            player.audio.play();
-            player.isPlaying = true;
+            toggleSound(id); // 재생 로직 재사용
         }
         updateUI(id, player.isPlaying);
         saveSession();
@@ -1592,6 +1634,7 @@ function createPlayerRow(id, isMobile) {
 
     volInput.addEventListener('input', (e) => {
         const val = parseFloat(e.target.value);
+        player.userVolume = val; // 사용자 볼륨 업데이트
         player.gainNode.gain.value = val;
         volInput.title = `${Math.round(val * 100)}%`;
         
@@ -1614,6 +1657,7 @@ function createPlayerRow(id, isMobile) {
         const toggleBtn = document.createElement('button');
         toggleBtn.className = 'p-1 text-slate-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 transition-colors shrink-0';
         toggleBtn.innerHTML = `<i data-lucide="${player.isPlaying ? 'pause' : 'play'}" class="w-4 h-4 fill-current"></i>`;
+        toggleBtn.setAttribute('aria-label', `${name} ${player.isPlaying ? translations[appState.currentLang].stop : translations[appState.currentLang].play}`);
         toggleBtn.onclick = handleToggle;
         controlsDiv.appendChild(volInput);
         controlsDiv.appendChild(toggleBtn);
@@ -1627,6 +1671,7 @@ function createPlayerRow(id, isMobile) {
     favBtn.className = `player-fav-btn p-1 transition-colors shrink-0 ${isFav ? 'text-red-500' : 'text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400'}`;
     favBtn.dataset.id = id;
     favBtn.innerHTML = `<i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-current' : ''}"></i>`;
+    favBtn.setAttribute('aria-label', `${name} ${translations[appState.currentLang].my_saved}`);
     favBtn.onclick = () => toggleFavorite(id);
     controlsDiv.appendChild(favBtn);
 
@@ -1635,6 +1680,7 @@ function createPlayerRow(id, isMobile) {
         const toggleBtn = document.createElement('button');
         toggleBtn.className = 'p-1 text-slate-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 transition-colors shrink-0';
         toggleBtn.innerHTML = `<i data-lucide="${player.isPlaying ? 'pause' : 'play'}" class="w-4 h-4 fill-current"></i>`;
+        toggleBtn.setAttribute('aria-label', `${name} ${player.isPlaying ? translations[appState.currentLang].stop : translations[appState.currentLang].play}`);
         toggleBtn.onclick = handleToggle;
         controlsDiv.appendChild(toggleBtn);
     }
@@ -1645,12 +1691,17 @@ function createPlayerRow(id, isMobile) {
         ? 'p-1 text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400 transition-colors shrink-0'
         : 'p-1 text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400 transition-colors shrink-0';
     closeBtn.innerHTML = `<i data-lucide="x" class="w-4 h-4"></i>`;
+    closeBtn.setAttribute('aria-label', `Close ${name}`);
     closeBtn.onclick = () => {
         // ▼ 안드로이드 앱에 정지 신호 전송 (X 버튼 클릭 시)
         if (player.isPlaying && typeof Android !== 'undefined' && Android.removeAudio) {
             Android.removeAudio(`https://asmrspace.shop/${sound.file}`);
         }
-        player.audio.pause();
+        if (player.source) {
+            try { player.source.stop(); } catch(e){}
+            player.source.disconnect();
+            player.source = null;
+        }
         player.isPlaying = false;
         const idx = appState.activeSounds.indexOf(id);
         if (idx !== -1) appState.activeSounds.splice(idx, 1);
@@ -1715,8 +1766,11 @@ window.resetAllButtons = function() {
     
     // 1. 모든 소리 중지
     Object.values(audioPlayers).forEach(player => {
-        player.audio.pause();
-        player.audio.currentTime = 0;
+        if (player.source) {
+            try { player.source.stop(); } catch(e){}
+            player.source.disconnect();
+            player.source = null;
+        }
         player.isPlaying = false;
     });
 
@@ -1747,12 +1801,22 @@ window.resetAllButtons = function() {
 };
 
 function stopAllSounds() {
-    if (typeof Android !== 'undefined') Android.stopAllAudio();
+    if (typeof Android !== 'undefined' && typeof Android.stopAllAudio === 'function') Android.stopAllAudio();
     // 모든 활성 사운드 정지 및 목록 초기화
     [...appState.activeSounds].forEach(id => {
         const player = audioPlayers[id];
         if (player) {
-            player.audio.pause();
+            // 안드로이드 알림 제거를 위해 개별 사운드 정지 신호 전송
+            if (player.isPlaying && typeof Android !== 'undefined' && typeof Android.removeAudio === 'function') {
+                const sound = soundsData.find(s => s.id === id);
+                if (sound) Android.removeAudio(`https://asmrspace.shop/${sound.file}`);
+            }
+
+            if (player.source) {
+                try { player.source.stop(); } catch(e){}
+                player.source.disconnect();
+                player.source = null;
+            }
             player.isPlaying = false;
             updateUI(id, false);
         }
@@ -1762,6 +1826,30 @@ function stopAllSounds() {
     saveSession();
 }
 
+// 페이드 아웃 종료 함수 (타이머용)
+window.fadeOutAndStopAll = function(duration = 5) {
+    const endTime = audioCtx.currentTime + duration;
+    let hasActive = false;
+
+    appState.activeSounds.forEach(id => {
+        const player = audioPlayers[id];
+        if (player && player.isPlaying) {
+            hasActive = true;
+            // 현재 볼륨에서 0으로 선형 감소
+            player.gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+            player.gainNode.gain.setValueAtTime(player.gainNode.gain.value, audioCtx.currentTime);
+            player.gainNode.gain.linearRampToValueAtTime(0, endTime);
+        }
+    });
+
+    if (hasActive) {
+        setTimeout(() => {
+            stopAllSounds();
+            // 볼륨은 다음 재생 시 userVolume으로 복구됨
+        }, duration * 1000);
+    }
+};
+
 async function playMix(mix) {
     stopAllSounds();
     if (audioCtx.state === 'suspended') await audioCtx.resume();
@@ -1769,8 +1857,13 @@ async function playMix(mix) {
     const promises = Object.entries(mix.sounds).map(async ([soundId, volume]) => {
         if (!appState.activeSounds.includes(soundId)) appState.activeSounds.push(soundId);
         const player = audioPlayers[soundId];
+        const sound = soundsData.find(s => s.id === soundId);
+
         if (player) {
+            player.userVolume = volume;
+            player.gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
             player.gainNode.gain.value = volume;
+            
             const volSlider = document.getElementById(`vol-${soundId}`);
             // Sync both sliders
             const mSlider = document.getElementById(`vol-mobile-${soundId}`);
@@ -1779,15 +1872,21 @@ async function playMix(mix) {
             if (pSlider) pSlider.value = volume;
             
             if (typeof Android !== 'undefined') {
-                const s = soundsData.find(sd => sd.id === soundId);
-                const url = `https://asmrspace.shop/${s.file}`;
+                const url = `https://asmrspace.shop/${sound.file}`;
                 const name = translations[appState.currentLang]['sound_' + soundId];
                 if (typeof Android.playAudio === 'function') Android.playAudio(url, name);
                 if (typeof Android.setVolume === 'function') Android.setVolume(url, volume);
             }
             
             try {
-                await player.audio.play();
+                const buffer = await loadAudioBuffer(sound.file);
+                if (!buffer) return;
+                const source = audioCtx.createBufferSource();
+                source.buffer = buffer;
+                source.loop = true;
+                source.connect(player.gainNode);
+                source.start(0);
+                player.source = source;
                 player.isPlaying = true;
                 updateUI(soundId, true);
             } catch (e) {
@@ -1811,7 +1910,11 @@ async function toggleSound(id) {
             Android.removeAudio(url);
         }
         
-        player.audio.pause();
+        if (player.source) {
+            try { player.source.stop(); } catch(e){}
+            player.source.disconnect();
+            player.source = null;
+        }
         player.isPlaying = false;
         updateUI(id, false);
     } else {
@@ -1823,7 +1926,19 @@ async function toggleSound(id) {
 
         if (!appState.activeSounds.includes(id)) appState.activeSounds.push(id);
         try {
-            await player.audio.play();
+            const buffer = await loadAudioBuffer(sound.file);
+            if (!buffer) return;
+
+            const source = audioCtx.createBufferSource();
+            source.buffer = buffer;
+            source.loop = true; // 무손실 루프
+            source.connect(player.gainNode);
+            
+            player.gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+            player.gainNode.gain.setValueAtTime(player.userVolume, audioCtx.currentTime);
+
+            source.start(0);
+            player.source = source;
             player.isPlaying = true;
             updateUI(id, true);
         } catch (e) {
@@ -1839,33 +1954,24 @@ async function toggleGlobalPlayback() {
     
     if (typeof Android !== 'undefined') {
         if (isAnyPlaying) {
-            Android.pauseAudio();
+            if (typeof Android.pauseAudio === 'function') Android.pauseAudio();
         } else {
-            Android.resumeAudio();
+            if (typeof Android.resumeAudio === 'function') Android.resumeAudio();
         }
     }
 
     if (isAnyPlaying) {
-        // 일시정지: 소리는 멈추지만 activeSounds 목록은 유지
-        appState.activeSounds.forEach(id => {
-            const player = audioPlayers[id];
-            if (player && player.isPlaying) {
-                player.audio.pause();
-                player.isPlaying = false;
-                updateUI(id, false);
-            }
+        // 일시정지: activeSounds 목록에 있는 재생중인 소리들을 모두 정지
+        const soundsToStop = appState.activeSounds.filter(id => audioPlayers[id] && audioPlayers[id].isPlaying);
+        soundsToStop.forEach(id => {
+            // toggleSound를 호출하여 개별 정지 로직(Android 알림 포함)을 재사용
+            toggleSound(id);
         });
     } else {
-        // 재생: activeSounds 목록에 있는 소리들 다시 재생
-        appState.activeSounds.forEach(async id => {
-            const player = audioPlayers[id];
-            if (player && !player.isPlaying) {
-                try {
-                    await player.audio.play();
-                    player.isPlaying = true;
-                    updateUI(id, true);
-                } catch (e) { console.error(e); }
-            }
+        // 재생: activeSounds 목록에 있는 정지된 소리들을 모두 재생
+        const soundsToPlay = appState.activeSounds.filter(id => audioPlayers[id] && !audioPlayers[id].isPlaying);
+        soundsToPlay.forEach(id => {
+            toggleSound(id);
         });
     }
 }
@@ -1876,14 +1982,17 @@ function updateUI(id, isPlaying) {
     const textKey = isPlaying ? 'stop' : 'play';
     const icon = isPlaying ? 'pause' : 'play';
     const sound = soundsData.find(s => s.id === id);
+    const soundName = translations[appState.currentLang]['sound_' + id] || id;
     
     if (isPlaying) {
         btn.className = 'w-full py-2 rounded-lg bg-sky-400 hover:bg-sky-500 text-white font-medium transition-colors flex justify-center items-center gap-2';
         btn.innerHTML = `<i data-lucide="${icon}" width="16"></i> <span data-i18n="${textKey}">${translations[appState.currentLang][textKey]}</span>`;
+        btn.setAttribute('aria-label', `${soundName} ${translations[appState.currentLang].stop}`);
         card.classList.add('card-active');
     } else {
         btn.className = 'w-full py-2 rounded-lg bg-slate-100 dark:bg-slate-600 hover:bg-blue-500 dark:hover:bg-blue-500 text-slate-700 dark:text-white hover:text-white font-medium transition-colors flex justify-center items-center gap-2';
         btn.innerHTML = `<i data-lucide="${icon}" width="16"></i> <span data-i18n="${textKey}">${translations[appState.currentLang][textKey]}</span>`;
+        btn.setAttribute('aria-label', `${soundName} ${translations[appState.currentLang].play}`);
         card.classList.remove('card-active');
     }
     updatePlayerBar();
@@ -2091,6 +2200,27 @@ function updateLanguage() {
             el.placeholder = translations[appState.currentLang][key];
         }
     });
+
+    // SEO: Update Document Title & Meta Tags dynamically
+    if (translations[appState.currentLang].title && translations[appState.currentLang].subtitle) {
+        document.title = `${translations[appState.currentLang].title} - ${translations[appState.currentLang].subtitle}`;
+    }
+    
+    // Update Meta Description
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && translations[appState.currentLang].site_desc) {
+        metaDesc.setAttribute('content', translations[appState.currentLang].site_desc);
+    }
+
+    // Update OG Tags
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle && translations[appState.currentLang].title) ogTitle.setAttribute('content', translations[appState.currentLang].title);
+    
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc && translations[appState.currentLang].subtitle) ogDesc.setAttribute('content', translations[appState.currentLang].subtitle);
+
+    // Update HTML Lang attribute
+    document.documentElement.lang = appState.currentLang;
 
     const langNames = {
         ko: '한국어',

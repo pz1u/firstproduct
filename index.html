@@ -6,6 +6,10 @@
     <title>Free ASMR Sounds for Sleep & Focus | 잠 잘 오는 무료 ASMR - asmrspace.shop</title>
     <meta name="description" content="Free ASMR service for sleep and focus, available on App and Web. Listen to rain, fire, typing sounds, and white noise. 애플리케이션과 웹에서 즐기는 잠 잘 오는 무료 ASMR입니다. 빗소리, 장작불 등 백색소음을 무료로 들어보세요.">
     <meta name="keywords" content="ASMR, White Noise, Sleep Sounds, Focus Music, Rain Sounds, Fire Sounds, 백색소음, 수면유도, 빗소리, 장작불">
+    <link rel="canonical" href="https://asmrspace.shop/">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://asmrspace.shop/">
@@ -20,6 +24,15 @@
     <meta property="twitter:image" content="https://asmrspace.shop/og-image.jpg">
     <!-- Favicon (Headphone Emoji) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text x=%2250%22 y=%2255%22 font-size=%2280%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>🎧</text></svg>">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Performance Optimization: Resource Hints -->
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://unpkg.com">
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BMKFVMLSN6"></script>
     <script>
@@ -45,8 +58,50 @@
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css?v=1.1">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "My ASMR Space",
+          "url": "https://asmrspace.shop/",
+          "description": "Free ASMR service for sleep and focus. Listen to rain, fire, typing sounds, and white noise.",
+          "applicationCategory": "HealthApplication",
+          "operatingSystem": "Any",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "Park Jiwoo"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://asmrspace.shop/"
+          }]
+        }
+      ]
+    }
+    </script>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-white min-h-screen flex flex-col transition-all duration-300">
+    <noscript>
+        <div class="w-full p-4 bg-red-100 text-red-700 text-center border-b border-red-200">
+            <p class="font-bold">JavaScript Required / 자바스크립트 필요</p>
+            <p>This website requires JavaScript to play sounds. Please enable JavaScript in your browser settings.</p>
+            <p>이 웹사이트는 소리를 재생하기 위해 자바스크립트가 필요합니다. 브라우저 설정에서 자바스크립트를 활성화해주세요.</p>
+        </div>
+    </noscript>
     <header class="p-6 text-center relative z-50">
         <div class="flex justify-end mb-4 sm:absolute sm:top-4 sm:right-4 sm:mb-0 gap-2">
             <button id="theme-btn" class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
@@ -91,6 +146,10 @@
                 <i data-lucide="list-music" class="w-4 h-4 text-purple-500 dark:text-purple-400"></i>
                 <span data-i18n="my_mix_title">나만의 믹스</span>
             </button>
+            <button id="timer-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 transition-all shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700">
+                <i data-lucide="timer" class="w-4 h-4 text-blue-500 dark:text-blue-400"></i>
+                <span data-i18n="btn_timer">타이머</span>
+            </button>
         </div>
 
         <!-- Recommended Mixes -->
@@ -102,31 +161,6 @@
         <div id="sound-grid" class="flex flex-wrap justify-center gap-3 sm:gap-6">
             <!-- 자바스크립트가 여기에 카드를 생성합니다 -->
         </div>
-
-        <!-- Timer Section -->
-        <section class="mt-12 max-w-3xl mx-auto px-4">
-            <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="flex items-center gap-4">
-                    <div class="p-4 bg-blue-500/10 rounded-full text-blue-400">
-                        <i data-lucide="timer" class="w-8 h-8"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold text-slate-700 dark:text-slate-200">Sleep Timer</h3>
-                        <div id="timer-display" class="text-3xl font-bold font-mono text-slate-900 dark:text-white">00:00</div>
-                    </div>
-                </div>
-                <div class="flex flex-wrap items-center justify-center gap-3">
-                    <button class="timer-opt px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg font-medium transition-colors" data-min="15">15m</button>
-                    <button class="timer-opt px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg font-medium transition-colors" data-min="30">30m</button>
-                    <button class="timer-opt px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg font-medium transition-colors" data-min="60">60m</button>
-                    <input type="number" id="custom-timer-input" placeholder="Min" min="1" class="w-20 px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg font-medium transition-colors text-center focus:outline-none placeholder-slate-400 dark:placeholder-slate-400">
-                    <button id="timer-start" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg font-medium transition-colors">Go</button>
-                    <button id="timer-cancel" class="hidden px-4 py-2 bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 rounded-lg font-medium transition-colors flex items-center gap-2">
-                        <i data-lucide="square" class="w-4 h-4 fill-current"></i> Stop
-                    </button>
-                </div>
-            </div>
-        </section>
 
         <!-- AdSense 승인을 위한 콘텐츠 보강 (텍스트 추가) -->
         <section class="mt-16 max-w-4xl mx-auto">
@@ -228,6 +262,34 @@
         </div>
     </div>
 
+    <!-- Timer Modal -->
+    <div id="timer-modal" class="fixed inset-0 z-[60] hidden flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-6 w-full max-w-md transform scale-95 transition-transform duration-300 border border-slate-200 dark:border-slate-700 mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i data-lucide="timer" class="w-6 h-6 text-blue-500"></i>
+                    <span data-i18n="btn_timer">타이머</span>
+                </h3>
+                <button id="timer-modal-close" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="flex flex-col items-center gap-6">
+                <div id="timer-display" class="text-5xl font-bold font-mono text-slate-900 dark:text-white tracking-wider">00:00</div>
+                <div class="flex flex-wrap justify-center gap-3 w-full">
+                    <button class="timer-opt flex-1 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl font-medium transition-colors" data-min="15">15m</button>
+                    <button class="timer-opt flex-1 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl font-medium transition-colors" data-min="30">30m</button>
+                    <button class="timer-opt flex-1 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl font-medium transition-colors" data-min="60">60m</button>
+                </div>
+                <div class="flex gap-3 w-full">
+                    <input type="number" id="custom-timer-input" placeholder="Min" min="1" class="w-24 px-4 py-3 bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-400 outline-none rounded-xl text-center text-slate-900 dark:text-white font-medium transition-all">
+                    <button id="timer-start" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-blue-500/30">Start</button>
+                    <button id="timer-cancel" class="hidden flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-red-500/30">Stop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Notification -->
     <div id="toast-container" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[80] flex flex-col gap-2 pointer-events-none"></div>
 
@@ -285,6 +347,9 @@
             const timerCancel = document.getElementById('timer-cancel');
             const timerStart = document.getElementById('timer-start');
             const customTimerInput = document.getElementById('custom-timer-input');
+            const timerBtn = document.getElementById('timer-btn');
+            const timerModal = document.getElementById('timer-modal');
+            const timerModalClose = document.getElementById('timer-modal-close');
             let timerInterval;
             let selectedMinutes = 0;
 
@@ -321,8 +386,10 @@
             timerCancel.addEventListener('click', () => {
                 if (typeof Android !== 'undefined') {
                     Android.cancelTimer();
-                    alert("타이머가 취소되었습니다.");
                 }
+                const msg = translations[appState.currentLang].timer_canceled || "Timer canceled.";
+                showToast(msg);
+
                 clearInterval(timerInterval);
                 timerDisplay.textContent = '00:00';
                 selectedMinutes = 0;
@@ -330,21 +397,50 @@
                 resetTimerState();
             });
 
+            // Modal Logic
+            if (timerBtn && timerModal) {
+                timerBtn.addEventListener('click', () => {
+                    timerModal.classList.remove('hidden');
+                    void timerModal.offsetWidth; // Trigger reflow
+                    timerModal.classList.remove('opacity-0');
+                    timerModal.querySelector('div').classList.remove('scale-95');
+                    timerModal.querySelector('div').classList.add('scale-100');
+                });
+
+                const closeTimerModal = () => {
+                    timerModal.classList.add('opacity-0');
+                    timerModal.querySelector('div').classList.remove('scale-100');
+                    timerModal.querySelector('div').classList.add('scale-95');
+                    setTimeout(() => {
+                        timerModal.classList.add('hidden');
+                    }, 300);
+                };
+
+                if (timerModalClose) timerModalClose.addEventListener('click', closeTimerModal);
+                timerModal.addEventListener('click', (e) => {
+                    if (e.target === timerModal) closeTimerModal();
+                });
+            }
+
             function resetTimerState() {
                 clearInterval(timerInterval);
                 timerStart.classList.remove('hidden');
                 timerCancel.classList.add('hidden');
+                timerBtn.classList.remove('bg-blue-50', 'dark:bg-blue-900/30', 'border-blue-200', 'dark:border-blue-800', 'text-blue-600', 'dark:text-blue-400');
             }
 
             function startTimer(minutes) {
                 if (typeof Android !== 'undefined') {
                     Android.setTimer(minutes);
-                    alert(minutes + "분 뒤에 휴식이 종료됩니다.");
                 }
+                const msg = (translations[appState.currentLang].timer_set || "Timer set for {minutes} minutes.").replace('{minutes}', minutes);
+                showToast(msg);
+
                 clearInterval(timerInterval);
                 const endTime = Date.now() + minutes * 60 * 1000;
                 timerStart.classList.add('hidden');
                 timerCancel.classList.remove('hidden');
+                timerBtn.classList.add('bg-blue-50', 'dark:bg-blue-900/30', 'border-blue-200', 'dark:border-blue-800', 'text-blue-600', 'dark:text-blue-400');
                 
                 function update() {
                     const diff = Math.ceil((endTime - Date.now()) / 1000);
@@ -353,12 +449,9 @@
                         timerDisplay.textContent = '00:00';
                         resetTimerState();
                         
-                        if (typeof audioPlayers !== 'undefined') {
-                            Object.keys(audioPlayers).forEach(id => {
-                                audioPlayers[id].audio.pause();
-                                audioPlayers[id].isPlaying = false;
-                                if (typeof updateUI === 'function') updateUI(id, false);
-                            });
+                        // 5초간 페이드 아웃 후 종료
+                        if (typeof fadeOutAndStopAll === 'function') {
+                            fadeOutAndStopAll(5);
                         }
                         return;
                     }
@@ -379,6 +472,18 @@
                 lucide.createIcons();
             }
         });
+
+        // PWA Service Worker 등록
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
     </script>
 </body>
 </html>
