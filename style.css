@@ -100,19 +100,3 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
-
-/* 타이머 모달 그라데이션 배경 애니메이션 */
-.timer-modal-bg {
-    background: linear-gradient(-45deg, #ffffff, #f0f9ff, #e0f2fe, #ffffff);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-}
-.dark .timer-modal-bg {
-    background: linear-gradient(-45deg, #1e293b, #0f172a, #172554, #1e293b);
-    background-size: 400% 400%;
-}
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}

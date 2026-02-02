@@ -265,7 +265,7 @@
 
     <!-- Timer Modal -->
     <div id="timer-modal" class="fixed inset-0 z-[60] hidden flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="timer-modal-bg rounded-2xl shadow-2xl p-6 w-full max-w-md transform scale-95 transition-transform duration-300 border border-slate-200 dark:border-slate-700 mx-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-6 w-full max-w-md transform scale-95 transition-transform duration-300 border border-slate-200 dark:border-slate-700 mx-4">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     <i data-lucide="timer" class="w-6 h-6 text-blue-500"></i>
@@ -316,7 +316,7 @@
 
     <!-- Floating Timer Chip -->
     <div id="timer-chip" class="hidden fixed bottom-24 right-6 z-50 flex items-center gap-2 bg-slate-900/90 text-white px-4 py-2 rounded-full shadow-lg backdrop-blur-md border border-slate-700 transition-transform duration-100 cursor-pointer touch-none select-none">
-        <span class="animate-pulse w-2 h-2 bg-red-500 rounded-full"></span>
+        <span id="timer-chip-dot" class="animate-pulse w-2 h-2 bg-red-500 rounded-full"></span>
         <span id="timer-chip-display" class="font-mono font-bold text-sm">00:00</span>
     </div>
 

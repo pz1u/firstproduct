@@ -1241,6 +1241,7 @@ function initSoundCards() {
             gainNode, 
             source: null, // AudioBufferSourceNode (재생 시 생성)
             isPlaying: false,
+            isLoading: false, // 로딩 상태 추적 추가
             userVolume: 0.5, // 사용자 설정 볼륨 저장
             file: sound.file 
         };
@@ -1509,7 +1510,7 @@ function showToast(message) {
     if (!container) return;
 
     const toast = document.createElement('div');
-    toast.className = 'bg-slate-800/90 dark:bg-white/90 text-white dark:text-slate-900 px-6 py-3 rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 opacity-0 translate-y-4 font-medium text-sm';
+    toast.className = 'bg-slate-900/95 dark:bg-white/95 text-white dark:text-slate-900 px-6 py-3 rounded-full shadow-xl backdrop-blur-md border border-white/10 dark:border-slate-200/20 transition-all duration-300 opacity-0 translate-y-4 font-medium text-sm whitespace-nowrap';
     toast.textContent = message;
 
     container.appendChild(toast);
@@ -1842,8 +1843,8 @@ window.resetAllButtons = function() {
 
 function stopAllSounds() {
     if (typeof Android !== 'undefined' && typeof Android.stopAllAudio === 'function') Android.stopAllAudio();
-    // 모든 활성 사운드 정지 및 목록 초기화
-    [...appState.activeSounds].forEach(id => {
+    // 모든 오디오 플레이어를 확인하여 강제 정지 (activeSounds 목록과 무관하게 처리)
+    Object.keys(audioPlayers).forEach(id => {
         const player = audioPlayers[id];
         if (player) {
             // 안드로이드 알림 제거를 위해 개별 사운드 정지 신호 전송
@@ -1858,6 +1859,7 @@ function stopAllSounds() {
                 player.source = null;
             }
             player.isPlaying = false;
+            player.isLoading = false; // 로딩 상태도 초기화
             updateUI(id, false);
         }
     });
@@ -1900,6 +1902,7 @@ async function playMix(mix) {
         const sound = soundsData.find(s => s.id === soundId);
 
         if (player) {
+            player.isLoading = true; // 로딩 시작
             player.userVolume = volume;
             player.gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
             player.gainNode.gain.value = volume;
@@ -1920,7 +1923,11 @@ async function playMix(mix) {
             
             try {
                 const buffer = await loadAudioBuffer(sound.file);
-                if (!buffer) return;
+                player.isLoading = false; // 로딩 종료
+
+                // 로딩 중에 정지되었거나 activeSounds에서 제거되었다면 재생하지 않음
+                if (!buffer || !appState.activeSounds.includes(soundId)) return;
+
                 const source = audioCtx.createBufferSource();
                 source.buffer = buffer;
                 source.loop = true;
@@ -1930,6 +1937,7 @@ async function playMix(mix) {
                 player.isPlaying = true;
                 updateUI(soundId, true);
             } catch (e) {
+                player.isLoading = false;
                 console.error(`Mix play error for ${soundId}:`, e);
             }
         }
@@ -1944,8 +1952,8 @@ async function toggleSound(id) {
     const sound = soundsData.find(s => s.id === id);
     const url = `https://asmrspace.shop/${sound.file}`;
     
-    if (player.isPlaying) {
-        // 재생 중이면 정지 (목록에서는 유지, X 버튼으로만 제거)
+    // 재생 중이거나 로딩 중일 때 클릭하면 정지 처리
+    if (player.isPlaying || player.isLoading) {
         if (typeof Android !== 'undefined' && typeof Android.removeAudio === 'function') {
             Android.removeAudio(url);
         }
@@ -1956,6 +1964,12 @@ async function toggleSound(id) {
             player.source = null;
         }
         player.isPlaying = false;
+        player.isLoading = false;
+        
+        // activeSounds에서 즉시 제거 (로딩 완료 후 재생 방지)
+        const idx = appState.activeSounds.indexOf(id);
+        if (idx !== -1) appState.activeSounds.splice(idx, 1);
+
         updateUI(id, false);
     } else {
         // 정지 상태면 재생하고 activeSounds에 추가
@@ -1965,9 +1979,15 @@ async function toggleSound(id) {
         }
 
         if (!appState.activeSounds.includes(id)) appState.activeSounds.push(id);
+        
+        player.isLoading = true; // 로딩 시작
+
         try {
             const buffer = await loadAudioBuffer(sound.file);
-            if (!buffer) return;
+            player.isLoading = false; // 로딩 종료
+
+            // 로딩 완료 후 재생 의사가 여전히 유효한지 확인 (activeSounds에 있어야 함)
+            if (!buffer || !appState.activeSounds.includes(id)) return;
 
             const source = audioCtx.createBufferSource();
             source.buffer = buffer;
@@ -1982,6 +2002,7 @@ async function toggleSound(id) {
             player.isPlaying = true;
             updateUI(id, true);
         } catch (e) {
+            player.isLoading = false;
             console.error('Play error:', e);
         }
     }
@@ -2083,6 +2104,13 @@ window.startAppTimer = function(minutes) {
     // 칩 표시
     const chip = document.getElementById('timer-chip');
     if (chip) chip.classList.remove('hidden');
+
+    // 칩 상태 초기화 (Running: Red + Pulse)
+    const chipDot = document.getElementById('timer-chip-dot');
+    if (chipDot) {
+        chipDot.classList.remove('bg-amber-500');
+        chipDot.classList.add('bg-red-500', 'animate-pulse');
+    }
 };
 
 window.addAppTimer = function(minutes) {
@@ -2093,10 +2121,24 @@ window.addAppTimer = function(minutes) {
 
 window.pauseAppTimer = function() {
     timerWorker.postMessage({ action: 'pause' });
+    
+    // 칩 상태 변경 (Paused: Amber + No Pulse)
+    const chipDot = document.getElementById('timer-chip-dot');
+    if (chipDot) {
+        chipDot.classList.remove('bg-red-500', 'animate-pulse');
+        chipDot.classList.add('bg-amber-500');
+    }
 };
 
 window.resumeAppTimer = function() {
     timerWorker.postMessage({ action: 'resume' });
+    
+    // 칩 상태 변경 (Running: Red + Pulse)
+    const chipDot = document.getElementById('timer-chip-dot');
+    if (chipDot) {
+        chipDot.classList.remove('bg-amber-500');
+        chipDot.classList.add('bg-red-500', 'animate-pulse');
+    }
 };
 
 window.cancelAppTimer = function() {
