@@ -2139,7 +2139,7 @@ window.pauseAppTimer = function() {
     // 칩 상태 변경 (Paused: Amber + No Pulse)
     const chipDot = document.getElementById('timer-chip-dot');
     if (chipDot) {
-        chipDot.classList.remove('bg-red-500', 'animate-pulse');
+        chipDot.classList.remove('bg-red-500', 'bg-green-500', 'animate-pulse');
         chipDot.classList.add('bg-amber-500');
     }
 };
