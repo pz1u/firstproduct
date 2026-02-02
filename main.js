@@ -2066,7 +2066,21 @@ function finalizeTimer() {
     
     // 2. UI 초기화
     const chip = document.getElementById('timer-chip');
-    if (chip) chip.classList.add('hidden');
+    if (chip) {
+        // 종료 알림 효과: 칩 전체 깜빡임 + 테두리 강조 + 점 초록색 변경
+        chip.classList.add('animate-pulse', 'ring-2', 'ring-red-500');
+        const chipDot = document.getElementById('timer-chip-dot');
+        if (chipDot) {
+            chipDot.classList.remove('bg-red-500', 'bg-amber-500', 'animate-pulse');
+            chipDot.classList.add('bg-green-500');
+        }
+        // 5초 후 숨김 (페이드 아웃과 동기화)
+        setTimeout(() => {
+            chip.classList.add('hidden');
+            chip.classList.remove('animate-pulse', 'ring-2', 'ring-red-500');
+            if (chipDot) chipDot.classList.remove('bg-green-500');
+        }, 5000);
+    }
     
     const modalDisplay = document.getElementById('timer-display');
     if (modalDisplay) modalDisplay.textContent = '00:00';
@@ -2108,7 +2122,7 @@ window.startAppTimer = function(minutes) {
     // 칩 상태 초기화 (Running: Red + Pulse)
     const chipDot = document.getElementById('timer-chip-dot');
     if (chipDot) {
-        chipDot.classList.remove('bg-amber-500');
+        chipDot.classList.remove('bg-amber-500', 'bg-green-500');
         chipDot.classList.add('bg-red-500', 'animate-pulse');
     }
 };
