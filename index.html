@@ -57,7 +57,7 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="style.css?v=1.2">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -137,7 +137,7 @@
 
     <main class="flex-grow container mx-auto px-4 py-8 relative z-10">
         <!-- Favorites Filter -->
-        <div class="flex justify-center gap-4 mb-8">
+        <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8">
             <button id="fav-filter-btn" class="hover-red flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 transition-all shadow-sm">
                 <i data-lucide="heart" class="w-4 h-4 text-red-500 dark:text-red-400"></i>
                 <span data-i18n="my_saved">즐겨찾기</span>
@@ -146,6 +146,7 @@
                 <i data-lucide="list-music" class="w-4 h-4 text-purple-500 dark:text-purple-400"></i>
                 <span data-i18n="my_mix_title">나만의 믹스</span>
             </button>
+            <div class="w-full sm:hidden"></div>
             <button id="timer-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 transition-all shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700">
                 <i data-lucide="timer" class="w-4 h-4 text-blue-500 dark:text-blue-400"></i>
                 <span data-i18n="btn_timer">타이머</span>
@@ -264,7 +265,7 @@
 
     <!-- Timer Modal -->
     <div id="timer-modal" class="fixed inset-0 z-[60] hidden flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-6 w-full max-w-md transform scale-95 transition-transform duration-300 border border-slate-200 dark:border-slate-700 mx-4">
+        <div class="timer-modal-bg rounded-2xl shadow-2xl p-6 w-full max-w-md transform scale-95 transition-transform duration-300 border border-slate-200 dark:border-slate-700 mx-4">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     <i data-lucide="timer" class="w-6 h-6 text-blue-500"></i>
@@ -275,16 +276,36 @@
                 </button>
             </div>
             <div class="flex flex-col items-center gap-6">
-                <div id="timer-display" class="text-5xl font-bold font-mono text-slate-900 dark:text-white tracking-wider">00:00</div>
+                <!-- Circular Progress Timer -->
+                <div class="relative w-64 h-64 flex items-center justify-center">
+                    <svg class="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3" class="text-slate-100 dark:text-slate-700" />
+                        <circle id="timer-progress" cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" class="text-blue-500 transition-all duration-1000 ease-linear" stroke-dasharray="283" stroke-dashoffset="0" />
+                    </svg>
+                    <div id="timer-display" class="text-5xl font-bold font-mono text-slate-900 dark:text-white tracking-wider z-10">00:00</div>
+                </div>
+
                 <div class="flex flex-wrap justify-center gap-3 w-full">
-                    <button class="timer-opt flex-1 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl font-medium transition-colors" data-min="15">15m</button>
-                    <button class="timer-opt flex-1 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl font-medium transition-colors" data-min="30">30m</button>
-                    <button class="timer-opt flex-1 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl font-medium transition-colors" data-min="60">60m</button>
+                    <button class="timer-opt flex-1 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-200 rounded-xl font-medium transition-colors active:scale-95" data-min="15">+ 15M</button>
+                    <button class="timer-opt flex-1 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-200 rounded-xl font-medium transition-colors active:scale-95" data-min="30">+ 30M</button>
+                    <button class="timer-opt flex-1 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-200 rounded-xl font-medium transition-colors active:scale-95" data-min="60">+ 1H</button>
                 </div>
                 <div class="flex gap-3 w-full">
-                    <input type="number" id="custom-timer-input" placeholder="Min" min="1" class="w-24 px-4 py-3 bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-400 outline-none rounded-xl text-center text-slate-900 dark:text-white font-medium transition-all">
-                    <button id="timer-start" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-blue-500/30">Start</button>
-                    <button id="timer-cancel" class="hidden flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-red-500/30">Stop</button>
+                    <div class="relative flex-1 flex gap-2">
+                        <div class="relative flex-1">
+                            <input type="number" id="timer-input-hour" placeholder="0" min="0" class="w-full px-3 py-3 bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-400 outline-none rounded-xl text-center text-slate-900 dark:text-white font-medium transition-all placeholder-slate-400">
+                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-slate-400 font-medium pointer-events-none" data-i18n="timer_hour">Hour</span>
+                        </div>
+                        <div class="relative flex-1">
+                            <input type="number" id="timer-input-min" placeholder="0" min="0" class="w-full px-3 py-3 bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 focus:ring-2 focus:ring-blue-400 outline-none rounded-xl text-center text-slate-900 dark:text-white font-medium transition-all placeholder-slate-400">
+                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-slate-400 font-medium pointer-events-none" data-i18n="timer_min">Min</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex gap-3 w-full">
+                    <button id="timer-reset" class="px-4 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-500 dark:text-slate-400 rounded-xl transition-colors" title="Reset"><i data-lucide="rotate-ccw" class="w-5 h-5"></i></button>
+                    <button id="timer-start" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-blue-500/30" data-i18n="btn_start">Start</button>
+                    <button id="timer-cancel" class="hidden flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-red-500/30" data-i18n="btn_stop">Stop</button>
                 </div>
             </div>
         </div>
@@ -292,6 +313,12 @@
 
     <!-- Toast Notification -->
     <div id="toast-container" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[80] flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Floating Timer Chip -->
+    <div id="timer-chip" class="hidden fixed bottom-24 right-6 z-50 flex items-center gap-2 bg-slate-900/90 text-white px-4 py-2 rounded-full shadow-lg backdrop-blur-md border border-slate-700 transition-transform duration-100 cursor-pointer touch-none select-none">
+        <span class="animate-pulse w-2 h-2 bg-red-500 rounded-full"></span>
+        <span id="timer-chip-display" class="font-mono font-bold text-sm">00:00</span>
+    </div>
 
     <!-- Mobile Player Bar (Fixed Bottom) -->
     <div id="mobile-player-bar" class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-700 pb-6 pt-3 px-4 z-40 transform translate-y-[150%] transition-transform duration-300 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
@@ -340,61 +367,112 @@
     </div>
 
     <!-- Main JS -->
-    <script src="main.js?v=1.1"></script>
+    <script src="main.js?v=1.2"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const timerDisplay = document.getElementById('timer-display');
             const timerCancel = document.getElementById('timer-cancel');
             const timerStart = document.getElementById('timer-start');
-            const customTimerInput = document.getElementById('custom-timer-input');
+            const inputHour = document.getElementById('timer-input-hour');
+            const inputMin = document.getElementById('timer-input-min');
             const timerBtn = document.getElementById('timer-btn');
             const timerModal = document.getElementById('timer-modal');
             const timerModalClose = document.getElementById('timer-modal-close');
-            let timerInterval;
+            const timerReset = document.getElementById('timer-reset');
             let selectedMinutes = 0;
+            let isTimerRunning = false;
+            let isTimerPaused = false;
 
             document.querySelectorAll('.timer-opt').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    selectedMinutes = parseInt(btn.dataset.min);
-                    timerDisplay.textContent = `${selectedMinutes}:00`;
-                    customTimerInput.value = '';
-                    resetTimerState();
+                    const addMin = parseInt(btn.dataset.min);
+                    
+                    if (isTimerRunning || isTimerPaused) {
+                        // 작동 중이면 시간 추가
+                        if (window.addAppTimer) window.addAppTimer(addMin);
+                        const msg = (translations[appState.currentLang].timer_added || "{minutes} minutes added.").replace('{minutes}', addMin);
+                        showToast(msg);
+                    } else {
+                        // 설정 중이면 시간 누적
+                        selectedMinutes += addMin;
+                        updateDisplay();
+                    }
                 });
             });
 
-            customTimerInput.addEventListener('input', () => {
-                const val = parseInt(customTimerInput.value);
-                if (val > 0) {
-                    selectedMinutes = val;
-                    timerDisplay.textContent = `${selectedMinutes}:00`;
-                    resetTimerState();
+            function updateFromInputs() {
+                if (!isTimerRunning && !isTimerPaused) {
+                    const h = parseInt(inputHour.value) || 0;
+                    const m = parseInt(inputMin.value) || 0;
+                    selectedMinutes = h * 60 + m;
+                    updateDisplay(false); // 입력창 업데이트 방지 (무한루프 방지)
                 }
+            }
+
+            inputHour.addEventListener('input', updateFromInputs);
+            inputMin.addEventListener('input', updateFromInputs);
+
+            timerReset.addEventListener('click', () => {
+                // 작동 중이어도 초기화 가능하도록 수정
+                if (window.cancelAppTimer) window.cancelAppTimer();
+                selectedMinutes = 0;
+                updateDisplay();
+                resetTimerState();
             });
 
-            customTimerInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    timerStart.click();
+            function updateDisplay(syncInputs = true) {
+                // 시간 포맷팅 (HH:MM:SS or MM:SS)
+                const h = Math.floor(selectedMinutes / 60);
+                const m = selectedMinutes % 60;
+                
+                if (h > 0) {
+                    timerDisplay.textContent = `${h}:${m.toString().padStart(2, '0')}:00`;
+                } else {
+                    timerDisplay.textContent = `${m.toString().padStart(2, '0')}:00`;
                 }
+
+                if (syncInputs) {
+                    inputHour.value = h > 0 ? h : '';
+                    inputMin.value = m > 0 ? m : '';
+                }
+            }
+
+            // Enter 키 입력 시 시작
+            [inputHour, inputMin].forEach(input => {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') timerStart.click();
+                });
             });
 
             timerStart.addEventListener('click', () => {
-                if (selectedMinutes > 0) {
-                    startTimer(selectedMinutes);
+                if (selectedMinutes > 0 || isTimerPaused) {
+                    if (isTimerPaused) {
+                        // 일시정지 상태면 재개
+                        if (window.resumeAppTimer) window.resumeAppTimer();
+                    } else {
+                        // 처음 시작
+                        if (typeof Android !== 'undefined') Android.setTimer(selectedMinutes);
+                        if (window.startAppTimer) window.startAppTimer(selectedMinutes);
+                        const msg = (translations[appState.currentLang].timer_set || "Timer set for {minutes} minutes.").replace('{minutes}', selectedMinutes);
+                        showToast(msg);
+                    }
+
+                    timerStart.classList.add('hidden');
+                    timerCancel.classList.remove('hidden');
+                    timerBtn.classList.add('bg-blue-50', 'dark:bg-blue-900/30', 'border-blue-200', 'dark:border-blue-800', 'text-blue-600', 'dark:text-blue-400');
+                    isTimerRunning = true;
+                    isTimerPaused = false;
                 }
             });
 
             timerCancel.addEventListener('click', () => {
-                if (typeof Android !== 'undefined') {
-                    Android.cancelTimer();
-                }
-                const msg = translations[appState.currentLang].timer_canceled || "Timer canceled.";
-                showToast(msg);
-
-                clearInterval(timerInterval);
-                timerDisplay.textContent = '00:00';
-                selectedMinutes = 0;
-                customTimerInput.value = '';
-                resetTimerState();
+                // 정지 버튼 클릭 시 일시정지(Pause) 동작
+                if (window.pauseAppTimer) window.pauseAppTimer();
+                
+                timerStart.classList.remove('hidden');
+                timerCancel.classList.add('hidden');
+                isTimerRunning = false;
+                isTimerPaused = true;
             });
 
             // Modal Logic
@@ -423,46 +501,85 @@
             }
 
             function resetTimerState() {
-                clearInterval(timerInterval);
                 timerStart.classList.remove('hidden');
                 timerCancel.classList.add('hidden');
                 timerBtn.classList.remove('bg-blue-50', 'dark:bg-blue-900/30', 'border-blue-200', 'dark:border-blue-800', 'text-blue-600', 'dark:text-blue-400');
+                isTimerRunning = false;
+                isTimerPaused = false;
             }
 
-            function startTimer(minutes) {
-                if (typeof Android !== 'undefined') {
-                    Android.setTimer(minutes);
-                }
-                const msg = (translations[appState.currentLang].timer_set || "Timer set for {minutes} minutes.").replace('{minutes}', minutes);
-                showToast(msg);
+            // --- Draggable Timer Chip Logic ---
+            const chip = document.getElementById('timer-chip');
+            let isDragging = false;
+            let startX, startY, initialLeft, initialTop;
+            let dragThreshold = 5; // 5px 이상 움직여야 드래그로 간주
 
-                clearInterval(timerInterval);
-                const endTime = Date.now() + minutes * 60 * 1000;
-                timerStart.classList.add('hidden');
-                timerCancel.classList.remove('hidden');
-                timerBtn.classList.add('bg-blue-50', 'dark:bg-blue-900/30', 'border-blue-200', 'dark:border-blue-800', 'text-blue-600', 'dark:text-blue-400');
+            function handleStart(e) {
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
                 
-                function update() {
-                    const diff = Math.ceil((endTime - Date.now()) / 1000);
-                    if (diff <= 0) {
-                        clearInterval(timerInterval);
-                        timerDisplay.textContent = '00:00';
-                        resetTimerState();
-                        
-                        // 5초간 페이드 아웃 후 종료
-                        if (typeof fadeOutAndStopAll === 'function') {
-                            fadeOutAndStopAll(5);
-                        }
-                        return;
+                startX = clientX;
+                startY = clientY;
+                
+                const rect = chip.getBoundingClientRect();
+                initialLeft = rect.left;
+                initialTop = rect.top;
+                
+                isDragging = false;
+                
+                // 드래그 시작 시 bottom/right 속성을 제거하고 left/top으로 고정
+                chip.style.bottom = 'auto';
+                chip.style.right = 'auto';
+                chip.style.left = `${initialLeft}px`;
+                chip.style.top = `${initialTop}px`;
+            }
+
+            function handleMove(e) {
+                if (startX === undefined || startY === undefined) return;
+                
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                
+                const dx = clientX - startX;
+                const dy = clientY - startY;
+
+                if (Math.abs(dx) > dragThreshold || Math.abs(dy) > dragThreshold) {
+                    isDragging = true;
+                    e.preventDefault(); // 스크롤 방지
+                    
+                    let newLeft = initialLeft + dx;
+                    let newTop = initialTop + dy;
+
+                    // 화면 경계 제한 (Boundary Restriction)
+                    newLeft = Math.max(0, Math.min(newLeft, window.innerWidth - chip.offsetWidth));
+                    newTop = Math.max(0, Math.min(newTop, window.innerHeight - chip.offsetHeight));
+
+                    chip.style.left = `${newLeft}px`;
+                    chip.style.top = `${newTop}px`;
+                }
+            }
+
+            function handleEnd(e) {
+                // 드래그가 시작되었을 때만 로직 실행 (startX가 설정된 경우)
+                if (startX !== undefined) {
+                    if (!isDragging) {
+                        // 드래그가 아니면 클릭으로 간주하여 타이머 모달 열기
+                        document.getElementById('timer-btn').click();
                     }
-                    const m = Math.floor(diff / 60);
-                    const s = diff % 60;
-                    timerDisplay.textContent = `${m}:${s.toString().padStart(2, '0')}`;
                 }
-                
-                update();
-                timerInterval = setInterval(update, 1000);
+                // 상태 초기화
+                startX = undefined;
+                startY = undefined;
+                isDragging = false; // 드래그 상태도 항상 초기화
             }
+
+            chip.addEventListener('mousedown', handleStart);
+            document.addEventListener('mousemove', handleMove);
+            document.addEventListener('mouseup', handleEnd);
+
+            chip.addEventListener('touchstart', handleStart, { passive: false });
+            document.addEventListener('touchmove', handleMove, { passive: false });
+            document.addEventListener('touchend', handleEnd);
         });
     </script>
     <script>

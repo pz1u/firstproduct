@@ -56,7 +56,15 @@ const translations = {
         search_placeholder: "믹스 검색...",
         msg_saved: "저장되었습니다.",
         timer_set: "{minutes}분 뒤에 소리가 꺼집니다.",
+        timer_added: "{minutes}분이 추가되었습니다.",
         timer_canceled: "타이머가 취소되었습니다.",
+        timer_hour: "시간",
+        timer_min: "분",
+        btn_start: "시작",
+        btn_stop: "정지",
+        btn_reset: "초기화",
+        btn_pause: "일시정지",
+        btn_resume: "재개",
         
         // 메뉴 & 링크 (Menu & Links)
         sitemap: "사이트맵",
@@ -271,7 +279,15 @@ const translations = {
         search_placeholder: "Search mixes...",
         msg_saved: "Saved successfully.",
         timer_set: "Sound will turn off in {minutes} minutes.",
+        timer_added: "{minutes} minutes added.",
         timer_canceled: "Timer has been canceled.",
+        timer_hour: "Hour",
+        timer_min: "Min",
+        btn_start: "Start",
+        btn_stop: "Stop",
+        btn_reset: "Reset",
+        btn_pause: "Pause",
+        btn_resume: "Resume",
         sitemap: "Sitemap",
         contact_link: "Contact Us",
         privacy: "Privacy Policy",
@@ -477,7 +493,15 @@ const translations = {
         search_placeholder: "ミックスを検索...",
         msg_saved: "保存しました。",
         timer_set: "{minutes}分後に音が消えます。",
+        timer_added: "{minutes}分が追加されました。",
         timer_canceled: "タイマーがキャンセルされました。",
+        timer_hour: "時間",
+        timer_min: "分",
+        btn_start: "開始",
+        btn_stop: "停止",
+        btn_reset: "リセット",
+        btn_pause: "一時停止",
+        btn_resume: "再開",
         sitemap: "サイトマップ",
         contact_link: "お問い合わせ",
         privacy: "プライバシーポリシー",
@@ -674,7 +698,15 @@ const translations = {
         search_placeholder: "搜索混音...",
         msg_saved: "保存成功。",
         timer_set: "声音将在{minutes}分钟后关闭。",
+        timer_added: "已添加 {minutes} 分钟。",
         timer_canceled: "计时器已取消。",
+        timer_hour: "小时",
+        timer_min: "分钟",
+        btn_start: "开始",
+        btn_stop: "停止",
+        btn_reset: "重置",
+        btn_pause: "暂停",
+        btn_resume: "继续",
         sitemap: "网站地图",
         contact_link: "联系我们",
         privacy: "隐私政策",
@@ -871,7 +903,15 @@ const translations = {
         search_placeholder: "Buscar mezclas...",
         msg_saved: "Guardado exitosamente.",
         timer_set: "El sonido se apagará en {minutes} minutos.",
+        timer_added: "Se añadieron {minutes} minutos.",
         timer_canceled: "El temporizador ha sido cancelado.",
+        timer_hour: "Hora",
+        timer_min: "Min",
+        btn_start: "Iniciar",
+        btn_stop: "Detener",
+        btn_reset: "Reiniciar",
+        btn_pause: "Pausa",
+        btn_resume: "Reanudar",
         sitemap: "Mapa del sitio",
         contact_link: "Contáctenos",
         privacy: "Política de Privacidad",
@@ -1948,6 +1988,129 @@ async function toggleSound(id) {
     lucide.createIcons();
     saveSession();
 }
+
+// --- Timer Worker Integration ---
+const timerWorker = new Worker('timer-worker.js');
+let currentTotalTime = 0; // 프로그레스 바 계산을 위한 전체 시간
+
+function formatTime(seconds) {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    if (h > 0) {
+        return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+    return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+timerWorker.onmessage = function(e) {
+    const { action, timeLeft } = e.data;
+
+    if (action === 'tick') {
+        const timeStr = formatTime(timeLeft);
+        
+        // 1. 플로팅 칩 업데이트
+        const chipDisplay = document.getElementById('timer-chip-display');
+        if (chipDisplay) chipDisplay.textContent = timeStr;
+        
+        // 2. 모달 디스플레이 업데이트 (열려있을 경우)
+        const modalDisplay = document.getElementById('timer-display');
+        if (modalDisplay) modalDisplay.textContent = timeStr;
+
+        // 3. 원형 프로그레스 바 업데이트
+        const progressCircle = document.getElementById('timer-progress');
+        if (progressCircle && currentTotalTime > 0) {
+            const circumference = 283; // 2 * PI * 45
+            const offset = circumference * (1 - (timeLeft / currentTotalTime));
+            progressCircle.style.strokeDashoffset = offset;
+        }
+        
+        // 4. 브라우저 탭 제목 업데이트
+        if (translations[appState.currentLang]) {
+            document.title = `${timeStr} - ${translations[appState.currentLang].title}`;
+        }
+
+        // 5. 안드로이드 앱으로 시간 전송
+        if (typeof Android !== 'undefined' && Android.updateTimer) {
+            Android.updateTimer(timeStr);
+        }
+    } else if (action === 'expired') {
+        finalizeTimer();
+    }
+};
+
+function finalizeTimer() {
+    // 1. 페이드 아웃 및 소리 정지
+    fadeOutAndStopAll(5);
+    
+    // 2. UI 초기화
+    const chip = document.getElementById('timer-chip');
+    if (chip) chip.classList.add('hidden');
+    
+    const modalDisplay = document.getElementById('timer-display');
+    if (modalDisplay) modalDisplay.textContent = '00:00';
+    
+    // 버튼 상태 복구
+    const timerStart = document.getElementById('timer-start');
+    const timerCancel = document.getElementById('timer-cancel');
+    const timerBtn = document.getElementById('timer-btn');
+    
+    if (timerStart) timerStart.classList.remove('hidden');
+    if (timerCancel) timerCancel.classList.add('hidden');
+    if (timerBtn) timerBtn.classList.remove('bg-blue-50', 'dark:bg-blue-900/30', 'border-blue-200', 'dark:border-blue-800', 'text-blue-600', 'dark:text-blue-400');
+    
+    // 제목 복구
+    if (translations[appState.currentLang]) {
+        document.title = `${translations[appState.currentLang].title} - ${translations[appState.currentLang].subtitle}`;
+    }
+
+    // 3. 앱 서비스 종료 신호
+    if (typeof Android !== 'undefined' && Android.stopService) {
+        Android.stopService();
+    }
+}
+
+// 전역 함수로 노출 (index.html에서 호출)
+window.startAppTimer = function(minutes) {
+    const seconds = minutes * 60;
+    currentTotalTime = seconds; // 전체 시간 설정
+    timerWorker.postMessage({ action: 'start', time: seconds });
+    
+    // 프로그레스 바 초기화
+    const progressCircle = document.getElementById('timer-progress');
+    if (progressCircle) progressCircle.style.strokeDashoffset = 0;
+
+    // 칩 표시
+    const chip = document.getElementById('timer-chip');
+    if (chip) chip.classList.remove('hidden');
+};
+
+window.addAppTimer = function(minutes) {
+    const seconds = minutes * 60;
+    currentTotalTime += seconds; // 전체 시간 증가 (비율 유지)
+    timerWorker.postMessage({ action: 'add', time: seconds });
+};
+
+window.pauseAppTimer = function() {
+    timerWorker.postMessage({ action: 'pause' });
+};
+
+window.resumeAppTimer = function() {
+    timerWorker.postMessage({ action: 'resume' });
+};
+
+window.cancelAppTimer = function() {
+    timerWorker.postMessage({ action: 'stop' });
+    
+    // UI 즉시 숨김
+    const chip = document.getElementById('timer-chip');
+    if (chip) chip.classList.add('hidden');
+    
+    // 제목 복구
+    if (translations[appState.currentLang]) {
+        document.title = `${translations[appState.currentLang].title} - ${translations[appState.currentLang].subtitle}`;
+    }
+};
 
 async function toggleGlobalPlayback() {
     const isAnyPlaying = appState.activeSounds.some(id => audioPlayers[id] && audioPlayers[id].isPlaying);
