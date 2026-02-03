@@ -15,7 +15,7 @@
         https://static.cloudflareinsights.com;
       style-src 'self' 'unsafe-inline';
       img-src 'self' data: https:;
-      connect-src 'self' https://www.google-analytics.com;
+      connect-src 'self' https://www.google-analytics.com https://stats.g.doubleclick.net https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://pagead2.googlesyndication.com;
       frame-src https://googleads.g.doubleclick.net;
       object-src 'none';
       require-trusted-types-for 'script';
@@ -94,12 +94,14 @@
     <meta name="google-adsense-account" content="ca-pub-5194430757582201">
     <script>
     window.addEventListener('load', function() {
-      const script = document.createElement('script');
-      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5194430757582201';
-      script.async = true;
-      script.crossOrigin = "anonymous";
-      script.setAttribute('data-ad-frequency-hint', '30s');
-      document.body.appendChild(script);
+      setTimeout(function() {
+          const script = document.createElement('script');
+          script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5194430757582201';
+          script.async = true;
+          script.crossOrigin = "anonymous";
+          script.setAttribute('data-ad-frequency-hint', '30s');
+          document.body.appendChild(script);
+      }, 3000);
     });
     </script>
     <meta name="naver-site-verification" content="a225d2d5c78d018b2a2026c233d89322d3181253" />
@@ -223,8 +225,12 @@
             <div id="mix-grid" class="flex flex-wrap justify-center gap-4"></div>
         </section>
 
-        <div id="sound-grid" class="flex flex-wrap justify-center gap-3 sm:gap-6 min-h-[500px]">
-            <!-- 자바스크립트가 여기에 카드를 생성합니다 -->
+        <div id="sound-grid" class="flex flex-wrap justify-center gap-3 sm:gap-6" style="min-height: 800px;">
+            <!-- 스켈레톤 로딩 -->
+            <div class="skeleton w-40 h-48 bg-slate-200 dark:bg-slate-700 rounded-2xl animate-pulse"></div>
+            <div class="skeleton w-40 h-48 bg-slate-200 dark:bg-slate-700 rounded-2xl animate-pulse"></div>
+            <div class="skeleton w-40 h-48 bg-slate-200 dark:bg-slate-700 rounded-2xl animate-pulse"></div>
+            <div class="skeleton w-40 h-48 bg-slate-200 dark:bg-slate-700 rounded-2xl animate-pulse"></div>
         </div>
 
         <!-- AdSense 승인을 위한 콘텐츠 보강 (텍스트 추가) -->
