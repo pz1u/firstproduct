@@ -1324,7 +1324,7 @@ function initSoundCards() {
     soundsData.forEach(sound => {
         const card = document.createElement('div');
         const isFav = appState.favorites.includes(sound.id);
-        card.className = 'w-[calc(50%-0.5rem)] sm:w-72 bg-white dark:bg-slate-800 border-2 border-transparent rounded-xl p-4 sm:p-6 flex flex-col items-center gap-2 sm:gap-4 transition-all duration-300 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm';
+        card.className = 'sound-card w-[calc(50%-0.5rem)] sm:w-72 bg-white dark:bg-slate-800 border-2 border-transparent rounded-xl p-4 sm:p-6 flex flex-col items-center gap-2 sm:gap-4 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm';
         card.id = `card-${sound.id}`;
         card.dataset.id = sound.id; 
         

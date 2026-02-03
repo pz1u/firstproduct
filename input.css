@@ -1,1 +1,127 @@
 @import "tailwindcss";
+
+/* style.css 통합 내용 */
+html {
+    color-scheme: light;
+}
+
+html.dark {
+    color-scheme: dark;
+}
+
+/* Tailwind CSS 다크모드 클래스 호환성 패치 */
+html.dark .dark\:block {
+    display: block !important;
+}
+html.dark .dark\:hidden {
+    display: none !important;
+}
+html.dark body {
+    background-color: #020617 !important; /* slate-950 */
+    background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 60%);
+    color: #f8fafc !important; /* slate-50 */
+}
+html.dark .bg-white {
+    background-color: rgba(30, 41, 59, 0.6) !important; /* slate-800/60 */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #f1f5f9 !important; /* slate-100 */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+}
+html.dark .text-slate-900 { color: #ffffff !important; }
+html.dark .text-slate-600 { color: #cbd5e1 !important; }
+
+/* 서브 페이지 박스(FAQ, 가이드 등) 다크모드 패치 */
+html.dark .bg-slate-100 {
+    background-color: rgba(51, 65, 85, 0.5) !important; /* slate-700/50 */
+    color: #e2e8f0 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 공지사항 타임라인 도트 패치 */
+html.dark .timeline-dot {
+    background-color: #1e293b !important; /* slate-800 solid */
+    border-color: #1e293b !important; /* slate-800 */
+}
+html.dark .group.is-active .timeline-dot {
+    background-color: #3b82f6 !important; /* blue-500 */
+    border-color: #1e293b !important;
+    color: #ffffff !important;
+}
+
+/* 태그 및 버튼 다크모드 추가 패치 */
+html.dark .tag-btn {
+    background-color: rgba(51, 65, 85, 0.8) !important; /* slate-700/80 */
+    color: #e2e8f0 !important; /* slate-200 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+html.dark button.bg-slate-100 {
+    background-color: rgba(71, 85, 105, 0.8) !important; /* slate-600/80 */
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+html.dark .text-slate-700 { color: #ffffff !important; }
+
+/* 투명도 배경 및 UI 요소 다크모드 추가 패치 */
+html.dark .bg-white\/50 { background-color: rgba(15, 23, 42, 0.6) !important; backdrop-filter: blur(16px); }
+html.dark .bg-white\/60 { background-color: rgba(15, 23, 42, 0.7) !important; backdrop-filter: blur(16px); }
+html.dark .bg-white\/80 { background-color: rgba(15, 23, 42, 0.85) !important; backdrop-filter: blur(16px); }
+html.dark .bg-white\/90 { background-color: rgba(15, 23, 42, 0.9) !important; backdrop-filter: blur(16px); }
+html.dark .bg-white\/95 { background-color: rgba(15, 23, 42, 0.95) !important; backdrop-filter: blur(16px); }
+
+html.dark .bg-slate-50 {
+    background-color: rgba(30, 41, 59, 0.5) !important; /* slate-800/50 */
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .border-slate-200 { border-color: rgba(255, 255, 255, 0.1) !important; }
+html.dark .text-slate-500 { color: #94a3b8 !important; } /* slate-400 */
+
+html.dark .bg-blue-50\/90 { background-color: rgba(30, 41, 59, 0.9) !important; } /* slate-800/90 */
+html.dark .bg-blue-50\/80 { background-color: rgba(30, 41, 59, 0.8) !important; } /* slate-800/80 */
+html.dark .hover\:bg-blue-100\/80:hover { background-color: rgba(51, 65, 85, 0.8) !important; } /* slate-700/80 */
+html.dark .border-blue-200\/50 { border-color: rgba(255, 255, 255, 0.1) !important; }
+
+html.dark span[data-i18n="mix_title"] {
+    background-image: linear-gradient(to right, #93c5fd, #c4b5fd) !important; /* blue-300 to purple-300 */
+}
+
+input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+input[type=range]:focus { outline: none; }
+input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #475569; border-radius: 9999px; }
+input[type=range]::-webkit-slider-thumb { height: 12px; width: 12px; border-radius: 50%; background: #60a5fa; cursor: pointer; -webkit-appearance: none; margin-top: -4px; box-shadow: 0 0 10px rgba(96, 165, 250, 0.5); transition: transform 0.1s; }
+input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+.card-active {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+    background-color: #f0f9ff !important;
+}
+html.dark .card-active {
+    border-color: #3b82f6 !important;
+    background-color: rgba(30, 58, 138, 0.5) !important; /* blue-900/50 */
+    box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+}
+
+#ambient-light { background: radial-gradient(circle at center, rgba(147, 197, 253, 0.4) 0%, transparent 70%); }
+.dark #ambient-light { background: radial-gradient(circle at center, rgba(56, 189, 248, 0.2) 0%, transparent 70%); }
+
+.waveform { display: flex; align-items: flex-end; gap: 2px; height: 12px; }
+.waveform-bar { width: 3px; background-color: currentColor; border-radius: 2px; animation: wave 1s infinite ease-in-out; }
+.waveform-bar:nth-child(2) { animation-delay: 0.1s; }
+.waveform-bar:nth-child(3) { animation-delay: 0.2s; }
+@keyframes wave { 0%, 100% { height: 20%; } 50% { height: 100%; } }
+
+@media (max-width: 640px) {
+    div:has([data-i18n="btn_home"]), div:has([data-i18n="btn_msg"]) { flex-direction: column !important; gap: 0.75rem !important; }
+    a:has([data-i18n="btn_home"]), button:has([data-i18n="btn_msg"]) { width: 100% !important; justify-content: center !important; }
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* CLS 최적화: 소리 카드 애니메이션 */
+.sound-card {
+    transition: transform 0.3s, opacity 0.3s;
+}
