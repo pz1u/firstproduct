@@ -206,7 +206,38 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0; 
 }
 
-/* 웹 환경 접근성 개선: 모든 버튼 요소에 포인터 커서 적용 */
-button:not(:disabled) {
-    cursor: pointer;
+/* 모든 버튼과 클릭 가능한 요소에 포인터 커서 강제 적용 */
+button, 
+.tag-btn,
+.sound-card,
+a {
+    cursor: pointer !important;
+}
+
+/* 비활성화된 버튼은 기본 커서로 표시 (선택 사항) */
+button:disabled {
+    cursor: default !important;
+}
+
+/* 추천 사운드 믹스 텍스트 겹침 해결 */
+h2 span[data-i18n="mix_title"] {
+    display: inline-block; /* 그라데이션 계산을 위해 블록화 */
+    line-height: 1.4 !important; /* 줄 간격 여유 확보 */
+    padding: 0.1em 0; /* 글자 위아래 잘림 방지 */
+    -webkit-background-clip: text; /* 사파리/크롬 호환성 */
+    background-clip: text;
+}
+
+@media (max-width: 640px) {
+    /* 모바일에서 아이콘과 텍스트가 세로로 겹치지 않게 조정 */
+    h2.flex {
+        flex-wrap: wrap; /* 공간 부족 시 자연스럽게 다음 줄로 */
+        gap: 0.5rem !important;
+        font-size: 1.25rem !important; /* 모바일에서는 폰트 크기를 살짝 줄임 */
+    }
+    
+    h2 i[data-lucide="sparkles"] {
+        width: 1.25rem !important; /* 아이콘 크기도 함께 조정 */
+        height: 1.25rem !important;
+    }
 }
