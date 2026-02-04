@@ -10,13 +10,21 @@
     <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin-allow-popups">
     <title>My ASMR Space | Free Sounds for Sleep & Focus</title>
     <style>
-      /* 1. 흰색 번쩍임 방지: 브라우저가 읽자마자 배경을 slate-950(어두운색)으로 고정 */
-      :root, html, body {
-        background-color: #020617 !important; /* 지우님 앱의 slate-950 색상 */
+      /* 1. 다크모드일 때 배경색 고정 */
+      html.dark, html.dark body {
+        background-color: #020617 !important; /* slate-950 */
         color: #f8fafc !important;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
       }
 
-      /* 2. 제목 텍스트 겹침 및 유령 현상 해결 */
+      /* 2. 라이트모드(dark 클래스가 없을 때) 배경색 고정 */
+      html:not(.dark), html:not(.dark) body {
+        background-color: #f8fafc !important; /* slate-50 (밝은 회색/흰색 계열) */
+        color: #0f172a !important;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+      }
+
+      /* 3. 추천 사운드 믹스 등 그라데이션 텍스트 보정 (기존과 동일) */
       h2 span[data-i18n="mix_title"] {
         display: inline-block !important;
         line-height: 1.5 !important;
@@ -28,12 +36,11 @@
         color: transparent !important;
       }
 
-      /* 3. 모바일에서 제목과 그리드 사이 간격 강제 확보 */
+      /* 4. 모바일에서 제목과 그리드 사이 간격 강제 확보 */
       h2.flex {
         margin-bottom: 2rem !important; /* mb-8보다 더 확실한 간격 */
         flex-wrap: wrap !important;
       }
-
     </style>
     <meta name="description" content="Free ASMR service for sleep and focus, available on App and Web. Listen to rain, fire, typing sounds, and white noise. 애플리케이션과 웹에서 즐기는 잠 잘 오는 무료 ASMR입니다. 빗소리, 장작불 등 백색소음을 무료로 들어보세요.">
     <meta name="keywords" content="ASMR, White Noise, Sleep Sounds, Focus Music, Rain Sounds, Fire Sounds, 백색소음, 수면유도, 빗소리, 장작불">
